@@ -1,0 +1,2 @@
+insert into cuoco(id,nome,cognome,data_nascita,url_foto) values(nextval('cuoco_seq'), 'cuoco1', 'cognome1', '19/12/2001', '/images/cuocomatto.jpg');
+insert into cuoco(id,nome,cognome,data_nascita,url_foto) values(nextval('cuoco_seq'), 'cuoco2', 'cognome2', '19/12/2002', '/images/cuocomatto2.jpg');
