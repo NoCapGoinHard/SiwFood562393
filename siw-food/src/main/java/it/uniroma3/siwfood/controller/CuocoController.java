@@ -44,13 +44,7 @@ public class CuocoController {
         return "cuoco.html";
     }
 
-    /* 
-    @GetMapping("/cuochi/nome/cognome")
-    public String getCuochiByNomeAndCognome(@RequestParam String nome, @RequestParam String cognome, Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findByNomeAndCognome(nome, cognome));
-        return "cuochi.html";
-    }
-    */
+
 
     @GetMapping("/formNuovoCuoco")
     public String formNuovoCuoco(Model model) {
@@ -72,29 +66,16 @@ public class CuocoController {
         }
     }
 
-    //TODO risolvi che non prende il form
-    @GetMapping("/formCercaCuochi")
-    public String formCercaCuochi() {
+    @GetMapping("/cuochi/cercaByNomeAndCognome")
+    public String getFormCercaCuochi() {
         return "formCercaCuochi.html";
     }
 
-    //TODO risolvi che non prende il form
-    @PostMapping("/cuochi/trovati") 
-    public String formCercaCuochi(@ModelAttribute("cuoco") Cuoco cuoco, @RequestParam String nome, @RequestParam String cognome, Model model) {
-        List<Cuoco> cuochi = this.cuocoService.findByNomeAndCognome(nome, cognome);
-        if(!cuochi.isEmpty()) {
-            model.addAttribute("cuochi", cuochi);
-            return "redirect:/cuochi.html";
-        }
-        else {
-            model.addAttribute("messaggioErrore", "Non ci sono cuochi chiamati così");
-            return "formCercaCuochi.html";
-        }
-        
+    @PostMapping("/cuochi/trovati")
+    public String getCuochiByNomeAndCognome(@RequestParam String nome, @RequestParam String cognome, Model model) {
+        model.addAttribute("cuochi", this.cuocoService.findAllByNomeAndCognome(nome, cognome));
+        return "cuochi.html";
     }
-
-
-
     
 
 }

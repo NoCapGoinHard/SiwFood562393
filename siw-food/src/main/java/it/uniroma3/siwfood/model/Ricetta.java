@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.model;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ public class Ricetta {
     private Long id;
     private String nome;
     private String descrizione;
-    private String ingredienti;
+    private List<String> ingredienti;
     private String urlImmagine;
     
     public Long getId() {
@@ -34,11 +36,11 @@ public class Ricetta {
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-    public String getIngredienti() {
+    public List<String> getIngredienti() {
         return ingredienti;
     }
-    public void setIngredienti(String ingredienti) {
-        this.ingredienti = ingredienti;
+    public void aggiungiIngrediente(String ingrediente) {
+        this.ingredienti.add(ingrediente);
     }
     public String getUrlImmagine() {
         return urlImmagine;

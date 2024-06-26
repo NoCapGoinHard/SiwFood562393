@@ -8,7 +8,7 @@ import it.uniroma3.siwfood.model.Cuoco;
 
 public interface CuocoRepository extends CrudRepository<Cuoco, Long> {
 
-    public List<Cuoco> findByNomeAndCognome(String nome, String cognome);
+    public List<Cuoco> findAllByNomeAndCognome(String nome, String cognome);
     
     public boolean existsByNomeAndCognome(String nome, String cognome);
 }

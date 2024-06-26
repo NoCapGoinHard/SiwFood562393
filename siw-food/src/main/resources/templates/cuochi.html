@@ -15,11 +15,11 @@
             <a th:href="@{/formNuovoCuoco}">Inserisci un nuovo cuoco</a>
         </div>
         <div>
-            <a th:href="@{/formCercaCuochi}">Cerca cuochi per nome e cognome</a>
+            <a href="/cuochi/cercaByNomeAndCognome">Cerca cuochi per nome e cognome</a>
         </div>
 
         <div
-            th:if="${cuochi == null || cuochi.isEmpty()}">Non ci sono cuochi nel sistema
+            th:if="${cuochi == null || cuochi.isEmpty()}">Non ci sono cuochi nel sistema che si chiamano in questo modo
         </div>
         <ul>
             <li th:each="cuoco : ${cuochi}">

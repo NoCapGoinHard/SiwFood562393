@@ -26,8 +26,8 @@ public class CuocoService {
         cuocoRepository.save(cuoco);
     }
 
-    public List<Cuoco> findByNomeAndCognome(String nome, String cognome) {
-        return cuocoRepository.findByNomeAndCognome(nome, cognome);
+    public List<Cuoco> findAllByNomeAndCognome(String nome, String cognome) {
+        return cuocoRepository.findAllByNomeAndCognome(nome, cognome);
     }
 
     public void deleteById(Long id) {

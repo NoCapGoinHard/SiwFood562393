@@ -10,27 +10,22 @@
     <body>
         
         <h1>Verranno poi mostrati tutti i cuochi i quali nome e cognome sono corrispondenti</h1>
-        <form th:action="@{/cuochi/trovati}" method = "POST" th:object="${cuochi}">
+        
+
+        <form action="#" th:action="@{/cuochi/trovati}" method = "post">
             <div>
-                <span th:text="${messaggioErrore}">ERRORE</span>
+                <label for="nome">Nome:</label>
+                <input type="text" name="nome" th:value="${nome}"/>
             </div>
             <div>
-                Nome: 
-                <span>
-                    <input required type="text" th:field="*{nome}"/>
-                </span>
+                <label for="cognome">Cognome:</label>
+                <input type="text" name="cognome" th:value="${cognome}"/>
             </div>
-                Cognome:
-                <span>
-                    <input required type="text" th:field="*{cognome}"/>
-                </span>
             <div>
-                <span>
-                    <button type="submit">
-                        Conferma
-                    </button>
-                </span>
-           </div>
+                <button type="submit">
+                    Conferma
+                </button>
+            </div>
         </form>
 
     </body>
