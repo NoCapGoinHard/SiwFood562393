@@ -1,5 +1,8 @@
 package it.uniroma3.siwfood.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,8 +32,6 @@ public class CuocoController {
         return "index.html";
     }
     
-
-
     @GetMapping("/cuochi")
     public String getCuochi(Model model) {
         model.addAttribute("cuochi", this.cuocoService.findAll());
@@ -43,24 +44,57 @@ public class CuocoController {
         return "cuoco.html";
     }
 
-    @GetMapping("/cuochi/nome")    ///cuochi/nome?nome=mario
-    public String getCuochiByNome(@RequestParam String nome, Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findByNome(nome));
+    /* 
+    @GetMapping("/cuochi/nome/cognome")
+    public String getCuochiByNomeAndCognome(@RequestParam String nome, @RequestParam String cognome, Model model) {
+        model.addAttribute("cuochi", this.cuocoService.findByNomeAndCognome(nome, cognome));
         return "cuochi.html";
     }
+    */
+
+    @GetMapping("/formNuovoCuoco")
+    public String formNuovoCuoco(Model model) {
+        model.addAttribute("cuoco", new Cuoco());
+        return "formNuovoCuoco.html";
+    }
     
-    @PostMapping("/cuoco")
-    public String registraCuoco(@ModelAttribute("cuoco") Cuoco cuoco, Model model) {
-        if(!cuocoRepository.existsByNomeCognome(cuoco.getNome(), cuoco.getCognome())) {
+    
+    @PostMapping("/cuoco/aggiunto")
+    public String formNuovoCuoco(@ModelAttribute("cuoco") Cuoco cuoco, Model model) {
+        if(!cuocoRepository.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
             this.cuocoService.save(cuoco);
             model.addAttribute("cuoco", cuoco);
-            return "redirect:/cuoco/"+cuoco.getId();
+            return "redirect:/cuochi"; //da migliorare con "redirect:/cuoco"+getId();
         }
         else {
             model.addAttribute("messaggioErrore", "Questo cuoco già è presente");
             return "formNuovoCuoco.html";
-        } 
+        }
     }
+
+    //TODO risolvi che non prende il form
+    @GetMapping("/formCercaCuochi")
+    public String formCercaCuochi() {
+        return "formCercaCuochi.html";
+    }
+
+    //TODO risolvi che non prende il form
+    @PostMapping("/cuochi/trovati") 
+    public String formCercaCuochi(@ModelAttribute("cuoco") Cuoco cuoco, @RequestParam String nome, @RequestParam String cognome, Model model) {
+        List<Cuoco> cuochi = this.cuocoService.findByNomeAndCognome(nome, cognome);
+        if(!cuochi.isEmpty()) {
+            model.addAttribute("cuochi", cuochi);
+            return "redirect:/cuochi.html";
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non ci sono cuochi chiamati così");
+            return "formCercaCuochi.html";
+        }
+        
+    }
+
+
+
     
 
 }

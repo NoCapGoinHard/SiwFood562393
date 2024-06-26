@@ -2,16 +2,25 @@
 <html>
 
     <head>
+        <meta charset="utf-8">
         <title> 
             Cuochi   
         </title> 
     </head>
 
     <body>
-        <h1>
-            Lista
-        </h1>
+        <h1>Lista Cuochi</h1>
         
+        <div>
+            <a th:href="@{/formNuovoCuoco}">Inserisci un nuovo cuoco</a>
+        </div>
+        <div>
+            <a th:href="@{/formCercaCuochi}">Cerca cuochi per nome e cognome</a>
+        </div>
+
+        <div
+            th:if="${cuochi == null || cuochi.isEmpty()}">Non ci sono cuochi nel sistema
+        </div>
         <ul>
             <li th:each="cuoco : ${cuochi}">
                 <div>

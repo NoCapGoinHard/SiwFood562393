@@ -21,6 +21,7 @@ public class Cuoco {
     private LocalDate dataNascita;
     private String urlFoto;
 
+    public Cuoco(){}
 
     public Long getId() {
         return id;

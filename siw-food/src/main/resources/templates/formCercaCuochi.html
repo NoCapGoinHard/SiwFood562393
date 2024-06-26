@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Ricerca cuochi</title>
+    </head>
+
+    <body>
+        
+        <h1>Verranno poi mostrati tutti i cuochi i quali nome e cognome sono corrispondenti</h1>
+        <form th:action="@{/cuochi/trovati}" method = "POST" th:object="${cuochi}">
+            <div>
+                <span th:text="${messaggioErrore}">ERRORE</span>
+            </div>
+            <div>
+                Nome: 
+                <span>
+                    <input required type="text" th:field="*{nome}"/>
+                </span>
+            </div>
+                Cognome:
+                <span>
+                    <input required type="text" th:field="*{cognome}"/>
+                </span>
+            <div>
+                <span>
+                    <button type="submit">
+                        Conferma
+                    </button>
+                </span>
+           </div>
+        </form>
+
+    </body>
+
+</html>

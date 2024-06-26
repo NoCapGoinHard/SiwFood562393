@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html>
 
+    <head>
+        <meta charset="utf-8">
+        <title>Cuoco</title>
+    </head>
 
+    <body>
+
+        <div th:if="${cuoco}">
+            <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>
+            <div th:if="${cuoco}">
+                <span th:text="'(' + ${cuoco.dataNascita} +')'">2000 </span>
+                <span> <img width="25%" th:src="${cuoco.urlFoto}"/> </span>
+            </div>
+        </div> 
+
+        <div th:unless="${cuoco}"> Non esistente </div>
+
+    </body>
+    
 </html>

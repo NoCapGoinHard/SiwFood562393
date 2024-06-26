@@ -2,9 +2,10 @@
 
 <html>
     <head>
-
+        <!--NON TE SCORDA DE STA RIGA DE CODICE, CHE NON RIESCE A CODIFICARE-->
+        <meta charset="utf-8"> 
         <title>
-            Nuovo Cuoco
+            Registrazione nuovo cuoco
         </title>
 
     </head>
@@ -13,22 +14,24 @@
         
         
         <h1>
-            Registra un cuoco
+            Inserire i dati e cliccare "conferma" per inserire il nuovo cuoco
         </h1>
 
-        <form th:action="@{/cuoco}" method = "POST" th:object="${/cuoco}"> 
+        <form th:action="@{/cuoco/aggiunto}" method = "POST" th:object="${cuoco}"> 
             <div>
                 <span th:text="${messaggioErrore}"> ERRORE </span>
             </div>
             <div>
-                Nome: <span>
-                            <input required type="text" th:field="${cuoco.nome}"/>
-                        </span>
+                Nome: 
+                <span>
+                    <input required type="text" th:field="*{nome}"/>
+                </span>
             </div>
             <div>
-                Cognome: <span>
-                            <input required type="text" th:field="${cuoco.cognome}"/>
-                        </span>
+                Cognome:
+                <span>
+                    <input required type="text" th:field="*{cognome}"/>
+                </span>
             </div>
             <div>
                  <label for="dataNascita"> Data di Nascita: </label>
