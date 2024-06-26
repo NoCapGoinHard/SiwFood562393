@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity
@@ -16,12 +18,16 @@ public class Ingrediente {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    private Integer quantita;
+    private String quantita;
     @ManyToOne
     @JoinColumn(name = "ricettaId")
     private Ricetta ricetta;
     
-    private List<String> allergeni;
+    @ManyToMany
+    @JoinTable( name = "ingrediente_allergene",
+                joinColumns = @JoinColumn(name = "ingredienteId"),
+                inverseJoinColumns = @JoinColumn(name = "allergeneId"))
+    private List<Allergene> allergeni;
     
     public Ingrediente() {
         this.allergeni = new ArrayList<>();
@@ -43,11 +49,11 @@ public class Ingrediente {
         this.nome = nome;
     }
     
-    public Integer getQuantita() {
+    public String getQuantita() {
         return quantita;
     }
     
-    public void setQuantita(Integer quantita) {
+    public void setQuantita(String quantita) {
         this.quantita = quantita;
     }
 
@@ -59,14 +65,13 @@ public class Ingrediente {
         this.ricetta = ricetta;
     }
     
-    public List<String> getAllergeni() {
+    public List<Allergene> getAllergeni() {
         return allergeni;
     }
     
-    public void setAllergeni(List<String> allergeni) {
+    public void setAllergeni(List<Allergene> allergeni) {
         this.allergeni = allergeni;
     }
-    
     
     
     @Override
@@ -76,6 +81,7 @@ public class Ingrediente {
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((quantita == null) ? 0 : quantita.hashCode());
         result = prime * result + ((ricetta == null) ? 0 : ricetta.hashCode());
+        result = prime * result + ((allergeni == null) ? 0 : allergeni.hashCode());
         return result;
     }
     
@@ -103,12 +109,17 @@ public class Ingrediente {
             return false;
         } else if (!ricetta.equals(other.ricetta))
         return false;
+        if (allergeni == null) {
+            if (other.allergeni != null)
+                return false;
+        } else if (!allergeni.equals(other.allergeni))
+        return false;
         return true;
     }
     
-    //////////////////////////////////////////////////////////////////////
-    
-    public void addAllergene(String allergene) {
+//////////////////////////////////////////////////////////////////////
+
+    public void addAllergene(Allergene allergene) {
         this.allergeni.add(allergene);
     }
     

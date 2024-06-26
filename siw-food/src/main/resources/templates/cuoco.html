@@ -9,15 +9,35 @@
     <body>
         <h1 th:unless="${cuoco}"> Non esistente </h1>
         
+
+        <div>
+            <a th:href="@{/cuoco/modifica/{id}(id=${cuoco.id})}">Modifica il profilo del cuoco</a>
+        </div>
+        <div>
+            <a th:href="@{/cuoco/elimina/{id}(id=${cuoco.id})}">Cancella il profilo del cuoco</a>
+        </div>
+
+
         <div th:if="${cuoco}">
             <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>
             <div th:if="${cuoco}">
-                <span th:text="'(' + ${cuoco.dataNascita} +')'"></span>
-                <span> <img width="25%" th:src="${cuoco.pathFoto}"/> </span>
+                <p th:text="'(' + 'nato il:' + ' ' + ${cuoco.dataNascita} +')'"></p>
+                <p> <img width="10%" th:src="${cuoco.pathFoto}"/> </p>
             </div>
-            <div>
-                <a th:href="@{/formNuovaRicetta}">Inserisci una nuova ricetta</a>
+        </div>
+
+        <div>
+            <h2>Ricette proposte dal cuoco</h2>
+            <div th:if="${cuoco.ricette.isEmpty()}">
+                <p>Il cuoco non ha ancora proposto alcuna ricetta</p>
             </div>
+            <ul th:unless="${cuoco.ricette.isEmpty()}">
+                 <li th:each="ricetta : ${cuoco.ricette}">
+                    <span th:text="${ricetta.nome}"></span>
+                    <span th:text="${ricetta.descrizione}"></span>
+                </li>
+            </ul>
+            <a th:href="@{/formNuovaRicetta}">Inserisci una nuova ricetta</a>
         </div> 
 
 

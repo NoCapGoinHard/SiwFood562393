@@ -25,12 +25,9 @@ public class CuocoController {
 
     @Autowired
     private CuocoRepository cuocoRepository;
-
-    @GetMapping("") //in realtà andrebbe in una classe facade controller
-    public String getHome() {
-        return "index.html";
-    }
     
+
+
     @GetMapping("/cuochi")
     public String getCuochi(Model model) {
         model.addAttribute("cuochi", this.cuocoService.findAll());
@@ -65,6 +62,19 @@ public class CuocoController {
         }
     }
 
+    @GetMapping("/cuoco/modifica/{id}")
+    public String formModificaCuoco(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        return "formModificaCuoco.html";
+    }
+    
+    @PostMapping("/cuoco/aggiorna/{id}")
+    public String aggiornaCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
+        cuoco.setId(id);
+        this.cuocoService.save(cuoco);
+        return "redirect:/cuoco";
+    }
+
     @GetMapping("/cuochi/cercaByNomeAndCognome")
     public String getFormCercaCuochi() {
         return "formCercaCuochi.html";
@@ -76,5 +86,10 @@ public class CuocoController {
         return "cuochi.html";
     }
     
+    @GetMapping("/cuoco/elimina/{id}")
+    public String eliminaCuocoById(@PathVariable("id") Long id) {
+        this.cuocoService.deleteById(id);
+        return "redirect:/cuochi";
+    }
 
 }

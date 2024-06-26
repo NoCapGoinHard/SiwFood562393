@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Modifica Cuoco</title>
+    </head>
+
+
+    <body>
+        <h1>Modifica la scheda del cuoco</h1>
+        <form action="#" th:action="@{/cuoco/aggiorna/{id}(id=${cuoco.id})}" th:object="${cuoco}" method="post">
+            <div>
+                <label for="nome">Modifica nome:</label>
+                <input type="text" id="nome" th:field="*{nome}" />
+            </div>
+            <div>
+                <label for="cognome">Modifica cognome:</label>
+                <input type="text" id="cognome" th:field="*{cognome}" />
+            </div>
+            <div>
+                <label for="dataNascita">Cambia data di nascita:</label>
+                <input type="date" id="dataNascita" th:field="*{dataNascita}" />
+            </div>
+            <div>
+                <label for="pathFoto">Inserisci la nuova immagine:</label>
+                <input type="text" id="pathFoto" th:field="*{pathFoto}" />
+            </div>
+            <div>
+                <button type="submit">Conferma modifiche</button>
+            </div>
+        </form>
+
+    </body>
+
+
+</html>

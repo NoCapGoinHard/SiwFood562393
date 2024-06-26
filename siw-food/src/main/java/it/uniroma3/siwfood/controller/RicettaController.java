@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Ricetta;
-import it.uniroma3.siwfood.repository.RicettaRepository;
+import it.uniroma3.siwfood.service.AllergeneService;
+import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
 
 @Controller
@@ -19,17 +20,20 @@ public class RicettaController {
     @Autowired
     private RicettaService ricettaService;
     
-    /*
+
     @Autowired
-    private RicettaRepository ricettaRepository;
-    */
+    private IngredienteService ingredienteService;
+
+    @Autowired
+    private AllergeneService allergeneService;
+    
 
     @GetMapping("/ricette")
     public String getRicette(Model model) {
         model.addAttribute("ricette", this.ricettaService.findAll());
         return "ricette.html";
     }
-
+    
     @GetMapping("/ricetta/{id}")
     public String getRicetta(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ricetta", this.ricettaService.findById(id));
@@ -48,6 +52,19 @@ public class RicettaController {
         model.addAttribute("ricetta", ricetta);
         return "redirect:/ricette";
     }
+    
+    @GetMapping("/ricetta/modifica/{id}")
+    public String formModificaRicetta(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ricetta", this.ricettaService.findById(id));
+        return "formModificaRicetta.html";
+    }
+
+    @PostMapping("/ricetta/aggiorna/{id}")
+    public String aggiornaRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
+        ricetta.setId(id);
+        this.ricettaService.save(ricetta);
+        return "redirect:/ricetta";
+    }
 
     @GetMapping("/ricette/cercaByNome")
     public String getFormCercaRicette() {
@@ -55,11 +72,15 @@ public class RicettaController {
     }
 
     @PostMapping("/ricette/trovate")
-    public String getRicetteByNomeAndCognome(@RequestParam String nome, Model model) {
+    public String getRicetteByNome(@RequestParam String nome, Model model) {
         model.addAttribute("ricette", this.ricettaService.findAllByNome(nome));
         return "ricette.html";
     }
 
-
+    @GetMapping("ricetta/elimina/{id}")
+    public String eliminaRicettaById(@PathVariable("id") Long id) {
+        this.ricettaService.deleteById(id);
+        return "redirect:/ricette";
+    }
 
 }

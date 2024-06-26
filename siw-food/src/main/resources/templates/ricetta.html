@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Scheda Ricetta</title>
+    </head>
+
+    <body>
+        <h1>Dettagli ricetta</h1>
+
+        <div>
+            <h2 th:text="${ricetta.nome}">Nome:</h2>
+            <p th:text="${ricetta.descrizione}">Descrizione ricetta</p>
+        </div>
+
+        <div>
+            <h3>Ingredienti</h3>
+
+            <ul>
+                <li th:each="ingrediente : ${ricetta.ingredienti}">
+                    <span th:text="${ingrediente.nome}"></span> 
+                    <span th:text="'(' + '${ingrediente.quantita}' + ')'"></span>
+
+                    <h5>ALLERGENI</h5>
+                    <div th:if="${ingrediente.allergeni.isEmpty()}">Non ci sono allergeni! Mangia senza pensieri!</div>
+                    
+                    <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
+                        <li th:each="allergene : ${ingrediente.allergeni}">
+                            <span th:text="${allergene.nome}"></span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Proposta dal cuoco:</h3>
+            <p th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"> </p>
+        </div>
+        
+
+    </body>
+
+
+
+
+</html>
