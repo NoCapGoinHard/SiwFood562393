@@ -15,23 +15,23 @@ public class CuocoService {
     private CuocoRepository cuocoRepository;
 
     public Cuoco findById(Long id) {
-        return cuocoRepository.findById(id).get();
+        return this.cuocoRepository.findById(id).get();
     }
 
     public Iterable<Cuoco> findAll() {
-        return cuocoRepository.findAll();
+        return this.cuocoRepository.findAll();
     }
 
     public void save(Cuoco cuoco) {
-        cuocoRepository.save(cuoco);
+        this.cuocoRepository.save(cuoco);
     }
 
     public List<Cuoco> findAllByNomeAndCognome(String nome, String cognome) {
-        return cuocoRepository.findAllByNomeAndCognome(nome, cognome);
+        return this.cuocoRepository.findAllByNomeAndCognome(nome, cognome);
     }
 
     public void deleteById(Long id) {
-        cuocoRepository.deleteById(id);
+        this.cuocoRepository.deleteById(id);
     }
 
     

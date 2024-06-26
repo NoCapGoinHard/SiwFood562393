@@ -24,11 +24,13 @@
         <ul>
             <li th:each="cuoco : ${cuochi}">
                 <div>
-                    <img th:src="@{${cuoco.urlFoto}}" width="50%">
+                    <img th:src="@{${cuoco.pathFoto}}" width="50%">
                 </div>
-                <a th:href="@{/cuoco/{id}(id=${cuoco.id})}">
-                   <span th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
-                   </span>
+                <a 
+                    th:href="@{/cuoco/{id}(id=${cuoco.id})}">
+                        <span 
+                            th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
+                        </span>
                 </a>
             </li>
         </ul>

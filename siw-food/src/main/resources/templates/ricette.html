@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title> 
+            Ricette   
+        </title> 
+    </head>
+
+    <body>
+        <h1>Lista Ricette</h1>
+
+        <div>
+            <a href="/ricette/cercaByNome">Cerca ricette per nome</a>
+        </div>
+
+        <div
+            th:if="${ricette == null || ricette.isEmpty()}">Non ci sono ricette nel sistema con questo nome
+        </div>
+        <ul>
+            <li th:each="ricetta : ${ricette}">
+                <div>
+                    <img th:src="@{${ricetta.pathFoto}}" width="50%">
+                </div>
+                <a th:href="@{/ricetta/{id}(id=${ricetta.id})}">
+                   <span th:text="${ricetta.nome}"></span>
+                </a>
+            </li>
+        </ul>
+    </body>
+
+
+</html>

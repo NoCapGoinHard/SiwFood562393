@@ -1,13 +1,18 @@
 package it.uniroma3.siwfood.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Cuoco {
@@ -19,10 +24,15 @@ public class Cuoco {
     private String cognome;
     @DateTimeFormat (pattern = "dd-mm-yyyy")
     private LocalDate dataNascita;
-    private String urlFoto;
+    private String pathFoto;
+    @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL) //se fai un'operazione su cuoco, a cascata le farà anche su ricetta
+    private List<Ricetta> ricette;
 
-    public Cuoco(){}
-
+    
+    public Cuoco(){
+        this.ricette = new ArrayList<>();
+    }
+    
     public Long getId() {
         return id;
     }
@@ -47,19 +57,32 @@ public class Cuoco {
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
     }
-    public String getUrlFoto() {
-        return urlFoto;
+    public String getPathFoto() {
+        return pathFoto;
     }
-    public void setUrlFoto(String urlFoto) {
-        this.urlFoto = urlFoto;
+    public void setPathFoto(String pathFoto) {
+        this.pathFoto = pathFoto;
     }
+    public List<Ricetta> getRicette() {
+        return ricette;
+    }
+    public void setRicette(List<Ricetta> ricette) {
+        this.ricette = ricette;
+    }
+
+    
+    
+
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+        result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
+        result = prime * result + ((dataNascita == null) ? 0 : dataNascita.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -69,14 +92,27 @@ public class Cuoco {
         if (getClass() != obj.getClass())
             return false;
         Cuoco other = (Cuoco) obj;
-        if (id == null) {
-            if (other.id != null)
+        if (nome == null) {
+            if (other.nome != null)
                 return false;
-        } else if (!id.equals(other.id))
+        } else if (!nome.equals(other.nome))
+            return false;
+        if (cognome == null) {
+            if (other.cognome != null)
+                return false;
+        } else if (!cognome.equals(other.cognome))
+            return false;
+        if (dataNascita == null) {
+            if (other.dataNascita != null)
+                return false;
+        } else if (!dataNascita.equals(other.dataNascita))
             return false;
         return true;
     }
-    
-    
+
+    /////////////////////////////////////////////////////////////////////////////////
+    public void addRicetta(Ricetta ricetta) {
+        this.ricette.add(ricetta);
+    }
     
 }

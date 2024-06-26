@@ -7,16 +7,19 @@
     </head>
 
     <body>
-
+        <h1 th:unless="${cuoco}"> Non esistente </h1>
+        
         <div th:if="${cuoco}">
             <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>
             <div th:if="${cuoco}">
-                <span th:text="'(' + ${cuoco.dataNascita} +')'">2000 </span>
-                <span> <img width="25%" th:src="${cuoco.urlFoto}"/> </span>
+                <span th:text="'(' + ${cuoco.dataNascita} +')'"></span>
+                <span> <img width="25%" th:src="${cuoco.pathFoto}"/> </span>
+            </div>
+            <div>
+                <a th:href="@{/formNuovaRicetta}">Inserisci una nuova ricetta</a>
             </div>
         </div> 
 
-        <div th:unless="${cuoco}"> Non esistente </div>
 
     </body>
     

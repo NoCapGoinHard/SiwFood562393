@@ -1,7 +1,6 @@
 package it.uniroma3.siwfood.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ public class CuocoController {
     @Autowired
     private CuocoRepository cuocoRepository;
 
-    @GetMapping("")
+    @GetMapping("") //in realtà andrebbe in una classe facade controller
     public String getHome() {
         return "index.html";
     }
