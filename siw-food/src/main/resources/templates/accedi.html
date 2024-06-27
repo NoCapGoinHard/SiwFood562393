@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>ACCEDI A SiwFood</title>        
+    </head>
+    
+    <body>
+        <form action="#" th:action="@{/success}" method = "POST">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="nome" th:value="${username}"/>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="text" name="password" th:value="${password}"/>
+            </div>
+            <div>
+                <button type="submit">Accedi</button>
+            </div>
+
+        </form>
+
+    </body>
+
+</html>
