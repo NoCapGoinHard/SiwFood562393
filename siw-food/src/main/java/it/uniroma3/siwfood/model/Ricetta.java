@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,18 +19,28 @@ public class Ricetta {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String nome;
     private String descrizione;
     @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredienti;
     private String pathFoto;
     @ManyToOne
-    @JoinColumn(name = "cuocoId")
+    @JoinColumn(name = "cuoco_id")
     private Cuoco cuoco;
 
     public Ricetta() {
         this.ingredienti = new ArrayList<>();
 
+    }
+
+    public Ricetta(Long id, String nome, String descrizione, List<Ingrediente> ingredienti, String pathFoto, Cuoco cuoco) {
+        this.id = id;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.ingredienti = ingredienti;
+        this.pathFoto = pathFoto;
+        this.cuoco = cuoco;
     }
 
     public Long getId() {

@@ -26,7 +26,12 @@ public class CuocoController {
     @Autowired
     private CuocoRepository cuocoRepository;
     
-
+    @GetMapping("")
+    public String index(Model model) {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+        return "index.html";
+    }
 
     @GetMapping("/cuochi")
     public String getCuochi(Model model) {

@@ -10,9 +10,9 @@
     <body>
         <h1>Dettagli</h1>
 
-        <div>
+        <div th:if="${ricetta}">
             <h2 th:text="${ricetta.nome}">Nome:</h2>
-            <p th:text="${ricetta.descrizione}">Descrizione ricetta</p>
+            <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
         </div>
 
         <div>
@@ -21,16 +21,17 @@
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
                     <span th:text="${ingrediente.nome}"></span> 
-                    <span th:text="'(' + '${ingrediente.quantita}' + ')'"></span>
-
-                    <h5>ALLERGENI</h5>
-                    <div th:if="${ingrediente.allergeni.isEmpty()}">Non ci sono allergeni! Mangia senza pensieri!</div>
-                    
-                    <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
-                        <li th:each="allergene : ${ingrediente.allergeni}">
-                            <span th:text="${allergene.nome}"></span>
-                        </li>
-                    </ul>
+                    <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
+                    <div>
+                        <h6>ALLERGENI</h6>
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">Non ci sono allergeni! Mangia senza pensieri!</p>
+                        
+                        <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
+                            <li th:each="allergene : ${ingrediente.allergeni}">
+                                <span th:text="${allergene.nome}"></span>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </div>

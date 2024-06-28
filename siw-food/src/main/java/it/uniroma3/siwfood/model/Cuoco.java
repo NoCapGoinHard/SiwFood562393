@@ -4,15 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.DateTimeFormat;
 
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Cuoco {
@@ -20,17 +23,29 @@ public class Cuoco {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(nullable = false)
     private String nome;
+    @Column(nullable = false)
     private String cognome;
-    @DateTimeFormat (pattern = "dd-mm-yyyy")
+    @DateTimeFormat (pattern = "dd-MM-yyyy")
     private LocalDate dataNascita;
     private String pathFoto;
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL) //se fai un'operazione su cuoco, a cascata le farà anche su ricetta
     private List<Ricetta> ricette;
 
+
     
     public Cuoco(){
         this.ricette = new ArrayList<>();
+    }
+
+    public Cuoco(Long id, String nome, String cognome, LocalDate dataNascita, String pathFoto, List<Ricetta> ricette) {
+        this.id = id;
+        this.nome = nome;
+        this.cognome = cognome;
+        this.dataNascita = dataNascita;
+        this.pathFoto = pathFoto;
+        this.ricette = ricette;
     }
     
     public Long getId() {

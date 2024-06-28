@@ -23,6 +23,9 @@ public class Allergene {
     public Allergene() {
         this.ingredientiCoinvolti = new ArrayList<>();
     }
+/*  public Allergene() {
+
+    } */ 
 
     public Long getId() {
         return id;
