@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class IngredienteService {
         return this.ingredienteRepository.findAll();
     }
 
+    public List<Ingrediente> findAllByNome(String nome) {
+        return this.ingredienteRepository.findAllByNome(nome);
+    }
+    
     public void save(Ingrediente ingrediente) {
         this.ingredienteRepository.save(ingrediente);
     }

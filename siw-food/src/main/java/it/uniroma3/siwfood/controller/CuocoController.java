@@ -47,10 +47,10 @@ public class CuocoController {
 
 
 
-    @GetMapping("/formNuovoCuoco")
+    @GetMapping("forms/formNuovoCuoco")
     public String formNuovoCuoco(Model model) {
         model.addAttribute("cuoco", new Cuoco());
-        return "formNuovoCuoco.html";
+        return "forms/formNuovoCuoco.html";
     }
     
     
@@ -63,26 +63,26 @@ public class CuocoController {
         }
         else {
             model.addAttribute("messaggioErrore", "Questo cuoco già è presente");
-            return "formNuovoCuoco.html";
+            return "forms/formNuovoCuoco.html";
         }
     }
 
-    @GetMapping("/cuoco/modifica/{id}")
+    @GetMapping("/cuoco/{id}/modifica")
     public String formModificaCuoco(@PathVariable("id") Long id, Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "formModificaCuoco.html";
+        return "forms/formModificaCuoco.html";
     }
     
-    @PostMapping("/cuoco/aggiorna/{id}")
+    @PostMapping("/cuoco/{id}/aggiorna")
     public String aggiornaCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
         cuoco.setId(id);
         this.cuocoService.save(cuoco);
-        return "redirect:/cuoco";
+        return "redirect:/cuoco/" + cuoco.getId();
     }
 
     @GetMapping("/cuochi/cercaByNomeAndCognome")
     public String getFormCercaCuochi() {
-        return "formCercaCuochi.html";
+        return "forms/formCercaCuochi.html";
     }
 
     @PostMapping("/cuochi/trovati")
@@ -91,7 +91,7 @@ public class CuocoController {
         return "cuochi.html";
     }
     
-    @GetMapping("/cuoco/elimina/{id}")
+    @GetMapping("/cuoco/{id}/elimina")
     public String eliminaCuocoById(@PathVariable("id") Long id) {
         this.cuocoService.deleteById(id);
         return "redirect:/cuochi";

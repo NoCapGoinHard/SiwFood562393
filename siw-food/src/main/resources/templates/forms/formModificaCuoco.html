@@ -2,26 +2,24 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Modifica Ricetta</title>
+        <title>Modifica Cuoco</title>
     </head>
 
 
     <body>
-        <h1>Modifica la scheda della ricetta</h1>
-        <form action="#" th:action="@{/ricetta/aggiorna/{id}(id=${ricetta.id})}" th:object="${ricetta}" method="post">
+        <h1>Modifica la scheda del cuoco</h1>
+        <form action="#" th:action="@{/cuoco/{id}/aggiorna(id=${cuoco.id})}" th:object="${cuoco}" method="post">
             <div>
                 <label for="nome">Modifica nome:</label>
                 <input type="text" id="nome" th:field="*{nome}" />
             </div>
             <div>
-                <label for="descrizione">Modifica descrizione:</label>
-                <input type="text" id="descrizione" th:field="*{descrizione}" />
+                <label for="cognome">Modifica cognome:</label>
+                <input type="text" id="cognome" th:field="*{cognome}" />
             </div>
             <div>
-                <!--cambio ingredienti-->
-                <div>
-                    <!--cambio allergeni VA FATTO PER OGNI INGREDIENTE-->
-                </div>
+                <label for="dataNascita">Cambia data di nascita:</label>
+                <input type="date" id="dataNascita" th:field="*{dataNascita}" />
             </div>
             <div>
                 <label for="pathFoto">Inserisci la nuova immagine:</label>

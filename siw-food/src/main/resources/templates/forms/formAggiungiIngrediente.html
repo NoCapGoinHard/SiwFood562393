@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+    <meta charset="utf-8">
+    
+    <body>
+        <form th:action="@{/ricetta/{id}/modifica/aggiungiIngrediente(id=${ricetta.id})}" th:object="${ingrediente}" method = "post">
+            <div>
+                <label for="nome">Ingrediente:</label>
+                <input type="text" id="nome" th:field="*{nome}"/>
+            </div>
+            <div>
+                <label for="quantita">Quantità:</label>
+                <input type="text" id="quantita" th:field="*{quantita}"/>
+            </div>
+            <div>
+                <button type="submit">Aggiungi</button>
+            </div>
+        </form>
+    </body>
+
+
+</html>

@@ -10,13 +10,21 @@
     <body>
         <h1>Dettagli</h1>
 
+        <div>
+            <a th:href="@{/ricetta/{id}/modifica(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
+        </div>
+        <div>
+            <a th:href="@{/ricetta/{id}/elimina(id=${ricetta.id})}">Cancella questa ricetta</a>
+        </div>
+
         <div th:if="${ricetta}">
             <h2 th:text="${ricetta.nome}">Nome:</h2>
             <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
+            <p> <img width="10%" th:src="${ricetta.pathFoto}"/> </p>
         </div>
 
         <div>
-            <h3>Ingredienti</h3>
+            <h2>Ingredienti</h2>
 
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
@@ -24,7 +32,7 @@
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
                     <div>
                         <h6>ALLERGENI</h6>
-                        <p th:if="${ingrediente.allergeni.isEmpty()}">Non ci sono allergeni! Mangia senza pensieri!</p>
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">questo ingrediente non presenta allergeni</p>
                         
                         <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
                             <li th:each="allergene : ${ingrediente.allergeni}">
