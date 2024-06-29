@@ -12,11 +12,12 @@
         <h1>Lista Ricette</h1>
 
         <div>
-            <a href="/ricette/cercaByNome">Cerca ricette per nome</a>
+            <a href="/ricette/cercaRicette">Cerca ricette per nome</a>
         </div>
 
         <div
-            th:if="${ricette == null || ricette.isEmpty()}">Non ci sono ricette nel sistema con questo nome
+            th:if="${ricette == null || ricette.isEmpty()}">
+            Non ci sono ricette nel sistema
         </div>
         <ul>
             <li th:each="ricetta : ${ricette}">

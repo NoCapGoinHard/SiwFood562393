@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <title>Ingredienti sul sito</title>
+    </head>
+
+    <body>
+        <div>
+            <a href="/ingredienti/cercaIngrediente">Cerca ingrediente per nome</a>
+        </div>
+
+        <div th:if="${ingredienti == null || ingredienti.isEmpty()}">
+            Non ci sono ingredienti con questo nome    
+        </div>
+        <ul>
+            <li th:each="ingrediente : ${ingredienti}">
+                <a th:href="@{/ingrediente/{nome}(nome=${ingrediente.nome})}">
+                   <span th:text="${ingrediente.nome}"></span>
+                </a>
+            </li>
+        </ul>
+
+    </body>
+    
+   
+
+
+</html>

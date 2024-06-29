@@ -25,6 +25,10 @@ public class IngredienteService {
         return this.ingredienteRepository.findAllByNome(nome);
     }
     
+    public List<String> findDistinctNomi() {
+        return ingredienteRepository.findDistinctNomi();
+    }
+
     public void save(Ingrediente ingrediente) {
         this.ingredienteRepository.save(ingrediente);
     }

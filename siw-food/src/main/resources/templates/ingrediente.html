@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Scheda Ingrediente</title>
+    </head>
+
+    <body>
+        <h1>Dettagli</h1>
+
+        <div><!--VA FATTO-->
+            <a th:href="@{/ingrediente/{nome}/modifica(nome=${ingrediente.nome})}">Modifica il nome dell'ingrediente</a>
+        </div>
+        <div><!--VA FATTO-->
+            <a th:href="@{/ingrediente/{nome}/elimina(nome=${ingrediente.nome})}">Cancella questo ingrediente</a>
+        </div>
+
+        <!--VA FATTO REFACTORING-->
+        <div th:if="${ricetta}">
+            <h2 th:text="${ricetta.nome}">Nome:</h2>
+            <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
+            <p> <img width="10%" th:src="${ricetta.pathFoto}"/> </p>
+        </div>
+
+        <div>
+            <h2>Ingredienti</h2>
+
+            <ul>
+                <li th:each="ingrediente : ${ricetta.ingredienti}">
+                    <span th:text="${ingrediente.nome}"></span> 
+                    <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
+                    <div>
+                        <h6>ALLERGENI</h6>
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">questo ingrediente non presenta allergeni</p>
+                        
+                        <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
+                            <li th:each="allergene : ${ingrediente.allergeni}">
+                                <span th:text="${allergene.nome}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Proposta dal cuoco:</h3>
+            <p th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"> </p>
+        </div>
+        
+
+    </body>
+
+
+
+
+</html>

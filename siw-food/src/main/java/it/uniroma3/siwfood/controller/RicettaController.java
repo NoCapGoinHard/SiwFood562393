@@ -20,7 +20,6 @@ public class RicettaController {
     
     @Autowired
     private RicettaService ricettaService;
-    
 
     @Autowired
     private IngredienteService ingredienteService;
@@ -61,21 +60,6 @@ public class RicettaController {
         return "forms/formModificaRicetta.html";
     }
 
-    @GetMapping("/ricetta/{id}/modifica/aggiungiIngrediente")
-    public String formAggiungiIngrediente(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("ricetta", this.ricettaService.findById(id));
-        model.addAttribute("ingrediente", new Ingrediente());
-        return "forms/formAggiungiIngrediente.html";
-    }
-
-    @PostMapping("/ricetta/{id}/modifica/aggiungiIngrediente")
-    public String formAggiungiIngrediente(@PathVariable("id") Long id, @ModelAttribute Ingrediente ingrediente) {
-        Ricetta ricetta = this.ricettaService.findById(id);
-        ingrediente.setRicetta(ricetta);
-        ingredienteService.save(ingrediente);
-        return "redirect:/ricetta/" + ricetta.getId();
-    }
-
     @PostMapping("/ricetta/{id}/aggiorna")
     public String aggiornaRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setId(id);
@@ -83,7 +67,7 @@ public class RicettaController {
         return "redirect:/ricetta/" + ricetta.getId();
     }
 
-    @GetMapping("/ricette/cercaByNome")
+    @GetMapping("/ricette/cercaRicette")
     public String getFormCercaRicette() {
         return "forms/formCercaRicette.html";
     }
