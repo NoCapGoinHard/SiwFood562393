@@ -57,8 +57,9 @@ public class IngredienteController {
 
     @GetMapping("/ingrediente/{nome}")
     public String ingrediente(@PathVariable("nome") String nome, Model model) {
-        model.addAttribute("ingrediente", this.ingredienteService.findAllByNome(nome).get(0));
-        return "ingrediente/"+ nome;
+        List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
+        model.addAttribute("ingrediente", ingredienti.get(0));
+        return "redirect:/ingrediente/"+ nome;
     }
 
     @GetMapping("/ingrediente/{nome}/elimina")
@@ -87,7 +88,7 @@ public class IngredienteController {
         }
         model.addAttribute("ingredienti", ingredienti);
         model.addAttribute("allergene", allergene);
-        return "redirect:/ingrediente/" + nome;
+        return "/ingrediente/"+nome;
 
     }
 
@@ -102,7 +103,8 @@ public class IngredienteController {
         }
         
         this.allergeneService.deleteById(idAllergene);
-        return "redirect:/ingrediente/" + nome;
+       
+        return "ingredienti.html";
     }
     
 
