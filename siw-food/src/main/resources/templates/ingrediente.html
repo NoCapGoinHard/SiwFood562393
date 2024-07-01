@@ -33,6 +33,7 @@
                 <ul th:if="${!ingrediente.allergeni.isEmpty()}">
                     <li th:each="allergene : ${ingrediente.allergeni}">
                         <span th:text="${allergene.nome}"></span>
+                        <a th:href="@{/ingrediente/{nome}/eliminaAllergene/{idAllergene}(nome=${ingrediente.nome}, idAllergene=${allergene.id})}" th:text="Rimuovi"></a>
                     </li>
                 </ul>
             </div>

@@ -28,14 +28,15 @@
 
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
-                    <span th:text="${ingrediente.nome}"></span> 
+                    <!--<span th:text="${ingrediente.nome}"></span>-->
+                    <a th:href="@{/ingrediente/{nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
                     <span>
                         <a th:href="@{/ricetta/{idRicetta}/eliminaIngrediente/{idIngrediente}(idRicetta = ${ricetta.id}, idIngrediente = ${ingrediente.id})}">Rimuovi ingrediente</a>
                     </span>
                     
                     <div>
-                        <h6>ALLERGENI</h6>
+                        <h7>ALLERGENI:</h7>
                         <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni</p>
                         <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
                             <li th:each="allergene : ${ingrediente.allergeni}">
@@ -43,13 +44,16 @@
                             </li>
                         </ul>
                     </div>
+                    <br>
                 </li>
             </ul>
         </div>
 
         <div>
-            <h3>Proposta dal cuoco:</h3>
-            <p th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"> </p>
+            <span>Proposta da:</span>
+            <span>
+                <a th:href="@{/cuoco/{id}(id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
+            </span>
         </div>
         
 
