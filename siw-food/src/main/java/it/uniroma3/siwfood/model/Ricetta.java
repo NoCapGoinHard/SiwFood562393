@@ -122,6 +122,7 @@ public class Ricetta {
 
 
     public void addIngrediente(Ingrediente ingrediente) {
+        ingrediente.setRicetta(this);
         this.ingredienti.add(ingrediente);
     }
 

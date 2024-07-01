@@ -54,6 +54,24 @@ public class RicettaController {
         return "redirect:/ricette";
     }
     
+    
+    @GetMapping("/ricette/cercaRicette")
+    public String getFormCercaRicette() {
+        return "forms/formCercaRicette.html";
+    }
+    
+    @PostMapping("/ricette/trovate")
+    public String getRicetteByNome(@RequestParam String nome, Model model) {
+        model.addAttribute("ricette", this.ricettaService.findAllByNome(nome));
+        return "ricette.html";
+    }
+    
+    @GetMapping("ricetta/{id}/elimina")
+    public String eliminaRicettaById(@PathVariable("id") Long id) {
+        this.ricettaService.deleteById(id);
+        return "redirect:/ricette";
+    }
+
     @GetMapping("/ricetta/{id}/modifica")
     public String formModificaRicetta(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ricetta", this.ricettaService.findById(id));
@@ -67,22 +85,23 @@ public class RicettaController {
         return "redirect:/ricetta/" + ricetta.getId();
     }
 
-    @GetMapping("/ricette/cercaRicette")
-    public String getFormCercaRicette() {
-        return "forms/formCercaRicette.html";
+    @GetMapping("ricetta/{id}/modifica/aggiungiIngrediente")
+    public String formAggiungiIngrediente(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ingrediente", new Ingrediente());
+        model.addAttribute("ricetta", this.ricettaService.findById(id));
+        return "forms/formAggiungiIngrediente.html";
     }
 
-    @PostMapping("/ricette/trovate")
-    public String getRicetteByNome(@RequestParam String nome, Model model) {
-        model.addAttribute("ricette", this.ricettaService.findAllByNome(nome));
-        return "ricette.html";
+    @PostMapping("ricetta/{id}/modifica/aggiungiIngrediente")
+    public String aggiungiIngrediente(@PathVariable("id") Long id, @ModelAttribute Ingrediente ingrediente, Model model) {
+        Ricetta ricetta = this.ricettaService.findById(id);
+        this.ingredienteService.save(ingrediente);
+        ricetta.addIngrediente(ingrediente);
+        this.ricettaService.save(ricetta);
+        model.addAttribute("ricetta", ricetta);
+        return "redirect:/ricetta/" + id;
     }
-
-    @GetMapping("ricetta/{id}/elimina")
-    public String eliminaRicettaById(@PathVariable("id") Long id) {
-        this.ricettaService.deleteById(id);
-        return "redirect:/ricette";
-    }
+    
 
     @GetMapping("ricetta/{idRicetta}/eliminaIngrediente/{idIngrediente}")
     public String eliminaIngredienteRicetta(@PathVariable("idRicetta") Long idRicetta, @PathVariable("idIngrediente") Long idIngrediente) {

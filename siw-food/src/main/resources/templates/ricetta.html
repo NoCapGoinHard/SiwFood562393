@@ -25,7 +25,9 @@
 
         <div>
             <h2>Ingredienti</h2>
-
+            <div>
+                <a th:href="@{/ricetta/{id}/modifica/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
+            </div>
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
                     <!--<span th:text="${ingrediente.nome}"></span>-->
