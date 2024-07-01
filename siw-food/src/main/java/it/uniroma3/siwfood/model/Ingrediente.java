@@ -122,5 +122,9 @@ public class Ingrediente {
     public void addAllergene(Allergene allergene) {
         this.allergeni.add(allergene);
     }
+
+    public void removeAllergene(Allergene allergene) {
+        this.allergeni.remove(allergene);
+    }
     
 }

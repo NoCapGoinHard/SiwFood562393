@@ -3,6 +3,7 @@ package it.uniroma3.siwfood.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,7 @@ public class Allergene {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
-    @ManyToMany(mappedBy = "allergeni")
+    @ManyToMany(mappedBy = "allergeni", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredientiCoinvolti;
 
 
@@ -75,5 +76,11 @@ public class Allergene {
             return false;
         return true;
     }
+
+
+    public void addIngredienteCoinvolto(Ingrediente ingrediente) {
+        this.ingredientiCoinvolti.add(ingrediente);
+    }
+    
 
 }

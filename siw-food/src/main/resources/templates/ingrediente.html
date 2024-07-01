@@ -10,44 +10,32 @@
     <body>
         <h1>Dettagli</h1>
 
-        <div><!--VA FATTO-->
-            <a th:href="@{/ingrediente/{nome}/modifica(nome=${ingrediente.nome})}">Modifica il nome dell'ingrediente</a>
+        <div>
+            <a th:href="@{/ingrediente/{nome}/aggiungiAllergene(nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
         </div>
-        <div><!--VA FATTO-->
+        <div>
             <a th:href="@{/ingrediente/{nome}/elimina(nome=${ingrediente.nome})}">Cancella questo ingrediente</a>
         </div>
 
-        <!--VA FATTO REFACTORING-->
-        <div th:if="${ricetta}">
-            <h2 th:text="${ricetta.nome}">Nome:</h2>
-            <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
-            <p> <img width="10%" th:src="${ricetta.pathFoto}"/> </p>
+
+        <div th:if="${ingrediente}">
+            <h2 th:text="${ingrediente.nome}">Nome:</h2>
         </div>
 
         <div>
-            <h2>Ingredienti</h2>
-
-            <ul>
-                <li th:each="ingrediente : ${ricetta.ingredienti}">
-                    <span th:text="${ingrediente.nome}"></span> 
-                    <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
-                    <div>
-                        <h6>ALLERGENI</h6>
-                        <p th:if="${ingrediente.allergeni.isEmpty()}">questo ingrediente non presenta allergeni</p>
-                        
-                        <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
-                            <li th:each="allergene : ${ingrediente.allergeni}">
-                                <span th:text="${allergene.nome}"></span>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div>
-            <h3>Proposta dal cuoco:</h3>
-            <p th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"> </p>
+            <div>
+                <h2>Scheda allergeni</h2>
+                
+                <!-- Mostra il messaggio se non ci sono allergeni -->
+                <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni.</p>
+                
+                <!-- Mostra la lista degli allergeni solo se non è vuota -->
+                <ul th:if="${!ingrediente.allergeni.isEmpty()}">
+                    <li th:each="allergene : ${ingrediente.allergeni}">
+                        <span th:text="${allergene.nome}"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
         
 

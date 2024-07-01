@@ -84,4 +84,13 @@ public class RicettaController {
         return "redirect:/ricette";
     }
 
+    @GetMapping("ricetta/{idRicetta}/eliminaIngrediente/{idIngrediente}")
+    public String eliminaIngredienteRicetta(@PathVariable("idRicetta") Long idRicetta, @PathVariable("idIngrediente") Long idIngrediente) {
+    Ricetta ricetta = this.ricettaService.findById(idRicetta);
+    Ingrediente ingrediente = this.ingredienteService.findById(idIngrediente);
+    ricetta.removeIngrediente(ingrediente);
+    this.ingredienteService.deleteById(idIngrediente);
+    return "redirect:/ricetta/" + idRicetta;  
+    }
+
 }

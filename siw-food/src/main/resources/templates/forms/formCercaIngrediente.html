@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Ricerca Ingrediente</title>
+    </head>
+    <body>
+        
+        <h1>Verrà mostrato l'ingrediente col nome cercato</h1>
+        
+        <form th:action="@{/ingrediente}" method = "post">
+
+            <div>
+                <label for="nome">Inserisci il nome</label>
+                <input type="text" name="nome" th:value="${nome}"/>
+            </div>
+            <div>
+                <button type="submit">Cerca</button>
+            </div>
+
+        </form>
+
+        <div th:if="${messaggioErrore}">
+            <p th:text="${messaggioErrore}"></p>
+        </div>
+
+    
+    </body>
+
+
+</html>

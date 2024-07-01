@@ -1,69 +1,46 @@
-package it.uniroma3.siwfood.model;
+package it.uniroma3.siwfood.model.auth;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import it.uniroma3.siwfood.model.auth.User;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
+import it.uniroma3.siwfood.model.Cuoco;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Cuoco {
+@Table(name = "users")
+public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
+
     private String nome;
-    @Column(nullable = false)
     private String cognome;
-    @DateTimeFormat (pattern = "dd-MM-yyyy")
+    private String email;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate dataNascita;
     private String pathFoto;
-    @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL) //se fai un'operazione su cuoco, a cascata le farà anche su ricetta
-    private List<Ricetta> ricette;
+    @OneToOne
+    private Cuoco cuoco;
 
-    @OneToOne(mappedBy = "cuoco")
-    private User user;
-
-    
-    public Cuoco(){
-        this.ricette = new ArrayList<>();
-    }
-    
-    public Cuoco(Long id, String nome, String cognome, LocalDate dataNascita, String pathFoto, List<Ricetta> ricette) {
-        this.id = id;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.dataNascita = dataNascita;
-        this.pathFoto = pathFoto;
-        this.ricette = ricette;
-    }
-    
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public Cuoco getCuoco() {
+        return cuoco;
+    }
+    public void setCuoco(Cuoco cuoco) {
+        this.cuoco = cuoco;
     }
     public String getNome() {
         return nome;
@@ -77,6 +54,12 @@ public class Cuoco {
     public void setCognome(String cognome) {
         this.cognome = cognome;
     }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public LocalDate getDataNascita() {
         return dataNascita;
     }
@@ -89,26 +72,18 @@ public class Cuoco {
     public void setPathFoto(String pathFoto) {
         this.pathFoto = pathFoto;
     }
-    public List<Ricetta> getRicette() {
-        return ricette;
-    }
-    public void setRicette(List<Ricetta> ricette) {
-        this.ricette = ricette;
-    }
-
     
-    
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         result = prime * result + ((cognome == null) ? 0 : cognome.hashCode());
+        result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((dataNascita == null) ? 0 : dataNascita.hashCode());
+        result = prime * result + ((pathFoto == null) ? 0 : pathFoto.hashCode());
         return result;
     }
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -117,7 +92,7 @@ public class Cuoco {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Cuoco other = (Cuoco) obj;
+        User other = (User) obj;
         if (nome == null) {
             if (other.nome != null)
                 return false;
@@ -128,17 +103,13 @@ public class Cuoco {
                 return false;
         } else if (!cognome.equals(other.cognome))
             return false;
-        if (dataNascita == null) {
-            if (other.dataNascita != null)
+        if (email == null) {
+            if (other.email != null)
                 return false;
-        } else if (!dataNascita.equals(other.dataNascita))
+        } else if (!email.equals(other.email))
             return false;
         return true;
     }
 
-    /////////////////////////////////////////////////////////////////////////////////
-    public void addRicetta(Ricetta ricetta) {
-        this.ricette.add(ricetta);
-    }
-    
+  
 }

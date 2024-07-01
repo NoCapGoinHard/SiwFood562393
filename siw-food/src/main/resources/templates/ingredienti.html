@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 
     <head>
+        <meta charset="utf-8">
         <title>Ingredienti sul sito</title>
     </head>
 
@@ -16,9 +17,12 @@
         </div>
         <ul>
             <li th:each="ingrediente : ${ingredienti}">
-                <a th:href="@{/ingrediente/{nome}(nome=${ingrediente.nome})}">
-                   <span th:text="${ingrediente.nome}"></span>
-                </a>
+                <span>
+                    <a th:href="@{/ingrediente/{nome}(nome=${ingrediente})}" th:text="${ingrediente}"></a>
+                </span>
+                <span>
+                    <a th:href="@{/ingrediente/{nome}/elimina(nome = ${ingrediente})}">Rimuovi ingrediente dal sistema</a>
+                </span>
             </li>
         </ul>
 
@@ -28,3 +32,4 @@
 
 
 </html>
+

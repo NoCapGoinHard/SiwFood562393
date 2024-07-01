@@ -20,7 +20,7 @@
         <div th:if="${ricetta}">
             <h2 th:text="${ricetta.nome}">Nome:</h2>
             <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
-            <p> <img width="10%" th:src="${ricetta.pathFoto}"/> </p>
+            <p> <img width="10%" th:src="@{${ricetta.pathFoto}}"/> </p>
         </div>
 
         <div>
@@ -30,10 +30,13 @@
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
                     <span th:text="${ingrediente.nome}"></span> 
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
+                    <span>
+                        <a th:href="@{/ricetta/{idRicetta}/eliminaIngrediente/{idIngrediente}(idRicetta = ${ricetta.id}, idIngrediente = ${ingrediente.id})}">Rimuovi ingrediente</a>
+                    </span>
+                    
                     <div>
                         <h6>ALLERGENI</h6>
-                        <p th:if="${ingrediente.allergeni.isEmpty()}">questo ingrediente non presenta allergeni</p>
-                        
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni</p>
                         <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
                             <li th:each="allergene : ${ingrediente.allergeni}">
                                 <span th:text="${allergene.nome}"></span>
