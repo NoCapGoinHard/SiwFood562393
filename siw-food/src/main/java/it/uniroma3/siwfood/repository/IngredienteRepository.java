@@ -18,8 +18,9 @@ public interface IngredienteRepository extends CrudRepository<Ingrediente, Long>
 
     public List<Ingrediente> findAllByNome(String nome);
 
-    @Query("SELECT DISTINCT i.nome FROM Ingrediente i")
-    public List<String> findDistinctNomi();
+    @Query("SELECT i FROM Ingrediente i WHERE i.nome IN (SELECT DISTINCT i2.nome FROM Ingrediente i2)")
+    public List<Ingrediente> findDistinctNomi();
+
     
     public boolean existsByNome(String nome);
 

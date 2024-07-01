@@ -30,7 +30,7 @@ public class IngredienteService {
         return this.ingredienteRepository.findAllByNome(nome);
     }
     
-    public List<String> findDistinctNomi() {
+    public List<Ingrediente> findDistinctNomi() {
         return ingredienteRepository.findDistinctNomi();
     }
 

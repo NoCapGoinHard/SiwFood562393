@@ -1,7 +1,7 @@
 package it.uniroma3.siwfood.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,7 +34,8 @@ public class IngredienteController {
 
     @GetMapping("/ingredienti")
     public String ingredienti(Model model) {
-        model.addAttribute("ingredienti", this.ingredienteService.findDistinctNomi());
+        List<Ingrediente> ingredienti = this.ingredienteService.findDistinctNomi();
+        model.addAttribute("ingredienti", ingredienti);
         return "ingredienti.html";
     }
 
@@ -59,7 +60,7 @@ public class IngredienteController {
     public String ingrediente(@PathVariable("nome") String nome, Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         model.addAttribute("ingrediente", ingredienti.get(0));
-        return "redirect:/ingrediente/"+ nome;
+        return "ingrediente.html";
     }
 
     @GetMapping("/ingrediente/{nome}/elimina")
@@ -78,17 +79,17 @@ public class IngredienteController {
     @PostMapping("/ingrediente/{nome}/aggiungiAllergene")
     public String formAggiungiAllergene(@PathVariable("nome") String nome, @ModelAttribute("allergene") Allergene allergene, Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
+        this.allergeneService.save(allergene);
+        
         for(Ingrediente i: ingredienti) {
             allergene.addIngredienteCoinvolto(i);
+            i.addAllergene(allergene);
+            this.ingredienteService.save(i);
         }
-        allergeneService.save(allergene);
-        for(Ingrediente i: ingredienti) {
-                i.addAllergene(allergene);
-                ingredienteService.save(i);
-        }
+
         model.addAttribute("ingredienti", ingredienti);
         model.addAttribute("allergene", allergene);
-        return "/ingrediente/"+nome;
+        return "redirect:/ingrediente/"+nome;
 
     }
 
@@ -104,7 +105,7 @@ public class IngredienteController {
         
         this.allergeneService.deleteById(idAllergene);
        
-        return "ingredienti.html";
+        return "redirect:/ingrediente/" + nome;
     }
     
 
