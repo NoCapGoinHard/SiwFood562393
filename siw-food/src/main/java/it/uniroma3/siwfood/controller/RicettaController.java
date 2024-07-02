@@ -38,7 +38,7 @@ public class RicettaController {
     public String getRicetta(@PathVariable("id") Long id, Model model) {
         Ricetta ricetta = this.ricettaService.findById(id);
         model.addAttribute("ricetta", ricetta);
-        return "ricetta";
+        return "ricetta/" + id;
     }
 
     @GetMapping("/forms/formNuovaRicetta")
@@ -99,7 +99,7 @@ public class RicettaController {
         ricetta.addIngrediente(ingrediente);
         this.ricettaService.save(ricetta);
         model.addAttribute("ricetta", ricetta);
-        return "redirect:/ricetta/" + id;
+        return "redirect:/ricetta/aggiunta";
     }
     
 

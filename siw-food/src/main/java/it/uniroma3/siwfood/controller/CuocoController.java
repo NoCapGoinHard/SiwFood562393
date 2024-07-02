@@ -1,7 +1,5 @@
 package it.uniroma3.siwfood.controller;
 
-import java.util.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Cuoco;
+import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.repository.CuocoRepository;
 import it.uniroma3.siwfood.service.CuocoService;
+import it.uniroma3.siwfood.service.RicettaService;
 
 
 
@@ -25,6 +25,9 @@ public class CuocoController {
 
     @Autowired
     private CuocoRepository cuocoRepository;
+
+    @Autowired
+    private RicettaService ricettaService;
     
     @GetMapping("")
     public String index(Model model) {
@@ -95,6 +98,23 @@ public class CuocoController {
     public String eliminaCuocoById(@PathVariable("id") Long id) {
         this.cuocoService.deleteById(id);
         return "redirect:/cuochi";
+    }
+
+
+    @GetMapping("/cuoco/{id}/aggiungiRicetta")
+    public String aggiungiRicettaACuoco(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("ricetta", new Ricetta());
+        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        return "forms/formNuovaRicetta.html";
+    }
+
+    @PostMapping("/cuoco/{id}/aggiungiRicetta")
+    public String aggiungiRicettaACuoco(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
+
+        Cuoco cuoco = this.cuocoService.findById(id);
+        ricetta.setCuoco(cuoco);
+        this.ricettaService.save(ricetta);
+        return "redirect:/ricetta/" + ricetta.getId();
     }
 
 }
