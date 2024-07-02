@@ -1,32 +1,25 @@
 package it.uniroma3.siwfood.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Base64;
 
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Allergene {
+public class Immagine {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 2000)
+    private byte[] dati;
+
     private String nome;
-    @ManyToMany(mappedBy = "allergeni", cascade = CascadeType.ALL)
-    private List<Ingrediente> ingredientiCoinvolti;
-
-
-    public Allergene() {
-        this.ingredientiCoinvolti = new ArrayList<>();
-    }
-/*  public Allergene() {
-
-    } */ 
 
     public Long getId() {
         return id;
@@ -34,6 +27,14 @@ public class Allergene {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public byte[] getDati() {
+        return dati;
+    }
+
+    public void setDati(byte[] dati) {
+        this.dati = dati;
     }
 
     public String getNome() {
@@ -44,18 +45,11 @@ public class Allergene {
         this.nome = nome;
     }
 
-    public List<Ingrediente> getIngredientiCoinvolti() {
-        return ingredientiCoinvolti;
-    }
-
-    public void setIngredientiCoinvolti(List<Ingrediente> ingredientiCoinvolti) {
-        this.ingredientiCoinvolti = ingredientiCoinvolti;
-    }
-
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + Arrays.hashCode(dati);
         result = prime * result + ((nome == null) ? 0 : nome.hashCode());
         return result;
     }
@@ -68,7 +62,9 @@ public class Allergene {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Allergene other = (Allergene) obj;
+        Immagine other = (Immagine) obj;
+        if (!Arrays.equals(dati, other.dati))
+            return false;
         if (nome == null) {
             if (other.nome != null)
                 return false;
@@ -78,9 +74,13 @@ public class Allergene {
     }
 
 
-    public void addIngredienteCoinvolto(Ingrediente ingrediente) {
-        this.ingredientiCoinvolti.add(ingrediente);
+    public String getFormat(){
+        return this.getNome().substring(1+this.getNome().lastIndexOf('.'));
     }
-    
+
+    public String getBase64(){
+        return Base64.getEncoder().encodeToString(this.dati);
+    }
+
 
 }

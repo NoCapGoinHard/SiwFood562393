@@ -47,13 +47,14 @@ public class AuthenticationController {
     @PostMapping("/auth/registrati")
     public String registerUser(@ModelAttribute("user") User user, @ModelAttribute("credentials") Credentials credentials, @ModelAttribute("cuoco") Cuoco cuoco, Model model) {
 
+            user.setCuoco(cuoco);
             userService.save(user);
             credentials.setUser(user);
 
+            cuoco.setUser(user);
             cuoco.setNome(user.getNome());
             cuoco.setCognome(user.getCognome());
             cuoco.setDataNascita(user.getDataNascita());
-            cuoco.setPathFoto(user.getPathFoto());
             cuocoService.save(cuoco);
 
             credentials.setRuolo(Credentials.UTENTE_CUOCO);
@@ -72,7 +73,7 @@ public class AuthenticationController {
     public String defaultAfterLogin(Model model) {
 
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Optional<Credentials> credentials = credentialsService.findByUsername(userDetails.getUsername());
+        Credentials credentials = credentialsService.findByUsername(userDetails.getUsername());
 
         return "index.html";
     }

@@ -32,14 +32,14 @@ public class GlobalController {
     }
 
 
-    @ModelAttribute("credenziali")
-    public Optional<Credentials> getCredentials() {
+    @ModelAttribute("credentials")
+    public Credentials getCredentials() {
         UserDetails user = null;
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Optional<Credentials> credentials = credentialsService.findByUsername(user.getUsername());
+            Credentials credentials = credentialsService.findByUsername(user.getUsername());
             return credentials;
         }
         return null;

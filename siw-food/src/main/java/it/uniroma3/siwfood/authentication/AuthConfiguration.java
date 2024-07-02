@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 
 @Configuration
 @EnableWebSecurity
@@ -21,41 +23,59 @@ public class AuthConfiguration {
     private DataSource dataSource;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    private void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .authoritiesByUsernameQuery("SELECT username, role from credentials WHERE username=?")
-                .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
+            .dataSource(dataSource)
+            .authoritiesByUsernameQuery("SELECT username, role FROM credentials WHERE username=?")
+            .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
-    @SuppressWarnings({ "removal", "deprecation" })
     @Bean
-    protected SecurityFilterChain configure(final HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf().disable()
-                .authorizeRequests()
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                .loginPage("/accedi")
-                .permitAll()
-                .defaultSuccessUrl("/logged", true)
-                .failureUrl("/login?error=true")
-                .and()
+    protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable()) // Disabilita CSRF se necessario, o configuralo come richiesto
+                .cors(cors -> cors.disable()) // Disabilita CORS se necessario, o configuralo come richiesto
+                // AUTORIZZAZIONE: qui definiamo chi può accedere a cosa
+                .authorizeHttpRequests( authorize -> authorize
+                        // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
+                        .requestMatchers(HttpMethod.GET, "/", "/index", "/registrati", "/css/**", "/image/**", "favicon.ico").permitAll()
+                        // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
+                        .requestMatchers(HttpMethod.POST, "/registrati", "/accedi").permitAll()
+                        //solo admin e utenti registrati possono aggiungere-cancellare-modificare risorse  (controlla che chi non è admin lavori per le sue risorse)
+                        .requestMatchers(HttpMethod.GET, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("AMMINISTRATORE","CUOCO")
+                        .requestMatchers(HttpMethod.POST, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("AMMINISTRATORE","CUOCO")
+                        // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
+                        .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("AMMINISTRATORE")          //.permitAll() //.hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("AMMINISTRATORE")        //.permitAll()   //.hasAnyAuthority("ADMIN")
+                        // tutti gli utenti autenticati possono accere alle pag
+                        .anyRequest().authenticated())
+
+
+                // LOGIN: qui definiamo come è gestita l'autenticazione
+				// usiamo il protocollo formlogin       
+                .formLogin(formLogin -> formLogin
+                         // la pagina di login si trova a /login
+                        .loginPage("/login")
+                        .permitAll()
+                        // se il login ha successo, si viene rediretti al path /default
+                        .defaultSuccessUrl("/logged", true)
+                        .failureUrl("/login?error=true"))
+
+                // LOGOUT: qui definiamo il logout
                 .logout(logout -> logout
-                        // il logout è attivato con una richiesta GET a "/logout"
                         .logoutUrl("/logout")
-                        // in caso di successo, si viene reindirizzati alla home
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .clearAuthentication(true).permitAll());
-        return httpSecurity.build();
+
+
+        return http.build();
     }
 }

@@ -17,7 +17,7 @@
             Inserire i dati e cliccare "conferma" per inserire la nuova ricetta
         </h1>
 
-        <form th:action="@{/ricetta/aggiunta}" method = "POST" th:object="${ricetta}"> 
+        <form th:action="@{/ricetta/aggiunta}" method="post" enctype="multipart/form-data" th:object="${ricetta}"></form> 
             <div>
                 <span th:text="${messaggioErrore}"> ERRORE </span>
             </div>
@@ -34,8 +34,8 @@
                 </span>
             </div>
             <div>
-                <label for="pathFoto"> Immagine: </label>
-                <input type="text" id="pathFoto" th:field="*{pathFoto}"/> 
+                <label for="immagine"> Scegli immagine dal File System: </label>
+                <input type="file" id="immagine" name="immagine" accept="image/*"/> 
            </div>
            <div>
                 <span>

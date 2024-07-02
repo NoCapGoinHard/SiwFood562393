@@ -33,16 +33,15 @@
             </div>
             <ul th:unless="${cuoco.ricette.isEmpty()}">
                  <li th:each="ricetta : ${cuoco.ricette}">
-                    <!--
-                    <span th:text="${ricetta.nome}"></span>
-                    <span th:text="${ricetta.descrizione}"></span>
-                    -->
                     <a th:href="@{/ricetta/{id}(id=${ricetta.id})}" th:text="${ricetta.nome}"></a>
                     <span th:text="' - ' + ${ricetta.descrizione}"></span>
                 </li>
             </ul>
-            <a th:href="@{/forms/formNuovaRicetta}">Inserisci una nuova ricetta</a>
+            <a th:href="@{/cuoco/{cuocoId}/aggiungiRicetta/{utenteId}(cuocoId=${cuoco.id}, utenteId=${credentials.user.id})}">Inserisci una nuova ricetta</a>
         </div> 
+        <div th:if="${messaggioErrore}">
+            <p th:text="${messaggioErrore}"></p>
+        </div>
 
 
     </body>

@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +10,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
+import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.repository.CuocoRepository;
 import it.uniroma3.siwfood.service.CuocoService;
+import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.RicettaService;
+import it.uniroma3.siwfood.service.UserService;
 
 
 
@@ -28,6 +34,12 @@ public class CuocoController {
 
     @Autowired
     private RicettaService ricettaService;
+
+    @Autowired
+    private ImmagineService immagineService;
+
+    @Autowired
+    private UserService userService;
     
     @GetMapping("")
     public String index(Model model) {
@@ -58,8 +70,15 @@ public class CuocoController {
     
     
     @PostMapping("/cuoco/aggiunto")
-    public String formNuovoCuoco(@ModelAttribute("cuoco") Cuoco cuoco, Model model) {
+    public String formNuovoCuoco(@ModelAttribute("cuoco") Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine, Model model) throws IOException {
         if(!cuocoRepository.existsByNomeAndCognome(cuoco.getNome(), cuoco.getCognome())) {
+            if(!immagine.isEmpty()) {
+                Immagine i = new Immagine();
+                i.setNome(immagine.getOriginalFilename());
+                i.setDati(immagine.getBytes());
+                cuoco.addImmagine(i);
+                this.immagineService.save(i);
+            }
             this.cuocoService.save(cuoco);
             model.addAttribute("cuoco", cuoco);
             return "redirect:/cuochi"; //da migliorare con "redirect:/cuoco"+getId();
@@ -101,11 +120,18 @@ public class CuocoController {
     }
 
 
-    @GetMapping("/cuoco/{id}/aggiungiRicetta")
-    public String aggiungiRicettaACuoco(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/cuoco/{cuocoId}/aggiungiRicetta/{utenteId}")
+    public String aggiungiRicettaACuoco(@PathVariable("id") Long cuocoId, @PathVariable("utenteId") Long utenteId, Model model) {
         model.addAttribute("ricetta", new Ricetta());
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "forms/formNuovaRicetta.html";
+        model.addAttribute("cuoco", this.cuocoService.findById(cuocoId));
+        model.addAttribute("utente", this.userService.findById(utenteId));
+        if(this.cuocoService.findById(cuocoId).equals(this.userService.findById(utenteId).getCuoco())) {
+            return "forms/formNuovaRicettaPerCuoco.html";
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per aggiungere una ricetta a questo cuoco!");
+            return "messaggioErrore";
+        }
     }
 
     @PostMapping("/cuoco/{id}/aggiungiRicetta")
@@ -114,7 +140,10 @@ public class CuocoController {
         Cuoco cuoco = this.cuocoService.findById(id);
         ricetta.setCuoco(cuoco);
         this.ricettaService.save(ricetta);
+        cuoco.addRicetta(ricetta);
         return "redirect:/ricetta/" + ricetta.getId();
     }
+
+
 
 }

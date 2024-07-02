@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <form th:action="@{/ingrediente/{nome}/aggiungiAllergene(nome = ${ingredienti[0].nome})}" th:object ="${allergene}" method ="post">
+        <form th:action="@{/admin/ingrediente/{nome}/aggiungiAllergene(nome = ${ingredienti[0].nome})}" th:object ="${allergene}" method ="post">
             <div>
                 <label for="nome">Allergene:</label>
                 <input type="text" id="nome" th:field="*{nome}"/>

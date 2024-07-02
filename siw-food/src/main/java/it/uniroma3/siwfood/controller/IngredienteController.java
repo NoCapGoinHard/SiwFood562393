@@ -63,20 +63,20 @@ public class IngredienteController {
         return "ingrediente.html";
     }
 
-    @GetMapping("/ingrediente/{nome}/elimina")
+    @GetMapping("/admin/ingrediente/{nome}/elimina")
     public String eliminaIngredienteByNome(@PathVariable("nome") String nome) {
         this.ingredienteService.deleteAllByNome(nome);
         return "redirect:/ingredienti";
     }
     
-    @GetMapping("/ingrediente/{nome}/aggiungiAllergene")
+    @GetMapping("/admin/ingrediente/{nome}/aggiungiAllergene")
     public String formAggiungiAllergene(@PathVariable("nome") String nome, Model model) {
         model.addAttribute("ingredienti", this.ingredienteService.findAllByNome(nome));
         model.addAttribute("allergene", new Allergene());
         return "forms/formAggiungiAllergene.html";
     }
 
-    @PostMapping("/ingrediente/{nome}/aggiungiAllergene")
+    @PostMapping("/admin/ingrediente/{nome}/aggiungiAllergene")
     public String formAggiungiAllergene(@PathVariable("nome") String nome, @ModelAttribute("allergene") Allergene allergene, Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         this.allergeneService.save(allergene);
@@ -93,7 +93,7 @@ public class IngredienteController {
 
     }
 
-    @GetMapping("ingrediente/{nome}/eliminaAllergene/{idAllergene}")
+    @GetMapping("/admin/ingrediente/{nome}/eliminaAllergene/{idAllergene}")
     public String getMethodName(@PathVariable("nome") String nome, @PathVariable("idAllergene") Long idAllergene) {
         Allergene allergene = this.allergeneService.findById(idAllergene);
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);

@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.controller;
 
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,10 +10,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
+import it.uniroma3.siwfood.repository.RicettaRepository;
 import it.uniroma3.siwfood.service.AllergeneService;
+import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
 
@@ -19,7 +25,13 @@ import it.uniroma3.siwfood.service.RicettaService;
 public class RicettaController {
     
     @Autowired
+    private RicettaRepository ricettaRepository;
+    
+    @Autowired
     private RicettaService ricettaService;
+
+    @Autowired
+    private ImmagineService immagineService;
 
     @Autowired
     private IngredienteService ingredienteService;
@@ -41,19 +53,32 @@ public class RicettaController {
         return "ricetta.html";
     }
 
-    @GetMapping("/forms/formNuovaRicetta")
-    public String formNuovaRicetta(Model model) {
+    @GetMapping("/admin/aggiungiRicetta")
+    public String formNuovaRicetta(Model model) { //aggiunge una nuova ricetta NEL SISTEMA
         model.addAttribute("ricetta", new Ricetta());
+
         return "forms/formNuovaRicetta.html";
     }
 
-    @PostMapping("/ricetta/aggiunta")
-    public String formNuovaRicetta(@ModelAttribute("ricetta") Ricetta ricetta, Model model) {
-        this.ricettaService.save(ricetta);
-        model.addAttribute("ricetta", ricetta);
-        return "redirect:/ricetta";
-    }
-    
+    @PostMapping("/ricetta/aggiunta") /*  vedi se serve pe forza pure "/admin" */
+    public String formNuovaRicetta(@ModelAttribute("ricetta") Ricetta ricetta, @RequestParam("immagine") MultipartFile immagine, Model model) throws IOException{
+        if(!ricettaRepository.existsByNomeAndCuoco(ricetta.getNome(), ricetta.getCuoco())) {
+            if(!immagine.isEmpty()) {
+                Immagine i = new Immagine();
+                i.setNome(immagine.getOriginalFilename());
+                i.setDati(immagine.getBytes());
+                ricetta.addImmagine(i);
+                this.immagineService.save(i);
+            }
+            this.ricettaService.save(ricetta);
+            model.addAttribute("ricetta", ricetta);
+            return "redirect:/ricetta";
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Questa ricetta è già presente");
+            return "forms/formNuovaRicetta.html";
+        }
+    }    
     
     @GetMapping("/ricette/cercaRicette")
     public String getFormCercaRicette() {

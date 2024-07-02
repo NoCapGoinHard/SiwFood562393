@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,14 +18,15 @@ import jakarta.persistence.OneToMany;
 public class Ricetta {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String nome;
     private String descrizione;
     @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredienti;
-    private String pathFoto;
+    @ElementCollection
+    private List<Immagine> immagini;
     @ManyToOne
     @JoinColumn(name = "cuoco_id")
     private Cuoco cuoco;
@@ -34,12 +36,12 @@ public class Ricetta {
 
     }
 
-    public Ricetta(Long id, String nome, String descrizione, List<Ingrediente> ingredienti, String pathFoto, Cuoco cuoco) {
+    public Ricetta(Long id, String nome, String descrizione, List<Ingrediente> ingredienti, List<Immagine> immagini, Cuoco cuoco) {
         this.id = id;
         this.nome = nome;
         this.descrizione = descrizione;
         this.ingredienti = ingredienti;
-        this.pathFoto = pathFoto;
+        this.immagini = immagini;
         this.cuoco = cuoco;
     }
 
@@ -68,11 +70,11 @@ public class Ricetta {
         this.ingredienti = ingredienti;
     }
 
-    public String getPathFoto() {
-        return pathFoto;
+    public List<Immagine> getImmagini() {
+        return immagini;
     }
-    public void setPathFoto(String pathFoto) {
-        this.pathFoto = pathFoto;
+    public void setPathFoto(List<Immagine> immagini) {
+        this.immagini = immagini;
     }
     public Cuoco getCuoco() {
         return cuoco;
@@ -128,6 +130,22 @@ public class Ricetta {
 
     public void removeIngrediente(Ingrediente ingrediente) {
         this.ingredienti.remove(ingrediente);
+    }
+
+    public Immagine getFirstImmagine(){
+        return this.immagini.get(0);
+    } 
+
+    public List<Immagine> getImmaginiDopoFirst(){
+        try {
+            return this.immagini.subList(1, this.immagini.size());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void addImmagine(Immagine immagine) {
+        this.immagini.add(immagine);
     }
     
 }
