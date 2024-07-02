@@ -20,7 +20,6 @@ import jakarta.validation.constraints.Past;
 @Entity
 public class User {
     
-    /*ATTRIBUTI*/
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,48 +38,10 @@ public class User {
     
     //@NotBlank
     private String email;
-    /*FINE ATTRIBUTI*/
 
 
-    /*EQUALS & HASHCODE*/
-    @Override
-    public int hashCode() {
-        return Objects.hash(nome,cognome,email);
-    }
+    public User(){}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Utente other = (Utente) obj;
-        if (nome == null) {
-            if (other.nome != null)
-                return false;
-        } else if (!nome.equals(other.nome))
-            return false;
-        if (cognome == null) {
-            if (other.cognome != null)
-                return false;
-        } else if (!cognome.equals(other.cognome))
-            return false;
-        if (email == null) {
-            if (other.email != null)
-                return false;
-        } else if (!email.equals(other.email))
-            return false;
-        return true;
-    }
-
-    public Utente(String nome, String cognome, String email, LocalDate dataNascita){
-        this.nome = nome;
-        this.cognome = cognome;
-        this.email = email;
-        this.dataNascita = dataNascita;
-    }
 
     public Long getId() {
         return id;
@@ -130,5 +91,37 @@ public class User {
         this.cuoco = cuoco;
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome,cognome,email);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Utente other = (Utente) obj;
+        if (nome == null) {
+            if (other.nome != null)
+                return false;
+        } else if (!nome.equals(other.nome))
+            return false;
+        if (cognome == null) {
+            if (other.cognome != null)
+                return false;
+        } else if (!cognome.equals(other.cognome))
+            return false;
+        if (email == null) {
+            if (other.email != null)
+                return false;
+        } else if (!email.equals(other.email))
+            return false;
+        return true;
+    }
     
 }

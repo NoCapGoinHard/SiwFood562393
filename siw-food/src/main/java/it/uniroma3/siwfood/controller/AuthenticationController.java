@@ -23,7 +23,6 @@ import it.uniroma3.siwfood.model.auth.Utente;
 import it.uniroma3.siwfood.service.CredentialsService;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
-import it.uniroma3.siwfood.service.UserService;
 import jakarta.validation.Valid;
 
 
@@ -42,7 +41,7 @@ public class AuthenticationController {
     @Autowired
     private ImmagineService immagineService;
     
-    //RESTITUISCE IL TEMPLATE DELL'HOME PAGE
+
     @GetMapping("/")
     public String getHomePage() {
 
@@ -60,7 +59,6 @@ public class AuthenticationController {
     @GetMapping("/success")
     public String getHomeAfterLogin(Model model) {
         
-        //capire come vengono passati  o comunque cosa ci fanno
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Credentials credentials = this.credentialsService.getCredentialsByUsername(userDetails.getUsername());
 
@@ -68,7 +66,6 @@ public class AuthenticationController {
     }
 
 
-    //REGISTRAZIONE
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
         
@@ -102,7 +99,7 @@ public class AuthenticationController {
         if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()){
             
             
-            //cuoco
+
             cuoco.setNome(utente.getNome());
             cuoco.setCognome(utente.getCognome());
             cuoco.setDataNascita(utente.getDataNascita());
@@ -124,8 +121,6 @@ public class AuthenticationController {
         
         return "auth/register.html";
     }
-    
-    //TODO capire come togliere i warning
     
     
 }
