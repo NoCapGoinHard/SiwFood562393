@@ -30,6 +30,7 @@ public class CuocoService {
         return this.cuocoRepository.findAllByNomeAndCognome(nome, cognome);
     }
 
+
     public void deleteById(Long id) {
         this.cuocoRepository.deleteById(id);
     }

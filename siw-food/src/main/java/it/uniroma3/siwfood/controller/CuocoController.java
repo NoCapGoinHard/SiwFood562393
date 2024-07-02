@@ -47,17 +47,17 @@ public class CuocoController {
         return "forms/formSearchCuoco.html";
     }
 
-    @PostMapping("/cuochi/byNome")  
-    public String postCuochiByNome(@RequestParam String nome, Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findByNome(nome));
+    @PostMapping("/cuochi/byNomeAndCognome")  
+    public String postCuochiByNome(@RequestParam String nome, @RequestParam String cognome, Model model) {
+        model.addAttribute("cuochi", this.cuocoService.findAllByNomeAndCognome(nome, cognome));
         return "cuochi.html";
     }
     
-    @PostMapping("/cuochi/byYear")
-    public String postCuochiByYear(@RequestParam int year, Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findByDataNascita(year));
-        return "cuochi.html";
-    }
+    //@PostMapping("/cuochi/byYear")
+    //public String postCuochiByYear(@RequestParam int year, Model model) {
+    //    model.addAttribute("cuochi", this.cuocoService.findByDataNascita(year));
+    //    return "cuochi.html";
+    //}
 
     @GetMapping("/admin/addCuoco")
     public String getFormNewCuoco(Model model) {
@@ -78,7 +78,7 @@ public class CuocoController {
             cuoco.getImmagini().add(img);
             immagineService.save(img);
         }
-        cuocoService.saveCuoco(cuoco);
+        cuocoService.save(cuoco);
         return "redirect:/cuochi/" + cuoco.getId();
     }
 
@@ -92,13 +92,13 @@ public class CuocoController {
     @PostMapping("/admin/editCuoco/{id}")
     public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
         cuoco.setId(id);
-        this.cuocoService.saveCuoco(cuoco);  
+        this.cuocoService.save(cuoco);  
         return "redirect:/cuochi/" + cuoco.getId();
     }
 
     @GetMapping("/admin/deleteCuoco/{id}")
     public String deleteCuocoById(@PathVariable("id") Long id) {
-        cuocoService.deleteCuoco(id);
+        cuocoService.deleteById(id);
         return "redirect:/cuochi";
     }
 

@@ -40,11 +40,11 @@ public class Allergene {
         this.nome = nome;
     }
 
-    public List<Ingrediente> getIngredientiCoinvolti() {
+    public Set<Ingrediente> getIngredientiCoinvolti() {
         return ingredientiCoinvolti;
     }
 
-    public void setIngredientiCoinvolti(List<Ingrediente> ingredientiCoinvolti) {
+    public void setIngredientiCoinvolti(Set<Ingrediente> ingredientiCoinvolti) {
         this.ingredientiCoinvolti = ingredientiCoinvolti;
     }
 

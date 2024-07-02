@@ -7,15 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
-import it.uniroma3.siwfood.service.UserService;
-
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PostMapping;
+import it.uniroma3.siwfood.service.auth.UserService;
 
 
 
@@ -29,7 +28,7 @@ public class RicettaController {
     private CuocoService cuocoService;
 
     @Autowired
-    private UserService utenteService;
+    private UserService userService;
 
     @Autowired
     private IngredienteService ingredienteService;
@@ -53,14 +52,15 @@ public class RicettaController {
   
     @PostMapping("/ricette/byNome")
     public String postRicetteByNome(@RequestParam String nome, Model model) {
-        model.addAttribute("ricette", this.ricettaService.findByNome(nome));
+        model.addAttribute("ricette", this.ricettaService.findAllByNome(nome));
         return "ricette.html";
     }
-    @PostMapping("/ricette/byIngrediente")
-    public String postRicetteByIngrediente(@RequestParam String ingr, Model model) {
-        model.addAttribute("ricette", this.ricettaService.findByIngredienteNome(ingr));
-        return "ricette.html";
-    }
+
+    //@PostMapping("/ricette/byIngrediente")
+    //public String postRicetteByIngrediente(@RequestParam String ingr, Model model) {
+    //    model.addAttribute("ricette", this.ricettaService.findByIngredienteNome(ingr));
+    //    return "ricette.html";
+    //}
 
 
     @GetMapping("/admin/addRicetta/{cuoco_id}")
@@ -74,14 +74,14 @@ public class RicettaController {
     @PostMapping("/admin/addRicetta/{cuoco_id}")
     public String postAdminNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setCuoco(this.cuocoService.findById(id));
-        this.ricettaService.saveRicetta(ricetta);
+        this.ricettaService.save(ricetta);
         return "redirect:/cuochi/" + id;
     }
 
     @GetMapping("/cuoco/addRicetta/{cuoco_id}/{utente_id}")
     public String getCuocoFormNewRicetta(@PathVariable("cuoco_id") Long idC, @PathVariable("utente_id") Long idU,Model model) {
         
-        if(!(this.cuocoService.findById(idC).equals(this.utenteService.getUtente(idU).getCuoco()))){
+        if(!(this.cuocoService.findById(idC).equals(this.userService.findById(idU).getCuoco()))){
             return "redirect:/cuochi/" + idC;
         }
         
@@ -94,7 +94,7 @@ public class RicettaController {
     @PostMapping("/cuoco/addRicetta/{cuoco_id}")
     public String postCuocoNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setCuoco(this.cuocoService.findById(id));
-        this.ricettaService.saveRicetta(ricetta);
+        this.ricettaService.save(ricetta);
         return "redirect:/cuochi/" + id;
     }
 
@@ -107,7 +107,7 @@ public class RicettaController {
     @PostMapping("/admin/editRicetta/{id}")
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setId(id);
-        this.ricettaService.saveRicetta(ricetta);
+        this.ricettaService.save(ricetta);
         return "redirect:/ricette/" + ricetta.getId();
     }
 
@@ -115,7 +115,7 @@ public class RicettaController {
 
     @GetMapping("/admin/deleteRicetta/{id}")
     public String deleteRicetteById(@PathVariable("id") Long id) {
-        this.ricettaService.deleteRicetta(id);
+        this.ricettaService.deleteById(id);
         return "redirect:/ricette";
     }
 

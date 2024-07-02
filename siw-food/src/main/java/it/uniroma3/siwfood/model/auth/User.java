@@ -105,7 +105,7 @@ public class User {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Utente other = (Utente) obj;
+        User other = (User) obj;
         if (nome == null) {
             if (other.nome != null)
                 return false;
