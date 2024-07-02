@@ -1,3 +1,4 @@
+
 package it.uniroma3.siwfood.authentication;
 
 import javax.sql.DataSource;
@@ -18,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class AuthConfiguration {
-
+    
     @Autowired
     private DataSource dataSource;
 
@@ -43,19 +44,19 @@ public class AuthConfiguration {
                 // AUTORIZZAZIONE: qui definiamo chi può accedere a cosa
                 .authorizeHttpRequests( authorize -> authorize
                         // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
-                        .requestMatchers(HttpMethod.GET, "/", "/index", "/registrati", "/css/**", "/image/**", "favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/", "/login", "/register", "/cuochi/**", "/ricette/**" , "/css/**", "/image/**").permitAll()  //tolto le icon
                         // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
-                        .requestMatchers(HttpMethod.POST, "/registrati", "/accedi").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/register", "/login").permitAll()
                         //solo admin e utenti registrati possono aggiungere-cancellare-modificare risorse  (controlla che chi non è admin lavori per le sue risorse)
-                        .requestMatchers(HttpMethod.GET, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("AMMINISTRATORE","CUOCO")
-                        .requestMatchers(HttpMethod.POST, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("AMMINISTRATORE","CUOCO")
+                        .requestMatchers(HttpMethod.GET, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("ADMIN","REGISTRATO")
+                        .requestMatchers(HttpMethod.POST, "CI VANNO LE OPERAZIONI DEL CUOCO").hasAnyAuthority("ADMIN","REGISTRATO")
                         // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
-                        .requestMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("AMMINISTRATORE")          //.permitAll() //.hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("AMMINISTRATORE")        //.permitAll()   //.hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/admin/**").permitAll()           //.hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/admin/**").permitAll()              //.hasAnyAuthority("ADMIN")
                         // tutti gli utenti autenticati possono accere alle pag
                         .anyRequest().authenticated())
-
-
+                        
+                
                 // LOGIN: qui definiamo come è gestita l'autenticazione
 				// usiamo il protocollo formlogin       
                 .formLogin(formLogin -> formLogin
@@ -63,9 +64,9 @@ public class AuthConfiguration {
                         .loginPage("/login")
                         .permitAll()
                         // se il login ha successo, si viene rediretti al path /default
-                        .defaultSuccessUrl("/logged", true)
+                        .defaultSuccessUrl("/success", true)
                         .failureUrl("/login?error=true"))
-
+                
                 // LOGOUT: qui definiamo il logout
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -75,7 +76,7 @@ public class AuthConfiguration {
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .clearAuthentication(true).permitAll());
 
-
+        
         return http.build();
     }
 }

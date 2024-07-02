@@ -16,7 +16,7 @@ public class Credentials {
     public static final String UTENTE_CUOCO = "CUOCO";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(nullable = false)

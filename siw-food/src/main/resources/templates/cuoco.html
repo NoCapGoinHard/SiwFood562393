@@ -22,7 +22,7 @@
             <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>
             <div th:if="${cuoco}">
                 <p th:text="'(' + 'nato il:' + ' ' + ${cuoco.dataNascita} +')'"></p>
-                <p> <img width="10%" th:src="${cuoco.pathFoto}"/> </p>
+                <!--<p> <img width="10%" th:src="${cuoco.pathFoto}"/> </p>-->
             </div>
         </div>
 

@@ -14,7 +14,7 @@ import jakarta.persistence.ManyToMany;
 public class Allergene {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nome;
     @ManyToMany(mappedBy = "allergeni", cascade = CascadeType.ALL)

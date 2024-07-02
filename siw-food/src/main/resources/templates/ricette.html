@@ -25,7 +25,7 @@
         <ul>
             <li th:each="ricetta : ${ricette}">
                 <div>
-                    <img th:src="@{${ricetta.pathFoto}}" width="10%">
+                    <!--<img th:src="@{${ricetta.pathFoto}}" width="10%">-->
                 </div>
                 <a th:href="@{/ricetta/{id}(id=${ricetta.id})}">
                    <span th:text="${ricetta.nome}"></span>
