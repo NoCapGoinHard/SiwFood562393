@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import it.uniroma3.siwfood.model.auth.Credentials;
-import it.uniroma3.siwfood.service.CredentialsService;
+import it.uniroma3.siwfood.repository.auth.CredentialsRepository;
 
 @ControllerAdvice
 public class GlobalController {
     
 
     @Autowired
-    private CredentialsService credentialsService;
+    private CredentialsRepository credentialsService;
 
     
     @ModelAttribute("userDetails")

@@ -19,10 +19,11 @@ import org.springframework.web.multipart.MultipartFile;
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.auth.Credentials;
-import it.uniroma3.siwfood.model.auth.Utente;
-import it.uniroma3.siwfood.service.CredentialsService;
+import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
+import it.uniroma3.siwfood.service.auth.CredentialsService;
+import it.uniroma3.siwfood.service.auth.UserService;
 import jakarta.validation.Valid;
 
 
@@ -33,7 +34,7 @@ public class AuthenticationController {
     private CredentialsService credentialsService;
 
     @Autowired
-    private UtenteService utenteService;
+    private UserService userService;
 
     @Autowired
     private CuocoService cuocoService;
@@ -70,14 +71,14 @@ public class AuthenticationController {
     public String getRegisterForm(Model model) {
         
         model.addAttribute("cuoco", new Cuoco());
-        model.addAttribute("utente", new Utente());
+        model.addAttribute("utente", new User());
         model.addAttribute("credentials", new Credentials());
 
         return "auth/register.html";
     }
     
     @PostMapping("/register")
-    public String postNewUtente(@Valid @ModelAttribute("utente") Utente utente, 
+    public String postNewUtente(@Valid @ModelAttribute("user") User user, 
                                 BindingResult utenteBindingResult, 
                                 @Valid @ModelAttribute("credentials") Credentials credentials, 
                                 BindingResult credentialsBindingResult, 
@@ -100,21 +101,21 @@ public class AuthenticationController {
             
             
 
-            cuoco.setNome(utente.getNome());
-            cuoco.setCognome(utente.getCognome());
-            cuoco.setDataNascita(utente.getDataNascita());
-            cuocoService.saveCuoco(cuoco);
+            cuoco.setNome(user.getNome());
+            cuoco.setCognome(user.getCognome());
+            cuoco.setDataNascita(user.getDataNascita());
+            cuocoService.save(cuoco);
 
-            utente.setCuoco(cuoco);
-            utenteService.saveUtente(utente);
+            user.setCuoco(cuoco);
+            userService.save(user);
 
 
-            credentials.setUtente(utente);
-            credentials.setRole(Credentials.UTENTE_REGISTRATO);
+            credentials.setUser(user);
+            credentials.setRole(Credentials.UTENTE_CUOCO);
             
             credentialsService.saveCredentials(credentials);
             
-            model.addAttribute("utente", utente);
+            model.addAttribute("user", user);
 
             return "redirect:/";
         }

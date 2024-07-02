@@ -1,8 +1,8 @@
 package it.uniroma3.siwfood.service.auth;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siwfood.model.auth.Credentials;
@@ -10,19 +10,34 @@ import it.uniroma3.siwfood.repository.auth.CredentialsRepository;
 
 @Service
 public class CredentialsService {
-
+    
     @Autowired
     private CredentialsRepository credentialsRepository;
-    
-    public Credentials findById(Long id) {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
+    public Credentials getCredentials(Long id){
         return this.credentialsRepository.findById(id).get();
     }
 
-    public Optional<Credentials> findByUsername(String username) {
-        return this.credentialsRepository.findByUsername(username);
+    public Credentials getCredentialsByUsername(String username){
+        return this.credentialsRepository.findByUsername(username).get();
     }
 
-    public void save(Credentials credentials) {
-        this.credentialsRepository.save(credentials);
+    public Credentials saveCredentials(Credentials credentials){
+
+
+        credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
+        return this.credentialsRepository.save(credentials);
+    
     }
+
+
+    public void deleteCredentials(Credentials credentials){
+        this.credentialsRepository.delete(credentials);
+    }
+
+
 }
