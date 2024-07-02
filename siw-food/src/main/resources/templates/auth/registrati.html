@@ -8,30 +8,35 @@
     </head>
     
     <body>
-        <form th:action="@{/auth/registrati}" method = "POST">
+        <form action="#" th:action="@{/auth/registrati}" method = "POST">
             <div> 
                 <label for="username">Username:</label>
-                <input required type="text" name="username" th:field="${credentials.username}"/>
+                <input required type="text" name="username" th:field="*{credentials.username}"/>
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input required type="password" name="password" th:field="${credentials.password}"/>
+                <input required type="text" name="password" th:field="*{credentials.password}"/>
             </div>
             <div>
                 <label for="email">e-mail:</label>
-                <input required type="text" name="email" th:field="${credentials.user.email}"/>
+                <input required type="text" name="email" th:field="*{user.email}"/>
             </div>
             <div>
                 <label for="nome">Nome:</label>
-                <input required type="text" name="nome" th:field="${credentials.user.nome}"/>
+                <input required type="text" name="nome" th:field="*{user.nome}"/>
             </div>
             <div>
                 <label for="cognome">Cognome:</label>
-                <input required type="text" name="cognome" th:field="${credentials.user.cognome}"/>
+                <input required type="text" name="cognome" th:field="*{user.cognome}"/>
             </div>
             <div>
                 <label for="dataNascita">Data di Nascita: </label>
-                <input type="date" id="dataNascita" th:field="${credentials.user.dataNascita}"/> 
+                <input type="date" id="dataNascita" th:field="*{user.dataNascita}"/> 
+           </div>
+            <div>
+                <label for="pathFoto">Immagine: </label>
+                <input type="text" id="pathFoto" th:field="*{user.pathFoto}"/> 
+                <!--manca lo span dell'errore-->
            </div>
            <span>
                 <button type="submit">Conferma</button>

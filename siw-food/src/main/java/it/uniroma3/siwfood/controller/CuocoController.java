@@ -40,9 +40,14 @@ public class CuocoController {
 
     @Autowired
     private UserService userService;
-
-
     
+    @GetMapping("")
+    public String index(Model model) {
+        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    
+        return "index.html";
+    }
+
     @GetMapping("/cuochi")
     public String getCuochi(Model model) {
         model.addAttribute("cuochi", this.cuocoService.findAll());

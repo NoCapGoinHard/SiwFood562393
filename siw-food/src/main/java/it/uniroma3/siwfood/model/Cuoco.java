@@ -21,7 +21,7 @@ import jakarta.persistence.OneToOne;
 public class Cuoco {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String nome;
@@ -35,7 +35,8 @@ public class Cuoco {
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL) //se fai un'operazione su cuoco, a cascata le farà anche su ricetta
     private List<Ricetta> ricette;
     
-
+    @OneToOne(mappedBy = "cuoco")
+    private User user;
     
     
     public Cuoco(){
@@ -52,6 +53,13 @@ public class Cuoco {
         this.ricette = ricette;
     }
     
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
     
     public Long getId() {
         return id;
