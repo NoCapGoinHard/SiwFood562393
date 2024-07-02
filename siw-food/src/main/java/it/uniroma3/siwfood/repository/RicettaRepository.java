@@ -1,5 +1,7 @@
 package it.uniroma3.siwfood.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,6 @@ public interface RicettaRepository extends CrudRepository<Ricetta,Long>{
     public Iterable<Ricetta> findByIngredienteNome(@Param("nomeIngrediente") String nomeIngrediente);
     
     public boolean existsByNomeAndCuoco(String nome, Cuoco cuoco);
+
+    public List<Ricetta> findAllByNome(String nome);
 }

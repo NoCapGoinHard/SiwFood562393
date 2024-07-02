@@ -7,5 +7,7 @@ import it.uniroma3.siwfood.model.auth.User;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
+    User findByNome(String nome);
     
 }
