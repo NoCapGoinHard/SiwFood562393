@@ -18,10 +18,10 @@
         <ul>
             <li th:each="ingrediente : ${ingredienti}">
                 <span>
-                    <a th:href="@{/ingredienti/{ingrediente_nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                    <a th:href="@{/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                 </span>
                 <span>
-                    <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
+                    <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
                 </span>
             </li>
         </ul>

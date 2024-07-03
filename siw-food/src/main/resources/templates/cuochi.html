@@ -26,7 +26,7 @@
             <li th:each="cuoco : ${cuochi}">
 
                 <a 
-                    th:href="@{/cuochi/{id}(id=${cuoco.id})}">
+                    th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco.id})}">
                         <span 
                             th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
                         </span>

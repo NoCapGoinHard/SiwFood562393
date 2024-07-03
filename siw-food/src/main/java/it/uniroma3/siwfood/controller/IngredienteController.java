@@ -51,18 +51,17 @@ public class IngredienteController {
         return "forms/formCercaIngrediente.html";
     }
     @PostMapping("/ingredienti/byNome") 
-    public String getIngredienteByNome(@RequestParam("nome") String nome, Model model){
+    public String getIngredientiByNome(@RequestParam("nome") String nome, Model model){
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         if(!ingredienti.isEmpty()) {
             model.addAttribute("ingrediente", ingredienti.get(0));
-            return "ingrediente.html";
+            return "ingredienti.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non ci sono ingredienti con questo nome");
             return "forms/formCercaIngrediente.html";
         }
     }
-
 
     @GetMapping("/admin/deleteIngrediente/{ingrediente_nome}")
     public String eliminaIngredienteByNome(@PathVariable("ingrediente_nome") String nome) {

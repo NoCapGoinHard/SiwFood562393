@@ -84,7 +84,12 @@ public class RicettaController {
         return "redirect:/ricette";
     }
 
-    @GetMapping("/ricette/aggiungiIngrediente/{ricetta_id}")
+   //@GetMapping("/ricette/aggiungiIngrediente/{ricetta_id}")
+   //@PostMapping("/ricette/removeIngrediente/{ricetta_id}")
 
+    //@GetMapping("/admin/modificaQuantita/{ingrediente_nome}")
+    //@PostMapping("/admin/modificaQuantita/{ingrediente_nome}")
+    //@GetMapping("/admin/modificaQuantita/{ingrediente_nome}")
+    //@PostMapping("/admin/modificaQuantita/{ingrediente_nome}")
 
 }

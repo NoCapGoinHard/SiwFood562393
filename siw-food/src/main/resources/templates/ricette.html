@@ -24,7 +24,7 @@
                 <div>
                     <img th:src="@{${ricetta.pathFoto}}" width="10%">
                 </div>
-                <a th:href="@{/ricette/{id}(id=${ricetta.id})}">
+                <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">
                    <span th:text="${ricetta.nome}"></span>
                 </a>
             </li>

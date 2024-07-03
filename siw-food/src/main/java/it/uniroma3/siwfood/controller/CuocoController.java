@@ -45,8 +45,8 @@ public class CuocoController {
         return "cuochi.html";
     }
 
-    @GetMapping("/cuochi/{id}")
-    public String getCuoco(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/cuochi/{cuoco_id}")
+    public String getCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         return "cuoco.html";
     }
@@ -94,7 +94,7 @@ public class CuocoController {
     @GetMapping("/admin/editCuoco/{cuoco_id}")
     public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "forms/formEditCuoco.html";
+        return "forms/formModificaCuoco.html";
     }
 
 
@@ -121,7 +121,7 @@ public class CuocoController {
         
         model.addAttribute("cuoco", this.cuocoService.findById(idC));
         model.addAttribute("ricetta", new Ricetta());
-        return "forms/formNuovaRicettaCuoco.html";
+        return "forms/formNuovaRicetta.html";
     }
 
 
@@ -136,7 +136,7 @@ public class CuocoController {
     public String getAdminFormNewRicetta(@PathVariable("cuoco_id") Long id,Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         model.addAttribute("ricetta", new Ricetta());
-        return "forms/formNewRicetta.html";
+        return "forms/formNuovaRicettaAlCuoco.html";
     }
 
 
