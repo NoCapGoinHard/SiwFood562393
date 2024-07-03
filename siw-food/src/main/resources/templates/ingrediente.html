@@ -11,10 +11,10 @@
         <h1>Dettagli</h1>
 
         <div>
-            <a th:href="@{/ingrediente/{nome}/aggiungiAllergene(nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
+            <a th:href="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
         </div>
         <div>
-            <a th:href="@{/ingrediente/{nome}/elimina(nome=${ingrediente.nome})}">Cancella questo ingrediente</a>
+            <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Cancella questo ingrediente dal sistema</a>
         </div>
 
 
@@ -33,7 +33,7 @@
                 <ul th:if="${!ingrediente.allergeni.isEmpty()}">
                     <li th:each="allergene : ${ingrediente.allergeni}">
                         <span th:text="${allergene.nome}"></span>
-                        <a th:href="@{/ingrediente/{nome}/eliminaAllergene/{idAllergene}(nome=${ingrediente.nome}, idAllergene=${allergene.id})}" th:text="Rimuovi"></a>
+                        <a th:href="@{/ingrediente/eliminaAllergene/{ingrediente_nome}/{idAllergene}(ingrediente_nome=${ingrediente.nome}, idAllergene=${allergene.id})}" th:text="Rimuovi"></a>
                     </li>
                 </ul>
             </div>

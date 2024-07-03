@@ -91,29 +91,29 @@ public class CuocoController {
         return "redirect:/cuochi/" + cuoco.getId();
     }
 
-    @GetMapping("/admin/editCuoco/{id}")
-    public String getFormEditCuoco(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/admin/editCuoco/{cuoco_id}")
+    public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         return "forms/formEditCuoco.html";
     }
 
 
-    @PostMapping("/admin/editCuoco/{id}")
-    public String updateCuoco(@PathVariable("id") Long id, @ModelAttribute Cuoco cuoco) {
+    @PostMapping("/admin/editCuoco/{cuoco_id}")
+    public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
         cuoco.setId(id);
         this.cuocoService.save(cuoco);  
         return "redirect:/cuochi/" + cuoco.getId();
     }
 
-    @GetMapping("/admin/deleteCuoco/{id}")
-    public String deleteCuocoById(@PathVariable("id") Long id) {
+    @GetMapping("/admin/deleteCuoco/{cuoco_id}")
+    public String deleteCuocoById(@PathVariable("cuoco_id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/cuochi";
     }
 
 
-    @GetMapping("/cuoco/addRicetta/{cuoco_id}/{utente_id}")
-    public String getCuocoFormNewRicetta(@PathVariable("cuoco_id") Long idC, @PathVariable("utente_id") Long idU,Model model) {
+    @GetMapping("/cuochi/addRicetta/{cuoco_id}/{user_id}")
+    public String getCuocoFormNewRicetta(@PathVariable("cuoco_id") Long idC, @PathVariable("user_id") Long idU,Model model) {
         
         if(!(this.cuocoService.findById(idC).equals(this.userService.findById(idU).getCuoco()))){
             return "redirect:/cuochi/" + idC;
@@ -125,8 +125,23 @@ public class CuocoController {
     }
 
 
-    @PostMapping("/cuoco/addRicetta/{cuoco_id}")
-    public String postCuocoNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
+    @PostMapping("/cuochi/addRicetta/{cuoco_id}/{user_id}")
+    public String postCuocoNewRicetta(@PathVariable("cuoco_id") Long cuocoId, @PathVariable("utente_id") Long userId, @ModelAttribute Ricetta ricetta) {
+        ricetta.setCuoco(this.cuocoService.findById(cuocoId));
+        this.ricettaService.save(ricetta);
+        return "redirect:/cuochi/" + cuocoId;
+    }
+
+    @GetMapping("/admin/addRicetta/{cuoco_id}")
+    public String getAdminFormNewRicetta(@PathVariable("cuoco_id") Long id,Model model) {
+        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        model.addAttribute("ricetta", new Ricetta());
+        return "forms/formNewRicetta.html";
+    }
+
+
+    @PostMapping("/admin/addRicetta/{cuoco_id}")
+    public String postAdminNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
         ricetta.setCuoco(this.cuocoService.findById(id));
         this.ricettaService.save(ricetta);
         return "redirect:/cuochi/" + id;
