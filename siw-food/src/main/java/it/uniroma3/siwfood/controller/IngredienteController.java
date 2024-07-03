@@ -98,6 +98,42 @@ public class IngredienteController {
     }
 
 
+
+    @GetMapping("/cuoco/editIngrediente/{ingrediente_id}/{user_id}")
+    public String formModificaIngredienteDalCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, @PathVariable("user_id") Long user_id, Model model) {
+        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
+        Ricetta ricetta = ingrediente.getRicetta();
+        Cuoco cuoco = ricetta.getCuoco();
+        if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
+            return "forms/formModificaIngredienteDalCuoco.html";
+        }
+        else{
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
+            return "redirect:/ricette/" + ricetta.getId();
+        }
+    }
+    @PostMapping("/cuoco/editIngrediente/{ingrediente_id}")
+    public String editIngredienteDalCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, @ModelAttribute Ingrediente ingrediente) {
+        ingrediente.setId(ingrediente_id);
+        this.ingredienteService.save(ingrediente);
+        return "redirect:/ricetta/" + ingrediente.getRicetta().getId();
+    }
+
+
+
+    @GetMapping("admin/editIngrediente/{ingrediente_id}")
+    public String formModificaIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
+        model.addAttribute("ingrediente", this.ingredienteService.findById(ingrediente_id));
+        return "forms/formModificaIngredienteAdmin.html";
+    }
+    @PostMapping("admin/editIngrediente/{ingrediente_id}")
+    public String editIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, @ModelAttribute Ingrediente ingrediente) {
+        ingrediente.setId(ingrediente_id);
+        this.ingredienteService.save(ingrediente);
+        return "redirect:/ricette" + ingrediente.getRicetta().getId();
+    }
+
+
     //DAL SISTEMA
     @GetMapping("/admin/deleteIngrediente/{ingrediente_nome}")
     public String eliminaIngredienteByNome(@PathVariable("ingrediente_nome") String nome) {
