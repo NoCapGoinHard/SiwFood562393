@@ -8,7 +8,7 @@
     </head>
     
     <body>
-        <form action="#" th:action="@{/auth/registrati}" method = "POST">
+        <form action="#" th:action="@{/register}" method = "POST">
             <div> 
                 <label for="username">Username:</label>
                 <input required type="text" name="username" th:field="*{credentials.username}"/>
@@ -32,11 +32,6 @@
             <div>
                 <label for="dataNascita">Data di Nascita: </label>
                 <input type="date" id="dataNascita" th:field="*{user.dataNascita}"/> 
-           </div>
-            <div>
-                <label for="pathFoto">Immagine: </label>
-                <input type="text" id="pathFoto" th:field="*{user.pathFoto}"/> 
-                <!--manca lo span dell'errore-->
            </div>
            <span>
                 <button type="submit">Conferma</button>

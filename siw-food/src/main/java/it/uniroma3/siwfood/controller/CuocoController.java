@@ -10,14 +10,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
+import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
+import it.uniroma3.siwfood.service.RicettaService;
+import it.uniroma3.siwfood.service.auth.UserService;
 
 
 @Controller
@@ -27,7 +30,13 @@ public class CuocoController {
     private CuocoService cuocoService;
 
     @Autowired
+    private RicettaService ricettaService;
+
+    @Autowired
     private ImmagineService immagineService;
+
+    @Autowired
+    private UserService userService;
 
 
     @GetMapping("/cuochi")
@@ -44,7 +53,7 @@ public class CuocoController {
 
     @GetMapping("/cuochi/search")
     public String getFormSearchCuoco() {
-        return "forms/formSearchCuoco.html";
+        return "forms/formCercaCuochi.html";
     }
 
     @PostMapping("/cuochi/byNomeAndCognome")  
@@ -62,7 +71,7 @@ public class CuocoController {
     @GetMapping("/admin/addCuoco")
     public String getFormNewCuoco(Model model) {
         model.addAttribute("cuoco", new Cuoco());
-        return "forms/formNewCuoco.html";
+        return "forms/formNuovoCuoco.html";
     }
 
     @PostMapping("/admin/addCuoco")
@@ -100,6 +109,27 @@ public class CuocoController {
     public String deleteCuocoById(@PathVariable("id") Long id) {
         cuocoService.deleteById(id);
         return "redirect:/cuochi";
+    }
+
+
+    @GetMapping("/cuoco/addRicetta/{cuoco_id}/{utente_id}")
+    public String getCuocoFormNewRicetta(@PathVariable("cuoco_id") Long idC, @PathVariable("utente_id") Long idU,Model model) {
+        
+        if(!(this.cuocoService.findById(idC).equals(this.userService.findById(idU).getCuoco()))){
+            return "redirect:/cuochi/" + idC;
+        }
+        
+        model.addAttribute("cuoco", this.cuocoService.findById(idC));
+        model.addAttribute("ricetta", new Ricetta());
+        return "forms/formNewRicettaCuoco.html";
+    }
+
+
+    @PostMapping("/cuoco/addRicetta/{cuoco_id}")
+    public String postCuocoNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
+        ricetta.setCuoco(this.cuocoService.findById(id));
+        this.ricettaService.save(ricetta);
+        return "redirect:/cuochi/" + id;
     }
 
         

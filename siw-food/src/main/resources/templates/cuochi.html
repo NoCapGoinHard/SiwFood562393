@@ -12,10 +12,10 @@
         <h1>Lista Cuochi</h1>
         
         <div>
-            <a href="/forms/formNuovoCuoco">Inserisci un nuovo cuoco</a>
+            <a href="/admin/addCuoco">Inserisci un nuovo cuoco</a>
         </div>
         <div>
-            <a href="/cuochi/cercaByNomeAndCognome">Cerca cuochi per nome e cognome</a>
+            <a href="/cuochi/search">Cerca cuochi per nome e cognome</a>
         </div>
 
 
@@ -24,9 +24,7 @@
         </div>
         <ul>
             <li th:each="cuoco : ${cuochi}">
-                <div>
-                    <img th:src="@{${cuoco.pathFoto}}" width="10%">
-                </div>
+
                 <a 
                     th:href="@{/cuoco/{id}(id=${cuoco.id})}">
                         <span 

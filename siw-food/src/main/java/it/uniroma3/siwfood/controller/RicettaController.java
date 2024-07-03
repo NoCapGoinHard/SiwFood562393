@@ -78,26 +78,6 @@ public class RicettaController {
         return "redirect:/cuochi/" + id;
     }
 
-    @GetMapping("/cuoco/addRicetta/{cuoco_id}/{utente_id}")
-    public String getCuocoFormNewRicetta(@PathVariable("cuoco_id") Long idC, @PathVariable("utente_id") Long idU,Model model) {
-        
-        if(!(this.cuocoService.findById(idC).equals(this.userService.findById(idU).getCuoco()))){
-            return "redirect:/cuochi/" + idC;
-        }
-        
-        model.addAttribute("cuoco", this.cuocoService.findById(idC));
-        model.addAttribute("ricetta", new Ricetta());
-        return "forms/formNewRicettaCuoco.html";
-    }
-
-
-    @PostMapping("/cuoco/addRicetta/{cuoco_id}")
-    public String postCuocoNewRicetta(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
-        ricetta.setCuoco(this.cuocoService.findById(id));
-        this.ricettaService.save(ricetta);
-        return "redirect:/cuochi/" + id;
-    }
-
     @GetMapping("/admin/editRicetta/{id}")
     public String getFormEditRicetta(@PathVariable("id") Long id, Model model) {
         model.addAttribute("ricetta", this.ricettaService.findById(id));

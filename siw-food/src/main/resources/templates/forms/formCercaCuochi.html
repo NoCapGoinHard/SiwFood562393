@@ -12,7 +12,7 @@
         <h1>Verranno poi mostrati tutti i cuochi i quali nome e cognome sono corrispondenti</h1>
         
 
-        <form action="#" th:action="@{/cuochi/trovati}" method = "post">
+        <form action="#" th:action="@{/cuochi/byNomeAndCognome}" method = "post">
             <div>
                 <label for="nome">Nome:</label>
                 <input type="text" name="nome" th:value="${nome}"/>
