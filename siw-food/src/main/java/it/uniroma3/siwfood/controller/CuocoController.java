@@ -70,7 +70,7 @@ public class CuocoController {
     @GetMapping("/admin/addCuoco")
     public String formNuovoCuocoAdmin(Model model) {
         model.addAttribute("cuoco", new Cuoco());
-        return "forms/formNuovoCuoco.html";
+        return "forms/formNuovoCuocoAdmin.html";
     }
     @PostMapping("/admin/addCuoco")
     public String formNuovoCuocoAdmin(@ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
@@ -105,6 +105,24 @@ public class CuocoController {
 
 
 
+    @GetMapping("/cuoco/editCuoco/{cuoco_id}/{user_id}")
+    public String formModificaCuocoDalCuoco(@PathVariable("cuoco_id") Long cuoco_id, @PathVariable("user_id") Long user_id, Model model) {
+        Cuoco cuoco = this.cuocoService.findById(cuoco_id);
+        if(userService.findById(user_id).getCuoco().equals(cuoco)) {
+            model.addAttribute("cuoco", this.cuocoService.findById(cuoco_id));
+            return "forms/formModificaCuocoDalCuoco.html";
+        }
+        else return "redirect:/cuochi";
+    }
+    @PostMapping("/cuoco/editCuoco/{cuoco_id}")
+    public String editCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
+        cuoco.setId(id);
+        this.cuocoService.save(cuoco);  
+        return "redirect:/cuochi/" + cuoco.getId();
+    }
+
+
+    //DAL SISTEMA
     @GetMapping("/admin/deleteCuoco/{cuoco_id}")
     public String deleteCuocoAdmin(@PathVariable("cuoco_id") Long id) {
         cuocoService.deleteById(id);

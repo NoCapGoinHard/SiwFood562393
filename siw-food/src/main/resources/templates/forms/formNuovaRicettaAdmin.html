@@ -17,7 +17,7 @@
             Inserire i dati e cliccare "conferma" per inserire la nuova ricetta
         </h1>
 
-        <form th:action="@{/cuochi/addRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}" method = "POST" th:object="${ricetta}">
+        <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" method = "POST" th:object="${ricetta}">
             <div>
                 <span th:text="${messaggioErrore}"> ERRORE </span>
             </div>

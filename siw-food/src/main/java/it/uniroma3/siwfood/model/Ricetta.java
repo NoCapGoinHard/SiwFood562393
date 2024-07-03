@@ -139,5 +139,13 @@ public class Ricetta {
         return true;
     }
  
+
+
+    public void addIngrediente(Ingrediente ingrediente) {
+        this.ingredienti.add(ingrediente);
+    }
+    public void removeIngrediente(Ingrediente ingrediente) {
+        this.ingredienti.remove(ingrediente);
+    }
 }
 

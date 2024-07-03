@@ -1,6 +1,5 @@
 package it.uniroma3.siwfood.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Allergene;
+import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Ingrediente;
+import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.AllergeneService;
 import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
+import it.uniroma3.siwfood.service.auth.UserService;
 
 @Controller
 public class IngredienteController {
@@ -29,6 +31,9 @@ public class IngredienteController {
 
     @Autowired
     private AllergeneService allergeneService;
+
+    @Autowired
+    private UserService userService;
     
 
 
@@ -63,12 +68,44 @@ public class IngredienteController {
         }
     }
 
+
+
+    @GetMapping("cuoco/rimuoviIngrediente/{ricetta_id}/{ingrediente_id}/{user_id}")
+    public String removeIngrediente(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("ingrediente_id") Long ingrediente_id, @PathVariable("user_id") Long user_id, Model model) {
+        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
+        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
+        Cuoco cuoco = ricetta.getCuoco();
+        if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
+            ricetta.removeIngrediente(ingrediente);
+            this.ingredienteService.deleteById(ingrediente_id);
+            this.ricettaService.save(ricetta);
+            return "redirect:/ricette/" + ricetta_id;
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
+            return "redirect:/ricette/" + ricetta_id;
+        }
+    }
+
+    @GetMapping("/admin/rimuoviIngrediente/{ricetta_id}/{ingrediente_id}")
+    public String removeIngrediente(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
+        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
+        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
+        ricetta.removeIngrediente(ingrediente);
+        this.ingredienteService.deleteById(ingrediente_id);
+        this.ricettaService.save(ricetta);
+        return "redirect:/ricette/" + ricetta_id;
+    }
+
+
+    //DAL SISTEMA
     @GetMapping("/admin/deleteIngrediente/{ingrediente_nome}")
     public String eliminaIngredienteByNome(@PathVariable("ingrediente_nome") String nome) {
         this.ingredienteService.deleteAllByNome(nome);
         return "redirect:/ingredienti";
     }
-    
+
+
     @GetMapping("/admin/aggiungiAllergene/{ingrediente_nome}")
     public String formAggiungiAllergene(@PathVariable("ingrediente_nome") String nome, Model model) {
         model.addAttribute("ingredienti", this.ingredienteService.findAllByNome(nome));
@@ -93,6 +130,9 @@ public class IngredienteController {
 
     }
 
+
+
+    //DAL SISTEMA
     @GetMapping("admin/eliminaAllergene/{ingrediente_nome}/{id_Allergene}")
     public String getMethodName(@PathVariable("ingrediente_nome") String nome, @PathVariable("id_Allergene") Long idAllergene) {
         Allergene allergene = this.allergeneService.findById(idAllergene);

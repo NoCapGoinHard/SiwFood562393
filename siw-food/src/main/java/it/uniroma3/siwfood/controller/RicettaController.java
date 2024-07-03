@@ -63,7 +63,7 @@ public class RicettaController {
 
 
     @GetMapping("/cuoco/editRicetta/{ricetta_id}/{user_id}")
-    public String formModificaRicettaAlCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id, Model model) {
+    public String formModificaRicettaDalCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id, Model model) {
         Cuoco cuoco = this.userService.findById(user_id).getCuoco();
         Ricetta ricetta = this.ricettaService.findById(ricetta_id);
         if(ricetta.getCuoco().equals(cuoco)) {
@@ -84,7 +84,7 @@ public class RicettaController {
     @GetMapping("/admin/editRicetta/{ricetta_id}")
     public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
         model.addAttribute("ricetta", this.ricettaService.findById(id));
-        return "forms/formModificaRicetta.html";
+        return "forms/formModificaRicettaAdmin.html";
     }
 
     @PostMapping("/admin/editRicetta/{ricetta_id}")
@@ -108,7 +108,7 @@ public class RicettaController {
     }
 
 
-
+    //DAL SISTEMA
     @GetMapping("/admin/deleteRicetta/{ricetta_id}")
     public String deleteRicettaAdmin(@PathVariable("ricetta_id") Long id) {
         this.ricettaService.deleteById(id);
@@ -141,7 +141,7 @@ public class RicettaController {
     public String formNuovaRicettaAdmin(@PathVariable("cuoco_id") Long id,Model model) {
         model.addAttribute("cuoco", this.cuocoService.findById(id));
         model.addAttribute("ricetta", new Ricetta());
-        return "forms/formNuovaRicettaAlCuoco.html";
+        return "forms/formNuovaRicettaAdmin.html";
     }
     @PostMapping("/admin/addRicetta/{cuoco_id}")
     public String addRicettaAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
@@ -149,22 +149,5 @@ public class RicettaController {
         this.ricettaService.save(ricetta);
         return "redirect:/cuochi/" + id;
     }
-
-    
-
-    
-
-
-    //TODO: EDIT RICETTA CUOCO
-    //TODO: DELETE RICETTA CUOCO
-
-
-   //@GetMapping("/ricette/aggiungiIngrediente/{ricetta_id}")
-   //@PostMapping("/ricette/removeIngrediente/{ricetta_id}")
-
-    //@GetMapping("/admin/modificaQuantita/{ingrediente_nome}")
-    //@PostMapping("/admin/modificaQuantita/{ingrediente_nome}")
-    //@GetMapping("/admin/modificaQuantita/{ingrediente_nome}")
-    //@PostMapping("/admin/modificaQuantita/{ingrediente_nome}")
 
 }
