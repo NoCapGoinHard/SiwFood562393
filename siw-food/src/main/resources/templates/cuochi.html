@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title> 
+            Cuochi   
+        </title> 
+    </head>
+
+    <body>
+        <h1>Lista Cuochi</h1>
+        
+        <div>
+            <a href="/forms/formNuovoCuoco">Inserisci un nuovo cuoco</a>
+        </div>
+        <div>
+            <a href="/cuochi/cercaByNomeAndCognome">Cerca cuochi per nome e cognome</a>
+        </div>
+
+
+        <div
+            th:if="${cuochi == null || cuochi.isEmpty()}">Non ci sono cuochi nel sistema che si chiamano in questo modo
+        </div>
+        <ul>
+            <li th:each="cuoco : ${cuochi}">
+                <div>
+                    <img th:src="@{${cuoco.pathFoto}}" width="10%">
+                </div>
+                <a 
+                    th:href="@{/cuoco/{id}(id=${cuoco.id})}">
+                        <span 
+                            th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
+                        </span>
+                </a>
+            </li>
+        </ul>
+    </body>
+
+
+</html>

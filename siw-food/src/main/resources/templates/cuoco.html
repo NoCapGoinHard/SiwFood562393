@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Cuoco</title>
+    </head>
+
+    <body>
+        <h1 th:unless="${cuoco}"> Non esistente </h1>
+        
+
+        <div>
+            <a th:href="@{/cuoco/{id}/modifica(id=${cuoco.id})}">Modifica il profilo del cuoco</a>
+        </div>
+        <div>
+            <a th:href="@{/cuoco/{id}/elimina(id=${cuoco.id})}">Cancella il profilo del cuoco</a>
+        </div>
+
+
+        <div th:if="${cuoco}">
+            <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>
+            <div th:if="${cuoco}">
+                <p th:text="'(' + 'nato il:' + ' ' + ${cuoco.dataNascita} +')'"></p>
+                <p> <img width="10%" th:src="${cuoco.pathFoto}"/> </p>
+            </div>
+        </div>
+
+        <div>
+            <h2>Ricette proposte dal cuoco</h2>
+            <div th:if="${cuoco.ricette.isEmpty()}">
+                <p>Il cuoco non ha ancora proposto alcuna ricetta</p>
+            </div>
+            <ul th:unless="${cuoco.ricette.isEmpty()}">
+                 <li th:each="ricetta : ${cuoco.ricette}">
+                    <!--
+                    <span th:text="${ricetta.nome}"></span>
+                    <span th:text="${ricetta.descrizione}"></span>
+                    -->
+                    <a th:href="@{/ricetta/{id}(id=${ricetta.id})}" th:text="${ricetta.nome}"></a>
+                    <span th:text="' - ' + ${ricetta.descrizione}"></span>
+                </li>
+            </ul>
+            <a th:href="@{/forms/formNuovaRicetta}">Inserisci una nuova ricetta</a>
+        </div> 
+
+
+    </body>
+    
+</html>

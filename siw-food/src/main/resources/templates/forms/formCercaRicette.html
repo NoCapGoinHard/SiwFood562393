@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Ricerca Ricette</title>
+    </head>
+
+    <body>
+        
+        <h1>Verranno mostrate tutte le ricette col nome cercato</h1>
+        
+
+        <form action="#" th:action="@{/ricette/trovate}" method = "post">
+            <div>
+                <label for="nome">Inserisci il nome</label>
+                <input type="text" name="nome" th:value="${nome}"/>
+            </div>
+            <div>
+                <button type="submit">
+                    Cerca
+                </button>
+            </div>
+        </form>
+
+    </body>
+
+</html>

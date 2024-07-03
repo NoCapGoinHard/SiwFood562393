@@ -48,7 +48,7 @@ public class AuthenticationController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
 
-        return "home.html";
+        return "index.html";
     }
 
     //LOGIN
@@ -63,7 +63,7 @@ public class AuthenticationController {
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Credentials credentials = this.credentialsService.getCredentialsByUsername(userDetails.getUsername());
 
-        return "home.html";
+        return "index.html";
     }
 
 

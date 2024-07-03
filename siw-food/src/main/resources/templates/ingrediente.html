@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Scheda Ingrediente</title>
+    </head>
+
+    <body>
+        <h1>Dettagli</h1>
+
+        <div>
+            <a th:href="@{/ingrediente/{nome}/aggiungiAllergene(nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
+        </div>
+        <div>
+            <a th:href="@{/ingrediente/{nome}/elimina(nome=${ingrediente.nome})}">Cancella questo ingrediente</a>
+        </div>
+
+
+        <div th:if="${ingrediente}">
+            <h2 th:text="${ingrediente.nome}">Nome:</h2>
+        </div>
+
+        <div>
+            <div>
+                <h2>Scheda allergeni</h2>
+                
+                <!-- Mostra il messaggio se non ci sono allergeni -->
+                <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni.</p>
+                
+                <!-- Mostra la lista degli allergeni solo se non è vuota -->
+                <ul th:if="${!ingrediente.allergeni.isEmpty()}">
+                    <li th:each="allergene : ${ingrediente.allergeni}">
+                        <span th:text="${allergene.nome}"></span>
+                        <a th:href="@{/ingrediente/{nome}/eliminaAllergene/{idAllergene}(nome=${ingrediente.nome}, idAllergene=${allergene.id})}" th:text="Rimuovi"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+
+    </body>
+
+
+
+
+</html>

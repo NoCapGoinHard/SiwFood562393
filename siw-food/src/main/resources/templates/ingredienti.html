@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Ingredienti sul sito</title>
+    </head>
+
+    <body>
+        <div>
+            <a href="/ingredienti/cercaIngrediente">Cerca ingrediente per nome</a>
+        </div>
+
+        <div th:if="${ingredienti == null || ingredienti.isEmpty()}">
+            Non ci sono ingredienti con questo nome    
+        </div>
+        <ul>
+            <li th:each="ingrediente : ${ingredienti}">
+                <span>
+                    <a th:href="@{/ingrediente/{nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                </span>
+                <span>
+                    <a th:href="@{/ingrediente/{nome}/elimina(nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
+                </span>
+            </li>
+        </ul>
+
+    </body>
+    
+   
+
+
+</html>
+

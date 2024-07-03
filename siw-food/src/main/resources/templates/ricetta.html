@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Scheda Ricetta</title>
+    </head>
+
+    <body>
+        <h1>Dettagli</h1>
+
+        <div>
+            <a th:href="@{/ricetta/{id}/modifica(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
+        </div>
+        <div>
+            <a th:href="@{/ricetta/{id}/elimina(id=${ricetta.id})}">Cancella questa ricetta</a>
+        </div>
+
+        <div th:if="${ricetta}">
+            <h2 th:text="${ricetta.nome}">Nome:</h2>
+            <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
+            <p> <img width="10%" th:src="@{${ricetta.pathFoto}}"/> </p>
+        </div>
+
+        <div>
+            <h2>Ingredienti</h2>
+            <div>
+                <a th:href="@{/ricetta/{id}/modifica/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
+            </div>
+            <ul>
+                <li th:each="ingrediente : ${ricetta.ingredienti}">
+                    <!--<span th:text="${ingrediente.nome}"></span>-->
+                    <a th:href="@{/ingrediente/{nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                    <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
+                    <span>
+                        <a th:href="@{/ricetta/{idRicetta}/eliminaIngrediente/{idIngrediente}(idRicetta = ${ricetta.id}, idIngrediente = ${ingrediente.id})}">Rimuovi ingrediente</a>
+                    </span>
+                    
+                    <div>
+                        <h7>ALLERGENI:</h7>
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni</p>
+                        <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
+                            <li th:each="allergene : ${ingrediente.allergeni}">
+                                <span th:text="${allergene.nome}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
+                </li>
+            </ul>
+        </div>
+
+        <div>
+            <span>Proposta da:</span>
+            <span>
+                <a th:href="@{/cuoco/{id}(id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
+            </span>
+        </div>
+        
+
+    </body>
+
+
+
+
+</html>
