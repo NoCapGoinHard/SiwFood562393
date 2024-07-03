@@ -1,6 +1,7 @@
 package it.uniroma3.siwfood.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class Ricetta {
     private List<Immagine> immagini;
 
     @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
-    private Set<Ingrediente> ingredienti = new HashSet<>();
+    private List<Ingrediente> ingredienti = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "cuoco_id")
@@ -80,11 +81,11 @@ public class Ricetta {
         this.immagini = immagini;
     }
 
-    public Set<Ingrediente> getIngredienti() {
+    public List<Ingrediente> getIngredienti() {
         return this.ingredienti;
     }
 
-    public void setIngredienti(Set<Ingrediente> ingredienti) {
+    public void setIngredienti(List<Ingrediente> ingredienti) {
         this.ingredienti = ingredienti;
     }
 

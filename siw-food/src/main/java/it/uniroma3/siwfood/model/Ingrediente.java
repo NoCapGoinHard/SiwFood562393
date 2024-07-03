@@ -1,7 +1,7 @@
 package it.uniroma3.siwfood.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,16 +34,16 @@ public class Ingrediente {
     @JoinTable( name = "ingrediente_allergene",
                 joinColumns = @JoinColumn(name = "ingredienteId"),
                 inverseJoinColumns = @JoinColumn(name = "allergeneId"))
-    private Set<Allergene> allergeni = new HashSet<>();
+    private List<Allergene> allergeni = new ArrayList<>();
 
-
+    
     public Ingrediente(){}
 
     
     public Long getId() {
         return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
     }
@@ -55,24 +55,34 @@ public class Ingrediente {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
+    
     public String getQuantita() {
         return quantita;
     }
-
+    
     public void setQuantita(String quantita) {
         this.quantita = quantita;
     }
-
+    
     public Ricetta getRicetta() {
         return ricetta;
     }
-
+    
     public void setRicetta(Ricetta ricetta) {
         this.ricetta = ricetta;
     }
- 
+    
+    
+    public List<Allergene> getAllergeni() {
+            return allergeni;
+        }
 
+
+    public void setAllergeni(List<Allergene> allergeni) {
+        this.allergeni = allergeni;
+    }
+    
+    
     
     @Override
     public int hashCode() {

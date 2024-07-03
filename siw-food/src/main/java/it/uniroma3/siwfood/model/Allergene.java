@@ -1,8 +1,7 @@
 package it.uniroma3.siwfood.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -19,7 +18,7 @@ public class Allergene {
     private Long id;
     private String nome;
     @ManyToMany(mappedBy = "allergeni", cascade = CascadeType.ALL)
-    private Set<Ingrediente> ingredientiCoinvolti = new HashSet<>();
+    private List<Ingrediente> ingredientiCoinvolti = new ArrayList();
 
 
     public Allergene() {}
@@ -40,11 +39,11 @@ public class Allergene {
         this.nome = nome;
     }
 
-    public Set<Ingrediente> getIngredientiCoinvolti() {
+    public List<Ingrediente> getIngredientiCoinvolti() {
         return ingredientiCoinvolti;
     }
 
-    public void setIngredientiCoinvolti(Set<Ingrediente> ingredientiCoinvolti) {
+    public void setIngredientiCoinvolti(List<Ingrediente> ingredientiCoinvolti) {
         this.ingredientiCoinvolti = ingredientiCoinvolti;
     }
 
