@@ -37,21 +37,21 @@ public class IngredienteController {
     
 
 
-    @GetMapping("/ingredienti")
+    @GetMapping("/admin/ingredienti")
     public String ingredienti(Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findDistinctNomi();
         model.addAttribute("ingredienti", ingredienti);
         return "ingredienti.html";
     }
 
-    @GetMapping("/ingredienti/{ingrediente_nome}")
+    @GetMapping("/admin/ingredienti/{ingrediente_nome}")
     public String ingrediente(@PathVariable("ingrediente_nome") String nome, Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         model.addAttribute("ingrediente", ingredienti.get(0));
         return "ingrediente.html";
     }
 
-    @GetMapping("/ingredienti/search")
+    @GetMapping("/admin/ingredienti/search")
     public String cercaIngrediente() {
         return "forms/formCercaIngrediente.html";
     }
@@ -64,37 +64,75 @@ public class IngredienteController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non ci sono ingredienti con questo nome");
-            return "forms/formCercaIngrediente.html";
+            return "forms/formCercaIngredienteSoloAdmin.html";
         }
     }
 
 
 
-    @GetMapping("cuoco/rimuoviIngrediente/{ricetta_id}/{ingrediente_id}/{user_id}")
-    public String removeIngrediente(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("ingrediente_id") Long ingrediente_id, @PathVariable("user_id") Long user_id, Model model) {
-        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
+    @GetMapping("cuoco/rimuoviIngrediente{ingrediente_id}/{user_id}")
+    public String removeIngredienteCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, @PathVariable("user_id") Long user_id, Model model) {
         Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
+        Ricetta ricetta = ingrediente.getRicetta();
         Cuoco cuoco = ricetta.getCuoco();
         if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
             ricetta.removeIngrediente(ingrediente);
             this.ingredienteService.deleteById(ingrediente_id);
             this.ricettaService.save(ricetta);
-            return "redirect:/ricette/" + ricetta_id;
+            return "redirect:/ricette/" + ingrediente.getRicetta().getId();
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
+            return "redirect:/ricette/" + ingrediente.getRicetta().getId();
+        }
+    }
+
+    @GetMapping("/admin/rimuoviIngrediente/{ingrediente_id}")
+    public String removeIngredienteAdmin(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
+        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
+        Ricetta ricetta = ingrediente.getRicetta();
+        ricetta.removeIngrediente(ingrediente);
+        this.ingredienteService.deleteById(ingrediente_id);
+        this.ricettaService.save(ricetta);
+        return "redirect:/ricette/" + ricetta_id;
+    }
+
+
+
+    @GetMapping("/cuoco/aggiungiIngrediente/{ricetta_id}/{user_id}")
+    public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id, Model model) {
+        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
+        Cuoco cuoco = ricetta.getCuoco();
+        if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
+            model.addAttribute("ingrediente", new Ingrediente());
+            return "forms/formAggiungiIngredienteDalCuoco.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
             return "redirect:/ricette/" + ricetta_id;
         }
     }
+    @PostMapping("cuoco/aggiungiIngrediente/{ricetta_id}")
+    public String aggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
+        ingrediente.setRicetta(this.ricettaService.findById(ricetta_id));
+        this.ricettaService.findById(ricetta_id).addIngrediente(ingrediente);
+        this.ingredienteService.save(ingrediente);
+        return "redirect:/ricette/" + ingrediente.getRicetta().getId();
+    }
 
-    @GetMapping("/admin/rimuoviIngrediente/{ricetta_id}/{ingrediente_id}")
-    public String removeIngrediente(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
-        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
-        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
-        ricetta.removeIngrediente(ingrediente);
-        this.ingredienteService.deleteById(ingrediente_id);
-        this.ricettaService.save(ricetta);
-        return "redirect:/ricette/" + ricetta_id;
+
+
+    @GetMapping("/admin/aggiungiIngrediente/{ricetta_id}")
+    public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, Model model) {
+        model.addAttribute("ingrediente", new Ingrediente());
+        return "forms/formAggiungiIngredienteAdmin.html";
+    }
+    @PostMapping("admin/aggiungiIngrediente/{ricetta_id}")
+    public String aggiungiIngredienteAdmin(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
+        ingrediente.setRicetta(this.ricettaService.findById(ricetta_id));
+        this.ricettaService.findById(ricetta_id).addIngrediente(ingrediente);
+        this.ingredienteService.save(ingrediente);
+        return "redirect:/ricette/" + ingrediente.getRicetta().getId();
     }
 
 
@@ -146,9 +184,8 @@ public class IngredienteController {
     public String formAggiungiAllergene(@PathVariable("ingrediente_nome") String nome, Model model) {
         model.addAttribute("ingredienti", this.ingredienteService.findAllByNome(nome));
         model.addAttribute("allergene", new Allergene());
-        return "forms/formAggiungiAllergene.html";
+        return "forms/formAggiungiAllergeneSoloAdmin.html";
     }
-
     @PostMapping("/admin/aggiungiAllergene/{ingrediente_nome}")
     public String formAggiungiAllergene(@PathVariable("ingrediente_nome") String nome, @ModelAttribute("allergene") Allergene allergene, Model model) {
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);

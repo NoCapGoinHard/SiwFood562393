@@ -16,7 +16,10 @@
             <input type="text" id="descrizione" th:field="*{descrizione}" />
         </div>
         <div>
-            <a th:href="@{/ricette/aggiungiIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}">Aggiungi ingrediente</a>
+            <a th:href="@{/admin/aggiungiIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}">Aggiungi ingrediente</a>
+        </div>
+        <div>
+            <a th:href="@{/cuoco/aggiungiIngrediente/{ricetta_id}/{user_id}(ricetta_id=${ricetta.id}, user_id=${credentials.user.id})}">Aggiungi ingrediente</a>
         </div>
         <div>
             <button type="submit">Conferma modifiche</button>

@@ -8,7 +8,7 @@
 
     
     <body>
-        <form th:action="@{/cuoco/editIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}" th:object="${ingrediente}" method = "post">
+        <form th:action="@{/cuoco/editIngrediente/{ingrediente_id}/{user_id}(ingrediente_id=${ingrediente.id}, user_id=${credentials.user.id})}" th:object="${ingrediente}" method = "post">
             <div>
                 <label for="nome">Ingrediente:</label>
                 <input type="text" id="nome" th:field="*{nome}"/>
