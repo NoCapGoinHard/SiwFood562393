@@ -121,7 +121,7 @@ public class CuocoController {
         
         model.addAttribute("cuoco", this.cuocoService.findById(idC));
         model.addAttribute("ricetta", new Ricetta());
-        return "forms/formNewRicettaCuoco.html";
+        return "forms/formNuovaRicettaCuoco.html";
     }
 
 

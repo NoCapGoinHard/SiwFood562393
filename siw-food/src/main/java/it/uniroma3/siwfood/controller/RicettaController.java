@@ -47,7 +47,7 @@ public class RicettaController {
 
     @GetMapping("/ricette/search")
     public String getFormSearchRicetta() {
-        return "forms/formSearchRicetta.html";
+        return "forms/formCercaRicette.html";
     }
   
     @PostMapping("/ricette/byNome")

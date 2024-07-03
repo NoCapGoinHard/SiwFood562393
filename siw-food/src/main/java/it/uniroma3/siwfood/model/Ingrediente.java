@@ -30,7 +30,7 @@ public class Ingrediente {
     private Ricetta ricetta;
 
 
-        @ManyToMany
+    @ManyToMany
     @JoinTable( name = "ingrediente_allergene",
                 joinColumns = @JoinColumn(name = "ingredienteId"),
                 inverseJoinColumns = @JoinColumn(name = "allergeneId"))

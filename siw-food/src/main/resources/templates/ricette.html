@@ -12,7 +12,10 @@
         <h1>Lista Ricette</h1>
 
         <div>
-            <a href="/ricette/cercaRicette">Cerca ricette per nome</a>
+            <a href="/ricette/search">Cerca ricette per nome</a>
+        </div>
+        <div>
+            <a thhref="/ricette/search">Cerca ricette per nome</a>
         </div>
 
         <div
@@ -24,7 +27,7 @@
                 <div>
                     <img th:src="@{${ricetta.pathFoto}}" width="10%">
                 </div>
-                <a th:href="@{/ricetta/{id}(id=${ricetta.id})}">
+                <a th:href="@{/ricette/{id}(id=${ricetta.id})}">
                    <span th:text="${ricetta.nome}"></span>
                 </a>
             </li>

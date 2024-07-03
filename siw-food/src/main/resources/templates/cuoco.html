@@ -42,6 +42,7 @@
                 </li>
             </ul>
             <a th:href="@{/cuoco/addRicetta/{cuoco_id}/{utente_id}(cuoco_id=${cuoco.id}, utente_id=${user.id})}">Inserisci una nuova ricetta</a>
+            <a th:href="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Assegna una nuova ricetta a questo cuoco</a>
         </div> 
 
 

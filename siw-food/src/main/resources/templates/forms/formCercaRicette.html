@@ -12,7 +12,7 @@
         <h1>Verranno mostrate tutte le ricette col nome cercato</h1>
         
 
-        <form action="#" th:action="@{/ricette/trovate}" method = "post">
+        <form action="#" th:action="@{/ricette/byNome}" method = "post">
             <div>
                 <label for="nome">Inserisci il nome</label>
                 <input type="text" name="nome" th:value="${nome}"/>

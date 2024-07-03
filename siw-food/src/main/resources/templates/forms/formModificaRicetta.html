@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Modifica la scheda della ricetta</h1>
-    <form th:action="@{/ricetta/{id}/aggiorna(id=${ricetta.id})}" th:object="${ricetta}" method="post">
+    <form th:action="@{/admin/editRicetta/{id}/(id=${ricetta.id})}" th:object="${ricetta}" method="post">
         <div>
             <label for="nome">Modifica nome:</label>
             <input type="text" id="nome" th:field="*{nome}" />
@@ -15,8 +15,8 @@
             <label for="descrizione">Modifica descrizione:</label>
             <input type="text" id="descrizione" th:field="*{descrizione}" />
         </div>
-        <!-- <div>
-            <a th:href="@{/ricetta/{id}/modifica/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
+        <!-- GIA REFACTORATO <div>
+            <a th:href="@{/ricetta/{id}/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
         </div> -->
         <div>
             <label for="pathFoto">Inserisci la nuova immagine:</label>

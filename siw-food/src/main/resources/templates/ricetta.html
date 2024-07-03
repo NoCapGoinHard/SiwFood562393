@@ -11,10 +11,10 @@
         <h1>Dettagli</h1>
 
         <div>
-            <a th:href="@{/ricetta/{id}/modifica(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
+            <a th:href="@{/admin/editRicetta/{id}(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
         </div>
         <div>
-            <a th:href="@{/ricetta/{id}/elimina(id=${ricetta.id})}">Cancella questa ricetta</a>
+            <a th:href="@{/admin/deleteRicetta/{id}(id=${ricetta.id})}">Cancella questa ricetta</a>
         </div>
 
         <div th:if="${ricetta}">
@@ -26,7 +26,7 @@
         <div>
             <h2>Ingredienti</h2>
             <div>
-                <a th:href="@{/ricetta/{id}/modifica/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
+                <a th:href="@{/ricetta/{id}/aggiungiIngrediente(id=${ricetta.id})}">Aggiungi ingrediente</a>
             </div>
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
@@ -54,7 +54,7 @@
         <div>
             <span>Proposta da:</span>
             <span>
-                <a th:href="@{/cuoco/{id}(id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
+                <a th:href="@{/cuochi/{id}(id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
             </span>
         </div>
         
