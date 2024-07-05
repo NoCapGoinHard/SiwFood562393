@@ -39,6 +39,11 @@ public class Ingrediente {
     
     public Ingrediente(){}
 
+    public Ingrediente(String nome, String quantita, Ricetta ricetta){
+        this.nome = nome;
+        this.quantita = quantita;
+        this.ricetta = ricetta;
+    }
     
     public Long getId() {
         return id;

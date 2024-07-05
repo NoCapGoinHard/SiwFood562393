@@ -33,7 +33,7 @@ public class Credentials {
     private String password;
     
     @Column(nullable = false)
-    private String role;
+    private String ruolo;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private User user;
@@ -66,12 +66,12 @@ public class Credentials {
         this.password = password;
     }
     
-    public String getRole() {
-        return role;
+    public String getRuolo() {
+        return ruolo;
     }
     
-    public void setRole(String role) {
-        this.role = role;
+    public void setRuolo(String ruolo) {
+        this.ruolo = ruolo;
     }
     
     public User getUser() {
@@ -114,7 +114,7 @@ public class Credentials {
     
     
     public boolean isAdmin(){
-        return this.role.equals(UTENTE_AMMINISTRATORE);
+        return this.ruolo.equals(UTENTE_AMMINISTRATORE);
     }
 
     

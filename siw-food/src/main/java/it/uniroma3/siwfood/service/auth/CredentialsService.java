@@ -26,12 +26,9 @@ public class CredentialsService {
         return this.credentialsRepository.findByUsername(username).get();
     }
 
-    public Credentials saveCredentials(Credentials credentials){
-
-
+    public Credentials save(Credentials credentials){
         credentials.setPassword(this.passwordEncoder.encode(credentials.getPassword()));
         return this.credentialsRepository.save(credentials);
-    
     }
 
 

@@ -44,6 +44,18 @@ public class Ricetta {
 
     public Ricetta(){}
 
+    public Ricetta(String nome, String descrizione) {
+        this.nome = nome;
+        this.descrizione = descrizione;
+    }
+
+    public Ricetta(String nome, String descr, List<Immagine> immagini, List<Ingrediente> ingr, Cuoco cuoco) {
+        this.nome = nome;
+        this.descrizione = descr;
+        this.immagini = immagini;
+        this.ingredienti = ingr;
+        this.cuoco = cuoco;
+    }
 
     public Immagine getFirstImmagine(){
         return this.immagini.get(0);

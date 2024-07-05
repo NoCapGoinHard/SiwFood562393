@@ -72,57 +72,82 @@ public class AuthenticationController {
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
         
-        model.addAttribute("cuoco", new Cuoco());
         model.addAttribute("utente", new User());
         model.addAttribute("credentials", new Credentials());
 
         return "auth/register.html";
     }
     
-    @PostMapping("/register")
-    public String postNewUtente(@Valid @ModelAttribute("user") User user, 
-                                BindingResult utenteBindingResult, 
-                                @Valid @ModelAttribute("credentials") Credentials credentials, 
-                                BindingResult credentialsBindingResult, 
-                                @ModelAttribute("cuoco") Cuoco cuoco, 
-                                @RequestParam("immagine") MultipartFile immagine,
-                                Model model) throws IOException {
+//    @PostMapping("/register")
+//    public String postNewUtente(@Valid @ModelAttribute("user") User user, 
+//                                BindingResult utenteBindingResult, 
+//                                @Valid @ModelAttribute("credentials") Credentials credentials, 
+//                                BindingResult credentialsBindingResult, 
+//                                @ModelAttribute("cuoco") Cuoco cuoco, 
+//                                @RequestParam("immagine") MultipartFile immagine,
+//                                Model model) throws IOException {
+//
+//        if(!immagine.isEmpty()){
+//            Immagine img = new Immagine();
+//            img.setFileName(immagine.getOriginalFilename());
+//            img.setImageData(immagine.getBytes());
+//            if (cuoco.getImmagini() == null) {
+//                cuoco.setImmagini(new ArrayList<>());
+//            }
+//            cuoco.getImmagini().add(img);
+//            this.immagineService.save(img);
+//        }
+//        
+//        if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()){
+//            
+//            
+//
+//            cuoco.setNome(user.getNome());
+//            cuoco.setCognome(user.getCognome());
+//            cuoco.setDataNascita(user.getDataNascita());
+//            cuocoService.save(cuoco);
+//
+//            user.setCuoco(cuoco);
+//            userService.save(user);
+//
+//
+//            credentials.setUser(user);
+//            credentials.setRuolo(Credentials.UTENTE_CUOCO);
+//            
+//            credentialsService.save(credentials);
+//            
+//            model.addAttribute("user", user);
+//
+//            return "redirect:/";
+//        }
+//        
+//        return "auth/register.html";
+//    }
 
-        if(!immagine.isEmpty()){
-            Immagine img = new Immagine();
-            img.setFileName(immagine.getOriginalFilename());
-            img.setImageData(immagine.getBytes());
-            if (cuoco.getImmagini() == null) {
-                cuoco.setImmagini(new ArrayList<>());
-            }
-            cuoco.getImmagini().add(img);
-            this.immagineService.save(img);
-        }
-        
-        if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()){
-            
-            
 
-            cuoco.setNome(user.getNome());
-            cuoco.setCognome(user.getCognome());
-            cuoco.setDataNascita(user.getDataNascita());
-            cuocoService.save(cuoco);
+    @PostMapping(value = { "/register" })
+    public String registerUser(@ModelAttribute("user") User user,
+            BindingResult userBindingResult,
 
-            user.setCuoco(cuoco);
+            @ModelAttribute("credential") Credentials credentials,
+            BindingResult credentialsBindingResult,
+            @RequestParam("immagine") MultipartFile immagine,
+            Model model) throws IOException {
+
+        if (!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             userService.save(user);
-
-
             credentials.setUser(user);
-            credentials.setRole(Credentials.UTENTE_CUOCO);
-            
-            credentialsService.saveCredentials(credentials);
-            
+            Cuoco cuoco = new Cuoco(user);
+            cuocoService.save(cuoco);
+            // credentials.setPassword(passwordEncoder.encode(credentials.getPassword()));
+            //
+            credentials.setRuolo(Credentials.UTENTE_CUOCO);
+            credentialsService.save(credentials);
             model.addAttribute("user", user);
 
             return "redirect:/";
         }
-        
-        return "auth/register.html";
+        return "register.html";
     }
     
     

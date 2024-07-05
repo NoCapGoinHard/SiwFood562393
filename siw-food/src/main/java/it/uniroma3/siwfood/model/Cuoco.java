@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import it.uniroma3.siwfood.model.auth.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -43,6 +44,20 @@ public class Cuoco {
 
 
     public Cuoco(){}
+
+    public Cuoco(User user) {
+        this.nome = user.getNome();
+        this.cognome = user.getCognome();
+        this.dataNascita = user.getDataNascita();
+    }
+
+    public Cuoco(String nome, String cognome, List<Immagine> immagini, LocalDate dataNascita, List<Ricetta> ricette) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.immagini = immagini;
+        this.dataNascita = dataNascita;
+        this.ricette = ricette;
+    }
 
 
     public Immagine getFirstImmagine(){
