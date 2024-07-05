@@ -26,8 +26,12 @@ public class CuocoService {
         this.cuocoRepository.save(cuoco);
     }
 
-    public List<Cuoco> findAllByNomeAndCognome(String nome, String cognome) {
-        return this.cuocoRepository.findAllByNomeAndCognome(nome, cognome);
+//  public List<Cuoco> findAllByNomeAndCognome(String nome, String cognome) {
+//      return this.cuocoRepository.findAllByNomeAndCognome(nome, cognome);
+//  }
+
+    public Cuoco findByNomeAndCognome(String nome, String cognome) {
+        return this.cuocoRepository.findByNomeAndCognome(nome, cognome);
     }
 
 

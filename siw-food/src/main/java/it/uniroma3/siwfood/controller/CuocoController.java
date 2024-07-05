@@ -16,13 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
+import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.auth.UserService;
 
 
 @Controller
-public class CuocoController {
+public class CuocoController extends GlobalController{
 
     @Autowired
     private CuocoService cuocoService;
@@ -59,7 +60,7 @@ public class CuocoController {
     }
     @PostMapping("/cuochi/byNomeAndCognome")  
     public String byNome(@RequestParam String nome, @RequestParam String cognome, Model model) {
-        model.addAttribute("cuochi", this.cuocoService.findAllByNomeAndCognome(nome, cognome));
+        model.addAttribute("cuochi", this.cuocoService.findByNomeAndCognome(nome, cognome));
         return "cuochi.html";
     }
 
@@ -98,6 +99,41 @@ public class CuocoController {
     public String editCuocoAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
         cuoco.setId(id);
         this.cuocoService.save(cuoco);  
+        return "redirect:/cuochi/" + cuoco.getId();
+    }
+
+    @GetMapping("/admin/editCuoco/{cuoco_id}")
+    public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
+        User user = getCredentials().getUser();
+        if ((!getCredentials().isAdmin()
+                && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id)
+                || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+            return "redirect:/error";
+        }
+        model.addAttribute("cuoco", this.cuocoService.findById(id));
+        return "formEditCuoco.html";
+    }
+
+    @PostMapping("/admin/editCuoco/{cuoco_id}")
+    public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco,
+            @RequestParam("immagine") MultipartFile immagine)
+            throws IOException {
+        cuoco.setId(id);
+
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (cuoco.getImmagini().isEmpty()) {
+                cuoco.getImmagini().add(img);
+            } else {
+                cuoco.getImmagini().clear();
+                cuoco.getImmagini().add(img);
+            }
+            immagineService.save(img);
+        }
+
+        this.cuocoService.save(cuoco);
         return "redirect:/cuochi/" + cuoco.getId();
     }
 

@@ -39,8 +39,8 @@ public class AuthenticationController {
     @Autowired
     private CuocoService cuocoService;
 
-    @Autowired
-    private ImmagineService immagineService;
+    //@Autowired
+    //private ImmagineService immagineService;
     
 
     @GetMapping("/")

@@ -19,7 +19,7 @@ import it.uniroma3.siwfood.service.auth.UserService;
 
 
 @Controller
-public class RicettaController {
+public class RicettaController extends GlobalController {
     
     @Autowired
     private RicettaService ricettaService;
