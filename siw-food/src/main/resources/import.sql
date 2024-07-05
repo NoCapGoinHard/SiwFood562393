@@ -1,11 +1,11 @@
 /*popolamento cuochi*/
-INSERT INTO Cuoco (id, nome, cognome, data_nascita, path_Foto) VALUES (nextval('cuoco_seq'), 'Cuoco1', 'Cognome1', '19-12-2001', '/images/cuocomatto1.jpg');
-INSERT INTO Cuoco (id, nome, cognome, data_nascita, path_Foto) VALUES (nextval('cuoco_seq'), 'Cuoco2', 'Cognome2', '19-12-2002', '/images/cuocomatto2.jpg');
+INSERT INTO Cuoco (id, nome, cognome, data_nascita) VALUES (nextval('cuoco_seq'), 'Cuoco1', 'Cognome1', '19-12-2001');
+INSERT INTO Cuoco (id, nome, cognome, data_nascita) VALUES (nextval('cuoco_seq'), 'Cuoco2', 'Cognome2', '19-12-2002');
 
 
 /*popolamento ricette*/
-INSERT INTO Ricetta(id, nome, descrizione, cuoco_id, path_Foto) VALUES (nextval('ricetta_seq'), 'Torta', 'Torta ai carboni passivi', (SELECT id FROM Cuoco WHERE nome = 'Cuoco1' AND cognome = 'Cognome1'), '/images/tortabruciata.jpg');
-INSERT INTO Ricetta(id, nome, descrizione, cuoco_id, path_Foto) VALUES (nextval('ricetta_seq'), 'Pane', 'Pane ai carboni passivi', (SELECT id FROM Cuoco WHERE nome = 'Cuoco2' AND cognome = 'Cognome2'), '/images/panebruciato.jpg');
+INSERT INTO Ricetta(id, nome, descrizione, cuoco_id) VALUES (nextval('ricetta_seq'), 'Torta', 'Torta ai carboni passivi', (SELECT id FROM Cuoco WHERE nome = 'Cuoco1' AND cognome = 'Cognome1'));
+INSERT INTO Ricetta(id, nome, descrizione, cuoco_id) VALUES (nextval('ricetta_seq'), 'Pane', 'Pane ai carboni passivi', (SELECT id FROM Cuoco WHERE nome = 'Cuoco2' AND cognome = 'Cognome2'));
 
 
 /*////////////////////popolamento ingredienti*/

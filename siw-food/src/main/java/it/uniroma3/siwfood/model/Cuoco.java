@@ -8,6 +8,7 @@ import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class Cuoco {
     private LocalDate dataNascita;
     
     @ElementCollection
+    @Column(nullable = true)
     private List<Immagine> immagini;
     
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL)

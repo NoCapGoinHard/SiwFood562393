@@ -3,7 +3,9 @@ package it.uniroma3.siwfood.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class Ricetta {
     private String descrizione;
 
     @ElementCollection
+    @Column(nullable = true)
     private List<Immagine> immagini;
 
     @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
