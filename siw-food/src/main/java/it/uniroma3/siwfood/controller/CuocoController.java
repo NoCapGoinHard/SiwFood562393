@@ -90,17 +90,17 @@ public class CuocoController extends GlobalController{
 
 
 
-    @GetMapping("/admin/editCuoco/{cuoco_id}")
-    public String formModificaCuocoAdmin(@PathVariable("cuoco_id") Long id, Model model) {
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "forms/formModificaCuocoAdmin.html";
-    }
-    @PostMapping("/admin/editCuoco/{cuoco_id}")
-    public String editCuocoAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
-        cuoco.setId(id);
-        this.cuocoService.save(cuoco);  
-        return "redirect:/cuochi/" + cuoco.getId();
-    }
+//    @GetMapping("/admin/editCuoco/{cuoco_id}")
+//    public String formModificaCuocoAdmin(@PathVariable("cuoco_id") Long id, Model model) {
+//        model.addAttribute("cuoco", this.cuocoService.findById(id));
+//        return "forms/formModificaCuocoAdmin.html";
+//    }
+//    @PostMapping("/admin/editCuoco/{cuoco_id}")
+//    public String editCuocoAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
+//        cuoco.setId(id);
+//        this.cuocoService.save(cuoco);  
+//        return "redirect:/cuochi/" + cuoco.getId();
+//    }
 
     @GetMapping("/admin/editCuoco/{cuoco_id}")
     public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
