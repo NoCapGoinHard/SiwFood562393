@@ -46,6 +46,7 @@ public class AuthenticationController {
     @GetMapping("/")
     public String getHomePage() {
 
+        @SuppressWarnings("unused")
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
 
         return "index.html";
@@ -61,6 +62,7 @@ public class AuthenticationController {
     public String getHomeAfterLogin(Model model) {
         
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        @SuppressWarnings("unused")
         Credentials credentials = this.credentialsService.getCredentialsByUsername(userDetails.getUsername());
 
         return "index.html";

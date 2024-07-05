@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.CuocoService;
-import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
 import it.uniroma3.siwfood.service.auth.UserService;
 
@@ -31,8 +30,8 @@ public class RicettaController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private IngredienteService ingredienteService;
+//    @Autowired
+//    private IngredienteService ingredienteService;
 
     @GetMapping("/ricette")   
     public String ricette(Model model) {

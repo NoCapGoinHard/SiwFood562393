@@ -18,7 +18,7 @@ public class Allergene {
     private Long id;
     private String nome;
     @ManyToMany(mappedBy = "allergeni", cascade = CascadeType.ALL)
-    private List<Ingrediente> ingredientiCoinvolti = new ArrayList();
+    private List<Ingrediente> ingredientiCoinvolti = new ArrayList<>();
 
 
     public Allergene() {}

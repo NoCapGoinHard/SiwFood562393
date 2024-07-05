@@ -16,10 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
-import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
-import it.uniroma3.siwfood.service.RicettaService;
 import it.uniroma3.siwfood.service.auth.UserService;
 
 
@@ -29,8 +27,8 @@ public class CuocoController {
     @Autowired
     private CuocoService cuocoService;
 
-    @Autowired
-    private RicettaService ricettaService;
+//   @Autowired
+//   private RicettaService ricettaService;
 
     @Autowired
     private ImmagineService immagineService;

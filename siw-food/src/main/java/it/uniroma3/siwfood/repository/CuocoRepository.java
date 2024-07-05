@@ -2,7 +2,6 @@ package it.uniroma3.siwfood.repository;
 
 
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
