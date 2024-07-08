@@ -37,7 +37,7 @@ public class GlobalController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             user = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            Credentials credentials = credentialsService.getCredentialsByUsername(user.getUsername());
+            Credentials credentials = credentialsService.findByUsername(user.getUsername());
             return credentials;
         }
         return null;

@@ -68,8 +68,14 @@ public class CuocoController extends GlobalController{
 
     @GetMapping("/admin/addCuoco")
     public String formNuovoCuocoAdmin(Model model) {
-        model.addAttribute("cuoco", new Cuoco());
-        return "forms/formNuovoCuocoAdmin.html";
+        if(getCredentials().isAdmin()) {
+            model.addAttribute("cuoco", new Cuoco());
+            return "forms/formNuovoCuocoAdmin.html";
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
+            return "messaggioErrore";
+        }
     }
     @PostMapping("/admin/addCuoco")
     public String formNuovoCuocoAdmin(@ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
@@ -105,15 +111,16 @@ public class CuocoController extends GlobalController{
     @GetMapping("/admin/editCuoco/{cuoco_id}")
     public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         User user = getCredentials().getUser();
-        if ((!getCredentials().isAdmin()
-                && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id)
-                || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
-            return "redirect:/error";
+        if (getCredentials().isAdmin()
+        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+            model.addAttribute("cuoco", this.cuocoService.findById(id));
+            return "formEditCuoco.html";
         }
-        model.addAttribute("cuoco", this.cuocoService.findById(id));
-        return "formEditCuoco.html";
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+            return "messaggioErrore";
+        }
     }
-
     @PostMapping("/admin/editCuoco/{cuoco_id}")
     public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco,
             @RequestParam("immagine") MultipartFile immagine)
@@ -139,28 +146,35 @@ public class CuocoController extends GlobalController{
 
 
 
-    @GetMapping("/cuoco/editCuoco/{cuoco_id}/{user_id}")
-    public String formModificaCuocoDalCuoco(@PathVariable("cuoco_id") Long cuoco_id, @PathVariable("user_id") Long user_id, Model model) {
-        Cuoco cuoco = this.cuocoService.findById(cuoco_id);
-        if(userService.findById(user_id).getCuoco().equals(cuoco)) {
-            model.addAttribute("cuoco", this.cuocoService.findById(cuoco_id));
-            return "forms/formModificaCuocoDalCuoco.html";
-        }
-        else return "redirect:/cuochi";
-    }
-    @PostMapping("/cuoco/editCuoco/{cuoco_id}")
-    public String editCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
-        cuoco.setId(id);
-        this.cuocoService.save(cuoco);  
-        return "redirect:/cuochi/" + cuoco.getId();
-    }
+//    @GetMapping("/cuoco/editCuoco/{cuoco_id}/{user_id}")
+//    public String formModificaCuocoDalCuoco(@PathVariable("cuoco_id") Long cuoco_id, @PathVariable("user_id") Long user_id, Model model) {
+//        Cuoco cuoco = this.cuocoService.findById(cuoco_id);
+//        if(userService.findById(user_id).getCuoco().equals(cuoco)) {
+//            model.addAttribute("cuoco", this.cuocoService.findById(cuoco_id));
+//            return "forms/formModificaCuocoDalCuoco.html";
+//        }
+//        else return "redirect:/cuochi";
+//    }
+//    @PostMapping("/cuoco/editCuoco/{cuoco_id}")
+//    public String editCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco) {
+//        cuoco.setId(id);
+//        this.cuocoService.save(cuoco);  
+//        return "redirect:/cuochi/" + cuoco.getId();
+//    }
 
 
     //DAL SISTEMA
     @GetMapping("/admin/deleteCuoco/{cuoco_id}")
     public String deleteCuocoAdmin(@PathVariable("cuoco_id") Long id) {
-        cuocoService.deleteById(id);
-        return "redirect:/cuochi";
+        User user = getCredentials().getUser();
+        if (getCredentials().isAdmin()
+        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+            this.cuocoService.deleteById(id);
+            return "redirect:/cuochi";
+        }
+        else {
+            return "redirect:/error";
+        }
     }
         
 }

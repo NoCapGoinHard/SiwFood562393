@@ -12,11 +12,8 @@ import it.uniroma3.siwfood.model.auth.Credentials;
 public interface CredentialsRepository extends CrudRepository<Credentials, Long>{
     
 
-    public Optional<Credentials> findByUsername(String username);
+    public Credentials findByUsername(String username);
 
-    public Optional<Credentials> findById(@NonNull Long id);
-
-    public Credentials getCredentialsByUsername(String username);
 
 }
 

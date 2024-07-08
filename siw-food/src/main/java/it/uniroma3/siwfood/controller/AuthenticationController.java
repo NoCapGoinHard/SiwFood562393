@@ -63,7 +63,7 @@ public class AuthenticationController {
         
         UserDetails userDetails = (UserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         @SuppressWarnings("unused")
-        Credentials credentials = this.credentialsService.getCredentialsByUsername(userDetails.getUsername());
+        Credentials credentials = this.credentialsService.findByUsername(userDetails.getUsername());
 
         return "index.html";
     }

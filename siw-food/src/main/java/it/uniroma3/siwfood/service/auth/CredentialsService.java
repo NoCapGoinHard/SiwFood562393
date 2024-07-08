@@ -21,9 +21,9 @@ public class CredentialsService {
     public Credentials getCredentials(Long id){
         return this.credentialsRepository.findById(id).get();
     }
-
-    public Credentials getCredentialsByUsername(String username){
-        return this.credentialsRepository.findByUsername(username).get();
+    
+    public Credentials findByUsername(String username) {
+        return this.credentialsRepository.findByUsername(username);
     }
 
     public Credentials save(Credentials credentials){
@@ -31,8 +31,7 @@ public class CredentialsService {
         return this.credentialsRepository.save(credentials);
     }
 
-
-    public void deleteCredentials(Credentials credentials){
+    public void delete(Credentials credentials){
         this.credentialsRepository.delete(credentials);
     }
 
