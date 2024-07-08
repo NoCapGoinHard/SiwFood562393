@@ -70,8 +70,8 @@ public class CuocoController extends GlobalController{
             return "forms/formNuovoCuocoAdmin.html";
         }
         else {
-            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
-            return "messaggioErrore";
+            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+            return "cuochi.html";
         }
     }
     @PostMapping("/admin/addCuoco")
@@ -115,7 +115,7 @@ public class CuocoController extends GlobalController{
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "redirect:/cuochi/" + id;
         }
     }
     @PostMapping("/admin/editCuoco/{cuoco_id}")
@@ -162,7 +162,7 @@ public class CuocoController extends GlobalController{
 
     //DAL SISTEMA
     @GetMapping("/admin/deleteCuoco/{cuoco_id}")
-    public String deleteCuocoAdmin(@PathVariable("cuoco_id") Long id) {
+    public String deleteCuocoAdmin(@PathVariable("cuoco_id") Long id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
         && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
@@ -170,7 +170,8 @@ public class CuocoController extends GlobalController{
             return "redirect:/cuochi";
         }
         else {
-            return "redirect:/error";
+            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+        return "redirect:/cuochi/" + id;
         }
     }
         

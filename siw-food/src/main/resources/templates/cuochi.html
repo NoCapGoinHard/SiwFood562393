@@ -22,6 +22,10 @@
         <div
             th:if="${cuochi == null || cuochi.isEmpty()}">Cuochi non trovati
         </div>
+        
+        <div>
+            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+        </div>
         <ul>
             <li th:each="cuoco : ${cuochi}">
 

@@ -10,6 +10,7 @@
         <h1 th:unless="${cuoco}"> Non esistente </h1>
         
 
+
         <div>
             <a th:href="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}">Modifica il profilo di questo cuoco</a>
         </div>
@@ -38,6 +39,9 @@
                 </li>
             </ul>
             <a th:href="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Assegna una nuova ricetta a questo cuoco</a>
+            <div>
+                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+            </div>
         </div> 
 
 
