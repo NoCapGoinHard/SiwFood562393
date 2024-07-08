@@ -39,7 +39,7 @@ public class IngredienteController extends GlobalController {
     
 
 
-    @GetMapping("/ingredienti")
+    @GetMapping("/admin/ingredienti")
     public String ingredienti(Model model) {
         if(getCredentials().isAdmin()) {
             List<Ingrediente> ingredienti = this.ingredienteService.findDistinctNomi();
@@ -48,13 +48,13 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
 
 
 
-    @GetMapping("/ingredienti/{ingrediente_nome}")
+    @GetMapping("/admin/ingredienti/{ingrediente_nome}")
     public String ingrediente(@PathVariable("ingrediente_nome") String nome, Model model) {
         if(getCredentials().isAdmin()) {
             List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
@@ -63,23 +63,23 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
 
 
 
-    @GetMapping("/ingredienti/search")
+    @GetMapping("/admin/ingredienti/search")
     public String cercaIngrediente(Model model) {
         if(getCredentials().isAdmin()) {
             return "forms/formCercaIngrediente.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
-    @PostMapping("/ingredienti/byNome") 
+    @PostMapping("/admin/ingredienti/byNome") 
     public String getIngredientiByNome(@RequestParam("nome") String nome, Model model){
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         if(!ingredienti.isEmpty()) {
@@ -124,7 +124,7 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
 
@@ -163,7 +163,7 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
     @PostMapping("/admin/aggiungiIngrediente/{ricetta_id}")
@@ -208,10 +208,10 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
-    @PostMapping("admin/editIngrediente/{ingrediente_id}")
+    @PostMapping("/admin/editIngrediente/{ingrediente_id}")
     public String editIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, @ModelAttribute Ingrediente ingrediente) {
         ingrediente.setId(ingrediente_id);
         this.ingredienteService.save(ingrediente);
@@ -225,11 +225,11 @@ public class IngredienteController extends GlobalController {
     public String eliminaIngredienteByNome(@PathVariable("ingrediente_nome") String nome, Model model) {
         if(getCredentials().isAdmin()) {
             this.ingredienteService.deleteAllByNome(nome);
-            return "redirect:/ingredienti";
+            return "redirect:/admin/ingredienti";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
 
@@ -244,7 +244,7 @@ public class IngredienteController extends GlobalController {
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
     @PostMapping("/admin/aggiungiAllergene/{ingrediente_nome}")
@@ -260,14 +260,14 @@ public class IngredienteController extends GlobalController {
 
         model.addAttribute("ingredienti", ingredienti);
         model.addAttribute("allergene", allergene);
-        return "redirect:/ingredienti/"+nome;
+        return "redirect:/admin/ingredienti/"+nome;
 
     }
 
 
 
     //DAL SISTEMA
-    @GetMapping("admin/eliminaAllergene/{ingrediente_nome}/{allergene_id}")
+    @GetMapping("/admin/eliminaAllergene/{ingrediente_nome}/{allergene_id}")
     public String getMethodName(@PathVariable("ingrediente_nome") String nome, @PathVariable("allergene_id") Long allergene_id, Model model) {
         if(getCredentials().isAdmin()) {
             Allergene allergene = this.allergeneService.findById(allergene_id);
@@ -278,11 +278,11 @@ public class IngredienteController extends GlobalController {
                 this.ingredienteService.save(i);
             }
             this.allergeneService.deleteById(allergene_id);
-            return "redirect:/ingredienti/" + nome;
+            return "redirect:/admin/ingredienti/" + nome;
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "index.html";
         }
     }
 

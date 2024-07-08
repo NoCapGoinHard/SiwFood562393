@@ -9,20 +9,17 @@
 
     <body>
         <div>
-            <a href="/ingredienti/search">Cerca ingrediente per nome</a>
+            <a href="/admin/ingredienti/search">Cerca ingrediente per nome</a>
         </div>
 
         <div>
-            <span th:text="${messaggioErrore}"></span>
+            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
         </div>
 
-        <div th:if="${ingredienti == null || ingredienti.isEmpty()}">
-            Non ci sono ingredienti con questo nome    
-        </div>
         <ul>
             <li th:each="ingrediente : ${ingredienti}">
                 <span>
-                    <a th:href="@{/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                    <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                 </span>
                 <span>
                     <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
