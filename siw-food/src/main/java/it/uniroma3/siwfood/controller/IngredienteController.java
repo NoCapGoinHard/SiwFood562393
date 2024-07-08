@@ -83,7 +83,7 @@ public class IngredienteController extends GlobalController {
     public String getIngredientiByNome(@RequestParam("nome") String nome, Model model){
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         if(!ingredienti.isEmpty()) {
-            model.addAttribute("ingrediente", ingredienti.get(0));
+            model.addAttribute("ingrediente", ingredienti);
             return "ingredienti.html";
         }
         else {
@@ -233,7 +233,7 @@ public class IngredienteController extends GlobalController {
         }
     }
 
-    
+
 
     @GetMapping("/admin/aggiungiAllergene/{ingrediente_nome}")
     public String formAggiungiAllergene(@PathVariable("ingrediente_nome") String nome, Model model) {
