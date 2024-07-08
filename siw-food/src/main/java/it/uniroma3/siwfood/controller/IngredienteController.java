@@ -72,7 +72,7 @@ public class IngredienteController extends GlobalController {
     @GetMapping("/admin/ingredienti/search")
     public String cercaIngrediente(Model model) {
         if(getCredentials().isAdmin()) {
-            return "forms/formCercaIngrediente.html";
+            return "forms/formCercaIngredienteSoloAdmin.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
@@ -83,12 +83,12 @@ public class IngredienteController extends GlobalController {
     public String getIngredientiByNome(@RequestParam("nome") String nome, Model model){
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         if(!ingredienti.isEmpty()) {
-            model.addAttribute("ingrediente", ingredienti);
+            model.addAttribute("ingrediente", ingredienti.get(0));
             return "ingredienti.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non ci sono ingredienti con questo nome");
-            return "forms/formCercaIngredienteSoloAdmin.html";
+            return "redirect:/admin/ingredienti/";
         }
     }
 
