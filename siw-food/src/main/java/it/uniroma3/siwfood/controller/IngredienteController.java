@@ -39,7 +39,7 @@ public class IngredienteController extends GlobalController {
     
 
 
-    @GetMapping("/admin/ingredienti")
+    @GetMapping("/ingredienti")
     public String ingredienti(Model model) {
         if(getCredentials().isAdmin()) {
             List<Ingrediente> ingredienti = this.ingredienteService.findDistinctNomi();
@@ -52,7 +52,9 @@ public class IngredienteController extends GlobalController {
         }
     }
 
-    @GetMapping("/admin/ingredienti/{ingrediente_nome}")
+
+
+    @GetMapping("/ingredienti/{ingrediente_nome}")
     public String ingrediente(@PathVariable("ingrediente_nome") String nome, Model model) {
         if(getCredentials().isAdmin()) {
             List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
@@ -65,7 +67,9 @@ public class IngredienteController extends GlobalController {
         }
     }
 
-    @GetMapping("/admin/ingredienti/search")
+
+
+    @GetMapping("/ingredienti/search")
     public String cercaIngrediente(Model model) {
         if(getCredentials().isAdmin()) {
             return "forms/formCercaIngrediente.html";
@@ -148,6 +152,7 @@ public class IngredienteController extends GlobalController {
 //    }
 
 
+
     @GetMapping("/admin/aggiungiIngrediente/{ricetta_id}")
     public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, Model model) {
         User user = getCredentials().getUser();
@@ -214,6 +219,7 @@ public class IngredienteController extends GlobalController {
     }
 
 
+
     //DAL SISTEMA
     @GetMapping("/admin/deleteIngrediente/{ingrediente_nome}")
     public String eliminaIngredienteByNome(@PathVariable("ingrediente_nome") String nome, Model model) {
@@ -227,6 +233,7 @@ public class IngredienteController extends GlobalController {
         }
     }
 
+    
 
     @GetMapping("/admin/aggiungiAllergene/{ingrediente_nome}")
     public String formAggiungiAllergene(@PathVariable("ingrediente_nome") String nome, Model model) {

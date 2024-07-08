@@ -9,7 +9,11 @@
 
     <body>
         <div>
-            <a href="/admin/ingredienti/search">Cerca ingrediente per nome</a>
+            <a href="/ingredienti/search">Cerca ingrediente per nome</a>
+        </div>
+
+        <div>
+            <span th:text="${messaggioErrore}"></span>
         </div>
 
         <div th:if="${ingredienti == null || ingredienti.isEmpty()}">

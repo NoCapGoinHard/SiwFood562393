@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-
 <html>
 
-    <head>
-        <meta charset="utf-8">
-        <title>ACCEDI A SiwFood</title>        
-    </head>
-    
-    <body>
-        <form action="#" th:action="@{/login}" method = "POST">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" name="nome" th:value="${username}"/>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="text" name="password" th:value="${password}"/>
-            </div>
-            <div>
-                <button type="submit">Accedi</button>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
 
+<body>
+    <div>
+
+        <h1>Login</h1>
+
+        <form th:action="@{/login}" id="login" method="POST">
+
+            <div>
+                <label for="username" th:text="'Username'"></label>
+                <input name="username" id="username" type="text" required>
+            </div>
+            <div>
+                <label for="password" th:text="'Password'"></label>
+                <input name="password" id="password" type="password" required>
+            </div>
+            <div>
+                <span th:if="${param.error != null}" th:text="'Username o password errati'"></span>
+            </div>
+            <div>
+                <button type="submit" th:text="'Accedi'"></button>
+            </div>
         </form>
-
-    </body>
+    </div>
+</body>
 
 </html>

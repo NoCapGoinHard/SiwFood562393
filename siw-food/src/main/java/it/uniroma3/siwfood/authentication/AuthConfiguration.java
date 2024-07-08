@@ -26,7 +26,7 @@ public class AuthConfiguration {
     private void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
         auth.jdbcAuthentication()
             .dataSource(dataSource)
-            .authoritiesByUsernameQuery("SELECT username, role FROM credentials WHERE username=?")
+            .authoritiesByUsernameQuery("SELECT username, ruolo FROM credentials WHERE username=?")
             .usersByUsernameQuery("SELECT username, password, 1 as enabled FROM credentials WHERE username=?");
     }
 
@@ -44,11 +44,11 @@ public class AuthConfiguration {
                 .authorizeHttpRequests( authorize -> authorize
                         // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
                         .requestMatchers(
-                            HttpMethod.GET, "/", "/index", "/register", "/cuochi/**", "/cuoco/**", "/ricette/**" , "/ricetta/**", "/css/**", "/image/**", "/error")
+                            HttpMethod.GET, "/", "/index", "/register", "/cuochi/**", "/cuoco/**", "/ricette/**" , "/ricetta/**", "/ingredienti/**", "/css/**", "/image/**", "/error")
                         .permitAll()  //tolto le icon
                         // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
                         .requestMatchers(
-                            HttpMethod.POST, "/register", "/login", "/cuochi/**", "/cuoco/**", "/ricette/**", "/ricetta/**")
+                            HttpMethod.POST, "/register", "/login", "/cuochi/**", "/cuoco/**", "/ricette/**", "/ricetta/**", "/ingredienti/**")
                             .permitAll()
                         // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
                         .requestMatchers(

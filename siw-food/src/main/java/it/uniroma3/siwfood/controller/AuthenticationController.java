@@ -40,8 +40,8 @@ public class AuthenticationController {
     @GetMapping("/")
     public String getHomePage() {
 
-        @SuppressWarnings("unused")
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
+     //   @SuppressWarnings("unused")
+      //  Authentication authentication = SecurityContextHolder.getContext().getAuthentication(); 
 
         return "index.html";
     }
