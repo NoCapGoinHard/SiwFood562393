@@ -26,9 +26,6 @@
         <div>
             <h2>Ingredienti</h2>
             <div>
-                <a th:href="@{/cuoco/aggiungiIngrediente/{ricetta_id}/{user_id}(ricetta_id=${ricetta.id}, user_id=${credentials.user.id})}">Aggiungi ingrediente</a>
-            </div>
-            <div>
                 <a th:href="@{/admin/aggiungiIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}">Aggiungi ingrediente</a>
             </div>
             <ul>
@@ -36,9 +33,6 @@
                     <!--<span th:text="${ingrediente.nome}"></span>-->
                     <a th:href="@{/ingredienti/{ingrediente_nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
-                    <span>
-                        <a th:href="@{/cuoco/rimuoviIngrediente/{ingrediente_id}/{user_id}(ingrediente_id = ${ingrediente.id}, user_id=${credentials.user.id})}">Rimuovi ingrediente</a>
-                    </span>
                     <span>
                         <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id = ${ingrediente.id})}">Rimuovi ingrediente</a>
                     </span>

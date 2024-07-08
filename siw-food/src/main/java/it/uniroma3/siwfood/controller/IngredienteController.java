@@ -165,7 +165,7 @@ public class IngredienteController extends GlobalController {
             return "messaggioErrore";
         }
     }
-    @PostMapping("admin/aggiungiIngrediente/{ricetta_id}")
+    @PostMapping("/admin/aggiungiIngrediente/{ricetta_id}")
     public String aggiungiIngredienteAdmin(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
         ingrediente.setRicetta(this.ricettaService.findById(ricetta_id));
         this.ricettaService.findById(ricetta_id).addIngrediente(ingrediente);
@@ -197,7 +197,7 @@ public class IngredienteController extends GlobalController {
 
 
 
-    @GetMapping("admin/editIngrediente/{ingrediente_id}")
+    @GetMapping("/admin/editIngrediente/{ingrediente_id}")
     public String formModificaIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
@@ -264,10 +264,10 @@ public class IngredienteController extends GlobalController {
 
 
     //DAL SISTEMA
-    @GetMapping("admin/eliminaAllergene/{ingrediente_nome}/{id_Allergene}")
-    public String getMethodName(@PathVariable("ingrediente_nome") String nome, @PathVariable("id_Allergene") Long idAllergene, Model model) {
+    @GetMapping("admin/eliminaAllergene/{ingrediente_nome}/{allergene_id}")
+    public String getMethodName(@PathVariable("ingrediente_nome") String nome, @PathVariable("allergene_id") Long allergene_id, Model model) {
         if(getCredentials().isAdmin()) {
-            Allergene allergene = this.allergeneService.findById(idAllergene);
+            Allergene allergene = this.allergeneService.findById(allergene_id);
             List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
     
             for(Ingrediente i: ingredienti) {

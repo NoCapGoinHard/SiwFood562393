@@ -13,9 +13,7 @@
         <div>
             <a th:href="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}">Modifica il profilo di questo cuoco</a>
         </div>
-        <div>
-            <a th:href="@{/cuoco/editCuoco/{cuoco_id}/{user_id}(cuoco_id=${cuoco.id}, user_id=${credentials.user.id})}">Modifica il tuo profilo</a>
-        </div>
+
         <div>
             <a th:href="@{/admin/deleteCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}">Cancella il profilo del cuoco</a>
         </div>
@@ -43,7 +41,6 @@
                     <span th:text="' - ' + ${ricetta.descrizione}"></span>
                 </li>
             </ul>
-            <a th:href="@{/cuoco/addRicetta/{cuoco_id}/{user_id}(cuoco_id=${cuoco.id}, user_id=${credentials.user.id})}">Inserisci una tua nuova ricetta</a>
             <a th:href="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Assegna una nuova ricetta a questo cuoco</a>
         </div> 
 

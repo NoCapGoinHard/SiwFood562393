@@ -19,7 +19,7 @@
 
         <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" method = "POST" th:object="${ricetta}">
             <div>
-                <span th:text="${messaggioErrore}"> ERRORE </span>
+                <span th:text="${messaggioErrore}"></span>
             </div>
             <div>
                 Nome: 
