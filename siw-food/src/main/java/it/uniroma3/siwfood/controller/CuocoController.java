@@ -19,7 +19,6 @@ import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
-import it.uniroma3.siwfood.service.auth.UserService;
 
 
 @Controller
@@ -34,8 +33,6 @@ public class CuocoController extends GlobalController{
     @Autowired
     private ImmagineService immagineService;
 
-    @Autowired
-    private UserService userService;
 
 
     @GetMapping("/cuochi")

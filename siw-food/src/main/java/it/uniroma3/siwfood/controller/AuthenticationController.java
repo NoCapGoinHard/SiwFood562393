@@ -1,7 +1,6 @@
 package it.uniroma3.siwfood.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,14 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
-import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.auth.Credentials;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
-import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.auth.CredentialsService;
 import it.uniroma3.siwfood.service.auth.UserService;
-import jakarta.validation.Valid;
 
 
 @Controller
@@ -39,8 +35,6 @@ public class AuthenticationController {
     @Autowired
     private CuocoService cuocoService;
 
-    //@Autowired
-    //private ImmagineService immagineService;
     
 
     @GetMapping("/")

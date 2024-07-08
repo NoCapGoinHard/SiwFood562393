@@ -14,7 +14,6 @@ import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.RicettaService;
-import it.uniroma3.siwfood.service.auth.UserService;
 
 
 
@@ -27,11 +26,6 @@ public class RicettaController extends GlobalController {
     @Autowired
     private CuocoService cuocoService;
 
-    @Autowired
-    private UserService userService;
-
-//    @Autowired
-//    private IngredienteService ingredienteService;
 
     @GetMapping("/ricette")   
     public String ricette(Model model) {

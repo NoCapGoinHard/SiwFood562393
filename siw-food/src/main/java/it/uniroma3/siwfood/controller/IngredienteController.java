@@ -3,7 +3,6 @@ package it.uniroma3.siwfood.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Allergene;
-import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.model.auth.User;
@@ -21,7 +19,6 @@ import it.uniroma3.siwfood.service.AllergeneService;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.IngredienteService;
 import it.uniroma3.siwfood.service.RicettaService;
-import it.uniroma3.siwfood.service.auth.UserService;
 
 @Controller
 public class IngredienteController extends GlobalController {
@@ -38,8 +35,7 @@ public class IngredienteController extends GlobalController {
     @Autowired
     private AllergeneService allergeneService;
 
-    @Autowired
-    private UserService userService;
+
     
 
 
@@ -274,7 +270,7 @@ public class IngredienteController extends GlobalController {
                 i.removeAllergene(allergene);
                 this.ingredienteService.save(i);
             }
-            this.allergeneService.deleteById(idAllergene);
+            this.allergeneService.deleteById(allergene_id);
             return "redirect:/ingredienti/" + nome;
         }
         else {
