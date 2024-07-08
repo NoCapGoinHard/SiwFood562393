@@ -78,13 +78,13 @@ public class RicettaController extends GlobalController {
     public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
             model.addAttribute("ricetta", this.ricettaService.findById(id));
             return "forms/formModificaRicettaAdmin.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "redirect:/ricette/" + id;
         }
     }
     @PostMapping("/admin/editRicetta/{ricetta_id}")
@@ -110,15 +110,16 @@ public class RicettaController extends GlobalController {
 
     //DAL SISTEMA
     @GetMapping("/admin/deleteRicetta/{ricetta_id}")
-    public String deleteRicettaAdmin(@PathVariable("ricetta_id") Long id) {
+    public String deleteRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
             this.ricettaService.deleteById(id);
             return "redirect:/ricette";
         }
         else {
-            return "redirect:/error";
+            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+            return "redirect:/ricette/" + id;
         }
     }
 
@@ -148,14 +149,14 @@ public class RicettaController extends GlobalController {
     public String formNuovaRicettaAdmin(@PathVariable("cuoco_id") Long id,Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
             model.addAttribute("cuoco", this.cuocoService.findById(id));
             model.addAttribute("ricetta", new Ricetta());
             return "forms/formNuovaRicettaAdmin.html";
         }
         else {
             model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "messaggioErrore";
+            return "redirect:/cuochi/" + id;
         }
     }
     @PostMapping("/admin/addRicetta/{cuoco_id}")

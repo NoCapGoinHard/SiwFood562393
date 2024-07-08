@@ -39,10 +39,11 @@
                 </li>
             </ul>
             <a th:href="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}">Assegna una nuova ricetta a questo cuoco</a>
-            <div>
-                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
-            </div>
+
         </div> 
+        <div>
+            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+        </div>
 
 
     </body>

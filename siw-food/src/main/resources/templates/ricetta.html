@@ -9,6 +9,10 @@
 
     <body>
         <h1>Dettagli</h1>
+        
+        <div>
+            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+        </div>
 
         <div>
             <a th:href="@{/admin/editRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Modifica la scheda della ricetta</a>

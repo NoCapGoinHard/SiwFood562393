@@ -109,7 +109,7 @@ public class CuocoController extends GlobalController{
     public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
             model.addAttribute("cuoco", this.cuocoService.findById(id));
             return "formEditCuoco.html";
         }
@@ -165,7 +165,7 @@ public class CuocoController extends GlobalController{
     public String deleteCuocoAdmin(@PathVariable("cuoco_id") Long id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
             this.cuocoService.deleteById(id);
             return "redirect:/cuochi";
         }

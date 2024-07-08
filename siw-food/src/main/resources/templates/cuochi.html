@@ -9,7 +9,7 @@
     </head>
 
     <body>
-        <h1>Lista Cuochi</h1>
+        <h1>Lista Cuochi trovati:</h1>
         
         <div>
             <a href="/admin/addCuoco">Inserisci un nuovo cuoco</a>
@@ -18,11 +18,6 @@
             <a href="/cuochi/search">Cerca cuochi per nome e cognome</a>
         </div>
 
-
-        <div
-            th:if="${cuochi == null || cuochi.isEmpty()}">Cuochi non trovati
-        </div>
-        
         <div>
             <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
         </div>
