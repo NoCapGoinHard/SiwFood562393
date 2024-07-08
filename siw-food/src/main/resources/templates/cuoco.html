@@ -33,10 +33,6 @@
             </div>
             <ul th:unless="${cuoco.ricette.isEmpty()}">
                  <li th:each="ricetta : ${cuoco.ricette}">
-                    <!--
-                    <span th:text="${ricetta.nome}"></span>
-                    <span th:text="${ricetta.descrizione}"></span>
-                    -->
                     <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}" th:text="${ricetta.nome}"></a>
                     <span th:text="' - ' + ${ricetta.descrizione}"></span>
                 </li>
