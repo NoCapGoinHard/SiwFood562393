@@ -66,7 +66,7 @@ public class AuthenticationController {
     @GetMapping("/register")
     public String getRegisterForm(Model model) {
         
-        model.addAttribute("utente", new User());
+        model.addAttribute("user", new User());
         model.addAttribute("credentials", new Credentials());
 
         return "auth/register.html";
@@ -120,21 +120,21 @@ public class AuthenticationController {
 
 
     @PostMapping(value = { "/register" })
-    public String registerUser(@ModelAttribute("user") User user,
+    public String registerUser(
+            @ModelAttribute("user") User user,
             BindingResult userBindingResult,
 
             @ModelAttribute("credential") Credentials credentials,
             BindingResult credentialsBindingResult,
-            @RequestParam("immagine") MultipartFile immagine,
-            Model model) throws IOException {
+
+            Model model
+            ) throws IOException {
 
         if (!userBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()) {
             userService.save(user);
             credentials.setUser(user);
             Cuoco cuoco = new Cuoco(user);
             cuocoService.save(cuoco);
-            // credentials.setPassword(passwordEncoder.encode(credentials.getPassword()));
-            //
             credentials.setRuolo(Credentials.UTENTE_CUOCO);
             credentialsService.save(credentials);
             model.addAttribute("user", user);
