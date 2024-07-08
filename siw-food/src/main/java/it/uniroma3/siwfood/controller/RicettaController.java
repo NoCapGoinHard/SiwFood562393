@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
@@ -77,8 +78,9 @@ public class RicettaController extends GlobalController {
     @GetMapping("/admin/editRicetta/{ricetta_id}")
     public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
         User user = getCredentials().getUser();
+        Cuoco cuoco = this.ricettaService.findById(id).getCuoco();
         if (getCredentials().isAdmin()
-        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == cuoco.getId()) {
             model.addAttribute("ricetta", this.ricettaService.findById(id));
             return "forms/formModificaRicettaAdmin.html";
         }
@@ -112,8 +114,9 @@ public class RicettaController extends GlobalController {
     @GetMapping("/admin/deleteRicetta/{ricetta_id}")
     public String deleteRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
         User user = getCredentials().getUser();
+        Cuoco cuoco = this.ricettaService.findById(id).getCuoco();
         if (getCredentials().isAdmin()
-        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == cuoco.getId()) {
             this.ricettaService.deleteById(id);
             return "redirect:/ricette";
         }

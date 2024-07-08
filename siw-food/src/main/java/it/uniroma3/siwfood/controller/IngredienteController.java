@@ -114,7 +114,7 @@ public class IngredienteController extends GlobalController {
     public String removeIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != user.getId()) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
             Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
             Ricetta ricetta = ingrediente.getRicetta();
             ricetta.removeIngrediente(ingrediente);
@@ -157,7 +157,7 @@ public class IngredienteController extends GlobalController {
     public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != user.getId()) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
             model.addAttribute("ingrediente", new Ingrediente());
             return "forms/formAggiungiIngredienteAdmin.html";
         }
@@ -202,7 +202,7 @@ public class IngredienteController extends GlobalController {
     public String formModificaIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
-        && cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() != user.getId()) {
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
             model.addAttribute("ingrediente", this.ingredienteService.findById(ingrediente_id));
             return "forms/formModificaIngredienteAdmin.html";
         }
