@@ -34,7 +34,7 @@
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
                     <!--<span th:text="${ingrediente.nome}"></span>-->
-                    <a th:href="@{/ingredienti/{ingrediente_nome}(nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                    <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
                     <span>
                         <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id = ${ingrediente.id})}">Rimuovi ingrediente</a>
