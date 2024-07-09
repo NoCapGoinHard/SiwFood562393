@@ -1,6 +1,8 @@
 package it.uniroma3.siwfood.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import it.uniroma3.siwfood.model.Cuoco;
+import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
@@ -54,60 +57,53 @@ public class RicettaController extends GlobalController {
         return "ricette.html";
     }
 
+///VECCHIO TENTATIVO DI MODIFICA E AGGIUNTA INGREDIENTE
 
-
-//    @GetMapping("/cuoco/editRicetta/{ricetta_id}/{user_id}")
-//    public String formModificaRicettaDalCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id, Model model) {
-//        Cuoco cuoco = this.userService.findById(user_id).getCuoco();
-//        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
-//        if(ricetta.getCuoco().equals(cuoco)) {
-//            model.addAttribute("ricetta", ricetta);
-//            return "forms/formModificaRicettaDalCuoco.html";
+//    @GetMapping("/admin/editRicetta/{ricetta_id}")
+//    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
+//        User user = getCredentials().getUser();
+//        Cuoco cuoco = this.ricettaService.findById(id).getCuoco();
+//        if (getCredentials().isAdmin()
+//        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == cuoco.getId()) {
+//            model.addAttribute("ricetta", this.ricettaService.findById(id));
+//            return "forms/formModificaRicettaAdmin.html";
 //        }
-//        else return "redirect:/ricette" + ricetta_id;
+//        else {
+//            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+//            return "redirect:/ricette/" + id;
+//        }
 //    }
-//    @PostMapping("/cuoco/editRicetta/{ricetta_id}")
-//    public String editRicettaCuoco(@PathVariable("ricetta_id") Long id, @ModelAttribute Ricetta ricetta) {
+//    @PostMapping("/admin/editRicetta/{ricetta_id}")
+//    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti) {
 //        ricetta.setId(id);
 //        this.ricettaService.save(ricetta);
-//        return "redirect:/ricette/" + id;
+//        return "redirect:/ricette/" + ricetta.getId();
 //    }
 
 
 
+    //NUOVO TENTATIVO DI EDIT RICETTA E INGREDIENTE
     @GetMapping("/admin/editRicetta/{ricetta_id}")
-    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
+    public String getFormEditRicetta(@PathVariable("ricetta_id") Long id, Model model) {
+        Ricetta ricetta = this.ricettaService.findById(id);
         User user = getCredentials().getUser();
-        Cuoco cuoco = this.ricettaService.findById(id).getCuoco();
-        if (getCredentials().isAdmin()
-        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == cuoco.getId()) {
-            model.addAttribute("ricetta", this.ricettaService.findById(id));
+        if ((getCredentials().isAdmin()
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == ricetta.getCuoco().getId())) {
+            model.addAttribute("ricetta", ricetta);
+            model.addAttribute("ingredienti", this.ricettaService.findById(id).getIngredienti());
+            model.addAttribute("nuovoIngrediente", new Ingrediente());
             return "forms/formModificaRicettaAdmin.html";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "redirect:/ricette/" + id;
-        }
+        return "redirect:/ricette/" + id;
     }
-    @PostMapping("/admin/editRicetta/{ricetta_id}")
-    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, @ModelAttribute Ricetta ricetta) {
+
+    @PostMapping("/admin/editRicetta/{id}")
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti) {
         ricetta.setId(id);
         this.ricettaService.save(ricetta);
         return "redirect:/ricette/" + ricetta.getId();
     }
 
-
-
-//    @GetMapping("cuoco/deleteRicetta/{ricetta_id}/{user_id}")
-//    public String deleteRicettaCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id) {
-//        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
-//        Cuoco cuoco = this.userService.findById(user_id).getCuoco();
-//        if(ricetta.getCuoco().equals(cuoco)) {
-//            this.ricettaService.deleteById(ricetta_id);
-//            return "redirect:/ricette";
-//        }
-//        else return "redirect:/ricette/" + ricetta_id;
-//    }
 
 
     //DAL SISTEMA
@@ -125,26 +121,6 @@ public class RicettaController extends GlobalController {
             return "redirect:/ricette/" + id;
         }
     }
-
-
-
-//    @GetMapping("/cuoco/addRicetta/{cuoco_id}/{user_id}")
-//    public String formNuovaRicettaCuoco(@PathVariable("cuoco_id") Long idC, @PathVariable("user_id") Long idU,Model model) {
-//        
-//        if(!(this.cuocoService.findById(idC).equals(this.userService.findById(idU).getCuoco()))){
-//            return "redirect:/cuochi/" + idC;
-//        }
-//        
-//        model.addAttribute("cuoco", this.cuocoService.findById(idC));
-//        model.addAttribute("ricetta", new Ricetta());
-//        return "forms/formNuovaRicettaDalCuoco.html";
-//    }
-//    @PostMapping("/cuochi/addRicetta/{cuoco_id}")
-//    public String addRicettaCuoco(@PathVariable("cuoco_id") Long cuocoId, @ModelAttribute Ricetta ricetta) {
-//        ricetta.setCuoco(this.cuocoService.findById(cuocoId));
-//        this.ricettaService.save(ricetta);
-//        return "redirect:/cuochi/" + cuocoId;
-//    }
 
 
 

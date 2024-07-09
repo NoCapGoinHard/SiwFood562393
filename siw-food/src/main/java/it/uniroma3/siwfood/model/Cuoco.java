@@ -41,6 +41,7 @@ public class Cuoco {
     
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL)
     private List<Ricetta> ricette = new ArrayList<>();
+    
 
 
     public Cuoco(){}

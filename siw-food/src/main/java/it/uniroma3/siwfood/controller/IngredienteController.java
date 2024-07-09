@@ -94,22 +94,6 @@ public class IngredienteController extends GlobalController {
 
 
 
-//    @GetMapping("cuoco/rimuoviIngrediente/{ingrediente_id}")
-//    public String removeIngredienteCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
-//        if (getCredentials().isAdmin()) {
-//            Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
-//            Ricetta ricetta = ingrediente.getRicetta();
-//            ricetta.removeIngrediente(ingrediente);
-//            this.ingredienteService.deleteById(ingrediente_id);
-//            this.ricettaService.save(ricetta);
-//            return "redirect:/ricette/" + ingrediente.getRicetta().getId();
-//        }
-//        else {
-//            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
-//            return "messaggioErrore";
-//        }
-//    }
-
     @GetMapping("/admin/rimuoviIngrediente/{ingrediente_id}") //DALLA RICETTA
     public String removeIngredienteAdmin(@PathVariable("ingrediente_id") Long ingrediente_id, Model model) {
         User user = getCredentials().getUser();
@@ -128,23 +112,43 @@ public class IngredienteController extends GlobalController {
         }
     }
 
+    //NUOVO TENTATIVO DI AGGIUNTA INGREDIENTE
+    @PostMapping("/admin/aggiungiIngrediente/{ricetta_id}")
+    public String aggiungiIngrediente(@PathVariable("ricetta_id") Long id, @ModelAttribute Ingrediente ingrediente, Model model) {
+        User user = getCredentials().getUser();
+        Ricetta ricetta = ricettaService.findById(id);
+        if (getCredentials().isAdmin()
+        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
+        ingrediente.setRicetta(ricetta);
+        ricetta.addIngrediente(ingrediente);
+        this.ingredienteService.save(ingrediente);
+        return "redirect:/admin/editRicetta/" + id;
+        }
+        else {
+            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+            return "redirect:/admin/editRicetta/" + id;
+        }
+    }
 
 
-//    @GetMapping("/cuoco/aggiungiIngrediente/{ricetta_id}")
-//    public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, @PathVariable("user_id") Long user_id, Model model) {
-//        Ricetta ricetta = this.ricettaService.findById(ricetta_id);
-//        Cuoco cuoco = ricetta.getCuoco();
-//        if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
+
+/////MODIFICA RICETTA E INGREDIENTE 
+
+//    @GetMapping("/admin/aggiungiIngrediente/{ricetta_id}")
+//    public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, Model model) {
+//        User user = getCredentials().getUser();
+//        if (getCredentials().isAdmin()
+//        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
 //            model.addAttribute("ingrediente", new Ingrediente());
-//            return "forms/formAggiungiIngredienteDalCuoco.html";
+//            return "forms/formAggiungiIngredienteAdmin.html";
 //        }
 //        else {
-//            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
-//            return "redirect:/ricette/" + ricetta_id;
+//            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
+//            return "index.html";
 //        }
 //    }
-//    @PostMapping("cuoco/aggiungiIngrediente/{ricetta_id}")
-//    public String aggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
+//    @PostMapping("/admin/aggiungiIngrediente/{ricetta_id}")
+//    public String aggiungiIngredienteAdmin(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
 //        ingrediente.setRicetta(this.ricettaService.findById(ricetta_id));
 //        this.ricettaService.findById(ricetta_id).addIngrediente(ingrediente);
 //        this.ingredienteService.save(ingrediente);
@@ -153,48 +157,6 @@ public class IngredienteController extends GlobalController {
 
 
 
-    @GetMapping("/admin/aggiungiIngrediente/{ricetta_id}")
-    public String formAggiungiIngredienteCuoco(@PathVariable("ricetta_id") Long ricetta_id, Model model) {
-        User user = getCredentials().getUser();
-        if (getCredentials().isAdmin()
-        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == user.getId()) {
-            model.addAttribute("ingrediente", new Ingrediente());
-            return "forms/formAggiungiIngredienteAdmin.html";
-        }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "index.html";
-        }
-    }
-    @PostMapping("/admin/aggiungiIngrediente/{ricetta_id}")
-    public String aggiungiIngredienteAdmin(@PathVariable("ricetta_id") Long ricetta_id, @ModelAttribute Ingrediente ingrediente) {
-        ingrediente.setRicetta(this.ricettaService.findById(ricetta_id));
-        this.ricettaService.findById(ricetta_id).addIngrediente(ingrediente);
-        this.ingredienteService.save(ingrediente);
-        return "redirect:/ricette/" + ingrediente.getRicetta().getId();
-    }
-
-
-
-//    @GetMapping("/cuoco/editIngrediente/{ingrediente_id}/{user_id}")
-//    public String formModificaIngredienteDalCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, @PathVariable("user_id") Long user_id, Model model) {
-//        Ingrediente ingrediente = this.ingredienteService.findById(ingrediente_id);
-//        Ricetta ricetta = ingrediente.getRicetta();
-//        Cuoco cuoco = ricetta.getCuoco();
-//        if(this.userService.findById(user_id).getCuoco().equals(cuoco)) {
-//            return "forms/formModificaIngredienteDalCuoco.html";
-//        }
-//        else{
-//            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
-//            return "redirect:/ricette/" + ricetta.getId();
-//        }
-//    }
-//    @PostMapping("/cuoco/editIngrediente/{ingrediente_id}")
-//    public String editIngredienteDalCuoco(@PathVariable("ingrediente_id") Long ingrediente_id, @ModelAttribute Ingrediente ingrediente) {
-//        ingrediente.setId(ingrediente_id);
-//        this.ingredienteService.save(ingrediente);
-//        return "redirect:/ricetta/" + ingrediente.getRicetta().getId();
-//    }
 
 
 
