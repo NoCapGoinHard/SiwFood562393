@@ -22,6 +22,10 @@
             <a th:href="@{/admin/deleteCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}">Cancella il profilo del cuoco</a>
         </div>
 
+        <div>
+            <img th:if="${cuoco.hasImages() == true}"
+                th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
+        </div>
 
         <div th:if="${cuoco}">
             <h1 th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}"> Dettagli Cuoco </h1>

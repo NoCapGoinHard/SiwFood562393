@@ -1,5 +1,6 @@
 package it.uniroma3.siwfood.model;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,7 @@ public class Ricetta {
 
     @ElementCollection
     @Column(nullable = true)
-    private List<Immagine> immagini;
+    private List<Immagine> immagini = new ArrayList<>();
 
     @OneToMany(mappedBy = "ricetta", cascade = CascadeType.ALL)
     private List<Ingrediente> ingredienti = new ArrayList<>();
@@ -55,6 +56,10 @@ public class Ricetta {
         this.immagini = immagini;
         this.ingredienti = ingr;
         this.cuoco = cuoco;
+    }
+
+    public boolean hasImages() {
+        return !this.immagini.isEmpty();
     }
 
     public Immagine getFirstImmagine(){

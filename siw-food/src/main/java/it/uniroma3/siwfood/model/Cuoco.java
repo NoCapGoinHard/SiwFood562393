@@ -37,7 +37,7 @@ public class Cuoco {
     
     @ElementCollection
     @Column(nullable = true)
-    private List<Immagine> immagini;
+    private List<Immagine> immagini = new ArrayList<>();
     
     @OneToMany(mappedBy = "cuoco", cascade = CascadeType.ALL)
     private List<Ricetta> ricette = new ArrayList<>();
@@ -60,6 +60,9 @@ public class Cuoco {
         this.ricette = ricette;
     }
 
+    public boolean hasImages() {
+        return !this.immagini.isEmpty();
+    } 
 
     public Immagine getFirstImmagine(){
         return this.immagini.get(0);
