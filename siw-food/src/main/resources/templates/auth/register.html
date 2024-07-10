@@ -8,7 +8,9 @@
     </head>
     
     <body>
-        <form action="#" th:action="@{/register}" method = "POST">
+        <a href="/">HOME</a>
+        
+        <form th:action="@{/register}" method = "POST">
             <div> 
                 <label for="username">Username:</label>
                 <input required type="text" name="username" th:field="*{credentials.username}"/>
