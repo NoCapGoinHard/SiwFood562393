@@ -108,7 +108,7 @@ public class RicettaController extends GlobalController {
     }
 
     @PostMapping("/admin/editRicetta/{id}")
-    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti,
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
     @RequestParam("immagine") MultipartFile immagine)
     throws IOException {
         ricetta.setId(id);
