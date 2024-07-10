@@ -67,6 +67,10 @@
             <label for="immagine">Immagine:</label>
             <input type="file" id="immagine" name="immagine" accept="image/*" required>
         </div>
+        <div>
+            <img th:if="${ricetta.hasImages() == true}"
+                th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%" />
+        </div>
         <button type="submit">Aggiorna</button>
     </form>
 

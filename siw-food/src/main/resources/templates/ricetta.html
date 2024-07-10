@@ -15,7 +15,7 @@
         </div>
 
         <div>
-            <a th:href="@{/admin/editRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Modifica la scheda della ricetta</a>
+            <a th:href="@{/admin/editRicetta/{id}(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
         </div>
         <div>
             <a th:href="@{/admin/deleteRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Cancella questa ricetta</a>
@@ -29,7 +29,6 @@
         <div th:if="${ricetta}">
             <h2 th:text="${ricetta.nome}">Nome:</h2>
             <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
-            <p> Lorem, ipsum dolor. </p>
         </div>
 
         <div>
@@ -38,14 +37,10 @@
             
             <ul>
                 <li th:each="ingrediente : ${ricetta.ingredienti}">
-                    <!--<span th:text="${ingrediente.nome}"></span>-->
                     <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
                     <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
                     <span>
                         <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id = ${ingrediente.id})}">Rimuovi ingrediente</a>
-                    </span>
-                    <span>
-                        <!--ANCORA A FORM PER MODIFICARE QUANTITA'-->
                     </span>
                     
                     <div>

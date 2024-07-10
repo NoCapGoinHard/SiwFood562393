@@ -90,8 +90,8 @@ public class RicettaController extends GlobalController {
 
 
     //NUOVO TENTATIVO DI EDIT RICETTA E INGREDIENTE
-    @GetMapping("/admin/editRicetta/{ricetta_id}")
-    public String getFormEditRicetta(@PathVariable("ricetta_id") Long id, Model model) {
+    @GetMapping("/admin/editRicetta/{id}")
+    public String getFormEditRicetta(@PathVariable("id") Long id, Model model) {
         Ricetta ricetta = this.ricettaService.findById(id);
         User user = getCredentials().getUser();
         if ((getCredentials().isAdmin()
@@ -101,7 +101,10 @@ public class RicettaController extends GlobalController {
             model.addAttribute("nuovoIngrediente", new Ingrediente());
             return "forms/formModificaRicettaAdmin.html";
         }
-        return "redirect:/ricette/" + id;
+        else{
+            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
+            return "redirect:/ricette/" + id;
+        }
     }
 
     @PostMapping("/admin/editRicetta/{id}")

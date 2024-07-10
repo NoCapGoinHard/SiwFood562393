@@ -11,7 +11,6 @@
     <body>
         <h1>Lista Ricette</h1>
 
-
         <div>
             <a href="/ricette/search">Cerca ricette per nome</a>
         </div>
@@ -22,14 +21,16 @@
         </div>
         <ul>
             <li th:each="ricetta : ${ricette}">
-                <div>
-                    Lorem, ipsum dolor.
-                </div>
                 <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">
                    <span th:text="${ricetta.nome}"></span>
                 </a>
+                <p th:text="${ricetta.descrizione}"></p>
             </li>
         </ul>
+
+                <div>
+            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+        </div>
     </body>
 
 
