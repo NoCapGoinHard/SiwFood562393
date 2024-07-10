@@ -83,7 +83,7 @@ public class IngredienteController extends GlobalController {
     public String getIngredientiByNome(@RequestParam("nome") String nome, Model model){
         List<Ingrediente> ingredienti = this.ingredienteService.findAllByNome(nome);
         if(!ingredienti.isEmpty()) {
-            model.addAttribute("ingrediente", ingredienti.get(0));
+            model.addAttribute("ingredienti", ingredienti.get(0));
             return "ingredienti.html";
         }
         else {
