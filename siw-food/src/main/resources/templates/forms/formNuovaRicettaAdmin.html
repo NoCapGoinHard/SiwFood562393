@@ -11,6 +11,7 @@
     </head>
 
     <body>
+        <a th:href="@{/cuochi/{cuoco_id}(cuoco_id = ${cuoco.id})}">Torna alla scheda del cuoco</a>
         
         
         <h1>
@@ -49,7 +50,6 @@
                 </span>
            </div>
         </form>
-        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 
 
     </body>

@@ -7,6 +7,9 @@
 
 
     <body>
+        <a th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco_id})}">Torna alla lista dei cuochi</a>
+
+
         <h1>Modifica la scheda del cuoco</h1>
         <form th:action="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${cuoco}" method="post">
             <div>
@@ -34,7 +37,6 @@
                 <button type="submit">Conferma modifiche</button>
             </div>
         </form>
-        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 
     </body>
 

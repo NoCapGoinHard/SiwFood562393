@@ -6,10 +6,11 @@
     <head>
         <meta charset="utf-8">
         <title>Aggiungi allergene</title>
-
+        
     </head>
-
+    
     <body>
+        <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingredienti[0].nome})}">Torna alla scheda dell'ingrediente</a>
         <form th:action="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome = ${ingredienti[0].nome})}" th:object ="${allergene}" method ="post">
             <div>
                 <label for="nome">Allergene:</label>

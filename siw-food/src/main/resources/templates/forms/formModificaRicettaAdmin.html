@@ -33,6 +33,8 @@
 </head>
 
 <body>
+    <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">Torna ai dettagli della ricetta</a>
+    
     <h1>Modifica i dettagli della Ricetta</h1>
 
     <div>
@@ -50,7 +52,7 @@
             </li>
         </ul>
     </div>
-
+    
     <h1>Aggiorna Ricetta</h1>
     <form th:action="@{/admin/editRicetta/{id}(id=${ricetta.id})}" enctype="multipart/form-data" method="post"
         th:object="${ricetta}">
@@ -88,9 +90,6 @@
         <button type="submit">Aggiungi</button>
     </form>
 
-    <div>
-        <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">torna ai dettagli della ricetta</a>
-    </div>
 
 </body>
 

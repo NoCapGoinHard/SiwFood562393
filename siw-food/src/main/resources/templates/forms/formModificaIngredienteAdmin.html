@@ -8,6 +8,8 @@
 
     
     <body>
+        <a th:href="/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})"></a>
+
         <form th:action="@{/admin/editIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}" th:object="${ingrediente}" method = "post">
             <div>
                 <label for="nome">Ingrediente:</label>

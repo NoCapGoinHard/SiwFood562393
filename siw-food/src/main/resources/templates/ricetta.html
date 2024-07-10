@@ -8,6 +8,8 @@
     </head>
 
     <body>
+        <a href="/ricette">Torna alla scheda delle ricette</a>
+        
         <h1>Dettagli</h1>
         
         <div>
@@ -63,6 +65,9 @@
                 <a th:href="@{/cuochi/{cuoco_id}(cuoco_id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
             </span>
         </div>
+
+
+
         
 
     </body>
