@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <!--NON TE SCORDA DE STA RIGA DE CODICE, CHE NON RIESCE A CODIFICARE-->
+        <meta charset="utf-8"> 
+        <title>
+            Registrazione nuovo cuoco
+        </title>
+
+    </head>
+
+    <body>
+        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
+        
+        
+        <h1>
+            Inserire i dati e cliccare "conferma" per inserire il nuovo cuoco
+        </h1>
+
+        <form th:action="@{/admin/addCuoco}" enctype = "multipart/form-data" method = "POST" th:object="${cuoco}"> 
+            <div>
+                <span th:text="${messaggioErrore}"> ERRORE </span>
+            </div>
+            <div>
+                Nome: 
+                <span>
+                    <input required type="text" th:field="*{nome}"/>
+                </span>
+            </div>
+            <div>
+                Cognome:
+                <span>
+                    <input required type="text" th:field="*{cognome}"/>
+                </span>
+            </div>
+            <div>
+                 <label for="dataNascita"> Data di Nascita: </label>
+                 <input type="date" id="dataNascita" th:field="*{dataNascita}"/> 
+            </div>
+            <div>
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*">
+            </div>
+    
+            <div>
+                <img th:if="${cuoco.hasImages() == true}"
+                    th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
+            </div>
+
+           <div>
+                <span>
+                    <button type="submit">
+                        Conferma
+                    </button>
+                </span>
+           </div>
+        </form>
+
+
+    </body>
+
+
+</html>
