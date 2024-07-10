@@ -1,6 +1,7 @@
 package it.uniroma3.siwfood.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
+import it.uniroma3.siwfood.model.Immagine;
 import it.uniroma3.siwfood.model.Ingrediente;
 import it.uniroma3.siwfood.model.Ricetta;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
+import it.uniroma3.siwfood.service.ImmagineService;
 import it.uniroma3.siwfood.service.RicettaService;
 
 
@@ -29,6 +33,9 @@ public class RicettaController extends GlobalController {
 
     @Autowired
     private CuocoService cuocoService;
+
+    @Autowired
+    private ImmagineService immagineService;
 
 
     @GetMapping("/ricette")   
@@ -98,8 +105,24 @@ public class RicettaController extends GlobalController {
     }
 
     @PostMapping("/admin/editRicetta/{id}")
-    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti) {
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti,
+    @RequestParam("immagine") MultipartFile immagine)
+    throws IOException {
         ricetta.setId(id);
+
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (ricetta.getImmagini().isEmpty()) {
+                ricetta.getImmagini().add(img);
+            } else {
+                ricetta.getImmagini().clear();
+                ricetta.getImmagini().add(img);
+            }
+            immagineService.save(img);
+        }
+
         this.ricettaService.save(ricetta);
         return "redirect:/ricette/" + ricetta.getId();
     }
@@ -139,8 +162,24 @@ public class RicettaController extends GlobalController {
         }
     }
     @PostMapping("/admin/addRicetta/{cuoco_id}")
-    public String addRicettaAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta) {
+    public String addRicettaAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta,
+    @RequestParam("immagine") MultipartFile immagine)
+    throws IOException {
         ricetta.setCuoco(this.cuocoService.findById(id));
+
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (ricetta.getImmagini().isEmpty()) {
+                ricetta.getImmagini().add(img);
+            } else {
+                ricetta.getImmagini().clear();
+                ricetta.getImmagini().add(img);
+            }
+            immagineService.save(img);
+        }
+
         this.ricettaService.save(ricetta);
         return "redirect:/cuochi/" + id;
     }

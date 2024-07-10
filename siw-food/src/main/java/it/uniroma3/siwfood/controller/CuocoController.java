@@ -119,23 +119,23 @@ public class CuocoController extends GlobalController{
         }
     }
     @PostMapping("/admin/editCuoco/{cuoco_id}")
-    public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco/*,
-            @RequestParam("immagine") MultipartFile immagine*/)
-            /*throws IOException*/ {
+    public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco,
+    @RequestParam("immagine") MultipartFile immagine)
+    throws IOException {
         cuoco.setId(id);
 
-    //    if (!immagine.isEmpty()) {
-    //        Immagine img = new Immagine();
-    //        img.setFileName(immagine.getOriginalFilename());
-    //        img.setImageData(immagine.getBytes());
-    //        if (cuoco.getImmagini().isEmpty()) {
-    //            cuoco.getImmagini().add(img);
-    //        } else {
-    //            cuoco.getImmagini().clear();
-    //            cuoco.getImmagini().add(img);
-    //        }
-    //        immagineService.save(img);
-    //    }
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            if (cuoco.getImmagini().isEmpty()) {
+                cuoco.getImmagini().add(img);
+            } else {
+                cuoco.getImmagini().clear();
+                cuoco.getImmagini().add(img);
+            }
+            immagineService.save(img);
+        }
 
         this.cuocoService.save(cuoco);
         return "redirect:/cuochi/" + cuoco.getId();

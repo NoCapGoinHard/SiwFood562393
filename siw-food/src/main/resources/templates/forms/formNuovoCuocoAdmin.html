@@ -17,7 +17,7 @@
             Inserire i dati e cliccare "conferma" per inserire il nuovo cuoco
         </h1>
 
-        <form th:action="@{/admin/addCuoco}" method = "POST" th:object="${cuoco}"> 
+        <form th:action="@{/admin/addCuoco}" enctype = "multipart/form-data" method = "POST" th:object="${cuoco}"> 
             <div>
                 <span th:text="${messaggioErrore}"> ERRORE </span>
             </div>
@@ -37,6 +37,15 @@
                  <label for="dataNascita"> Data di Nascita: </label>
                  <input type="date" id="dataNascita" th:field="*{dataNascita}"/> 
             </div>
+            <div>
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*">
+            </div>
+    
+            <div>
+                <img th:if="${cuoco.hasImages() == true}"
+                    th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
+            </div>
 
            <div>
                 <span>
@@ -46,6 +55,7 @@
                 </span>
            </div>
         </form>
+        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 
 
     </body>

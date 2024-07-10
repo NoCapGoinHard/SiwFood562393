@@ -17,7 +17,7 @@
             Inserire i dati e cliccare "conferma" per inserire la nuova ricetta
         </h1>
 
-        <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" method = "POST" th:object="${ricetta}">
+        <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" method = "POST" th:object="${ricetta}">
             <!--<div>
                 <span th:text="${messaggioErrore}"></span>
             </div>-->
@@ -33,6 +33,10 @@
                     <input type="text" th:field="*{descrizione}"/>
                 </span>
             </div>
+            <div>
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*" required>
+            </div>
            <div>
                 <span>
                     <button type="submit">
@@ -41,6 +45,7 @@
                 </span>
            </div>
         </form>
+        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 
 
     </body>

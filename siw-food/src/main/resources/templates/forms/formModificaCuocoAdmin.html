@@ -8,7 +8,7 @@
 
     <body>
         <h1>Modifica la scheda del cuoco</h1>
-        <form th:action="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}" th:object="${cuoco}" method="post">
+        <form th:action="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${cuoco}" method="post">
             <div>
                 <label for="nome">Modifica nome:</label>
                 <input type="text" id="nome" th:field="*{nome}" />
@@ -22,12 +22,19 @@
                 <input type="date" id="dataNascita" th:field="*{dataNascita}" />
             </div>
             <div>
-                Lorem, ipsum dolor.
+                <label for="immagine">Immagine:</label>
+                <input type="file" id="immagine" name="immagine" accept="image/*">
+            </div>
+    
+            <div>
+                <img th:if="${cuoco.hasImages() == true}"
+                    th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
             </div>
             <div>
                 <button type="submit">Conferma modifiche</button>
             </div>
         </form>
+        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
 
     </body>
 
