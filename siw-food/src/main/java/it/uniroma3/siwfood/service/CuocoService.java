@@ -16,6 +16,7 @@ public class CuocoService {
         return this.cuocoRepository.findById(id).get();
     }
 
+
     public Iterable<Cuoco> findAll() {
         return this.cuocoRepository.findAll();
     }
@@ -31,7 +32,6 @@ public class CuocoService {
     public Cuoco findByNomeAndCognome(String nome, String cognome) {
         return this.cuocoRepository.findByNomeAndCognome(nome, cognome);
     }
-
 
     public void deleteById(Long id) {
         this.cuocoRepository.deleteById(id);

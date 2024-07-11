@@ -10,11 +10,16 @@
 
     <body>
         <div>
-            <a href="/login">ACCEDI</a>
+            <a href="/logout" th:if="${userDetails}">Logout</a>
         </div>
-        <div>
-            <a href="/register">REGISTRATI</a>
-        </div>
+        
+
+        <span>
+            <a href="/login">Login</a>
+        </span>
+        <span>
+            <a href="/register">Registrati</a>
+        </span>
 
         <h1>
             Consulta

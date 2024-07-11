@@ -4,6 +4,7 @@ package it.uniroma3.siwfood.controller;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -148,7 +149,7 @@ public class RicettaController extends GlobalController {
     }
 
 
-
+    
     @GetMapping("/admin/addRicetta/{cuoco_id}")
     public String formNuovaRicettaAdmin(@PathVariable("cuoco_id") Long id,Model model) {
         User user = getCredentials().getUser();
