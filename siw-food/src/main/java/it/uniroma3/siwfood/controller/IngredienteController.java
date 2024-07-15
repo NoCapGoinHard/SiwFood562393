@@ -106,10 +106,7 @@ public class IngredienteController extends GlobalController {
             this.ricettaService.save(ricetta);
             return "redirect:/ricette/" + ricetta.getId();
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "index.html";
-        }
+        else return "error.html";
     }
 
     //NUOVO TENTATIVO DI AGGIUNTA INGREDIENTE
@@ -124,10 +121,7 @@ public class IngredienteController extends GlobalController {
         this.ingredienteService.save(ingrediente);
         return "redirect:/admin/editRicetta/" + id;
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "redirect:/admin/editRicetta/" + id;
-        }
+        else return "error.html";
     }
 
 

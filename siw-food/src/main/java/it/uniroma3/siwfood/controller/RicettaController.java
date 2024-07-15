@@ -77,10 +77,7 @@ public class RicettaController extends GlobalController {
             model.addAttribute("nuovoIngrediente", new Ingrediente());
             return "forms/formModificaRicettaAdmin.html";
         }
-        else{
-            model.addAttribute("messaggioErrore", "Non disponi delle autorizzazioni per questa operazione!");
-            return "redirect:/ricette/" + id;
-        }
+        else return "error.html";
     }
 
     @PostMapping("/admin/editRicetta/{id}")
@@ -121,10 +118,7 @@ public class RicettaController extends GlobalController {
             this.ricettaService.deleteById(id);
             return "redirect:/ricette";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "redirect:/ricette/" + id;
-        }
+        else return "error.html";
     }
 
 
@@ -138,10 +132,7 @@ public class RicettaController extends GlobalController {
             model.addAttribute("ricetta", new Ricetta());
             return "forms/formNuovaRicettaAdmin.html";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "redirect:/cuochi/" + id;
-        }
+        else return "error.html";
     }
     @PostMapping("/admin/addRicetta/{cuoco_id}")
     public String addRicettaAdmin(@PathVariable("cuoco_id") Long id, @ModelAttribute Ricetta ricetta,

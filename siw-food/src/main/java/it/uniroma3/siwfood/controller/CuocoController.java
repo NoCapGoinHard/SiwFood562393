@@ -74,10 +74,7 @@ public class CuocoController extends GlobalController{
             model.addAttribute("cuoco", new Cuoco());
             return "forms/formNuovoCuocoAdmin.html";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "cuochi.html";
-        }
+        else return "error.html";
     }
     @PostMapping("/admin/addCuoco")
     public String formNuovoCuocoAdmin(@ModelAttribute Cuoco cuoco, @RequestParam("immagine") MultipartFile immagine) throws IOException {
@@ -118,10 +115,7 @@ public class CuocoController extends GlobalController{
             model.addAttribute("cuoco", this.cuocoService.findById(id));
             return "forms/formModificaCuocoAdmin.html";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "redirect:/cuochi/" + id;
-        }
+        else return "error.html";
     }
     @PostMapping("/admin/editCuoco/{cuoco_id}")
     public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco,
@@ -178,10 +172,7 @@ public class CuocoController extends GlobalController{
             this.cuocoService.deleteById(id);
             return "redirect:/cuochi";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-        return "redirect:/cuochi/" + id;
-        }
+        else return "error.html";
     }
         
 }
