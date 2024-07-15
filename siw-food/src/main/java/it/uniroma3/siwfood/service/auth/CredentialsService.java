@@ -21,6 +21,10 @@ public class CredentialsService {
     public Credentials getCredentials(Long id){
         return this.credentialsRepository.findById(id).get();
     }
+
+    public Credentials findByUserId(Long id) {
+        return this.credentialsRepository.findByUserId(id);
+    }
     
     public Credentials findByUsername(String username) {
         return this.credentialsRepository.findByUsername(username);

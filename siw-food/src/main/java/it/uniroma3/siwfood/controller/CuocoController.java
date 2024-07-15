@@ -16,9 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import it.uniroma3.siwfood.model.Cuoco;
 import it.uniroma3.siwfood.model.Immagine;
+import it.uniroma3.siwfood.model.auth.Credentials;
 import it.uniroma3.siwfood.model.auth.User;
 import it.uniroma3.siwfood.service.CuocoService;
 import it.uniroma3.siwfood.service.ImmagineService;
+import it.uniroma3.siwfood.service.auth.CredentialsService;
 
 
 @Controller
@@ -32,6 +34,9 @@ public class CuocoController extends GlobalController{
 
     @Autowired
     private ImmagineService immagineService;
+
+    @Autowired
+    private CredentialsService credentialsService;
 
 
 
@@ -166,6 +171,10 @@ public class CuocoController extends GlobalController{
         User user = getCredentials().getUser();
         if (getCredentials().isAdmin()
         || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
+            if(user != null) {
+                Credentials credentials = this.credentialsService.findByUsername(getCredentials().getUsername());
+                this.credentialsService.delete(credentials);
+            }
             this.cuocoService.deleteById(id);
             return "redirect:/cuochi";
         }
