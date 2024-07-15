@@ -63,29 +63,6 @@ public class RicettaController extends GlobalController {
         return "ricette.html";
     }
 
-///VECCHIO TENTATIVO DI MODIFICA E AGGIUNTA INGREDIENTE
-
-//    @GetMapping("/admin/editRicetta/{ricetta_id}")
-//    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, Model model) {
-//        User user = getCredentials().getUser();
-//        Cuoco cuoco = this.ricettaService.findById(id).getCuoco();
-//        if (getCredentials().isAdmin()
-//        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == cuoco.getId()) {
-//            model.addAttribute("ricetta", this.ricettaService.findById(id));
-//            return "forms/formModificaRicettaAdmin.html";
-//        }
-//        else {
-//            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-//            return "redirect:/ricette/" + id;
-//        }
-//    }
-//    @PostMapping("/admin/editRicetta/{ricetta_id}")
-//    public String editRicettaAdmin(@PathVariable("ricetta_id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute List<Ingrediente> ingredienti) {
-//        ricetta.setId(id);
-//        this.ricettaService.save(ricetta);
-//        return "redirect:/ricette/" + ricetta.getId();
-//    }
-
 
 
     //NUOVO TENTATIVO DI EDIT RICETTA E INGREDIENTE
@@ -110,7 +87,10 @@ public class RicettaController extends GlobalController {
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
     @RequestParam("immagine") MultipartFile immagine)
     throws IOException {
-        ricetta.setId(id);
+        Ricetta tmpRicetta = ricettaService.findById(id);
+        ricetta.setCuoco(tmpRicetta.getCuoco());
+        ricetta.setId(tmpRicetta.getId());
+
 
         if (!immagine.isEmpty()) {
             Immagine img = new Immagine();
