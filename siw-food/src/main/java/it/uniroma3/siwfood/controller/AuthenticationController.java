@@ -68,52 +68,7 @@ public class AuthenticationController {
 
         return "auth/register.html";
     }
-    
-//    @PostMapping("/register")
-//    public String postNewUtente(@Valid @ModelAttribute("user") User user, 
-//                                BindingResult utenteBindingResult, 
-//                                @Valid @ModelAttribute("credentials") Credentials credentials, 
-//                                BindingResult credentialsBindingResult, 
-//                                @ModelAttribute("cuoco") Cuoco cuoco, 
-//                                @RequestParam("immagine") MultipartFile immagine,
-//                                Model model) throws IOException {
-//
-//        if(!immagine.isEmpty()){
-//            Immagine img = new Immagine();
-//            img.setFileName(immagine.getOriginalFilename());
-//            img.setImageData(immagine.getBytes());
-//            if (cuoco.getImmagini() == null) {
-//                cuoco.setImmagini(new ArrayList<>());
-//            }
-//            cuoco.getImmagini().add(img);
-//            this.immagineService.save(img);
-//        }
-//        
-//        if(!utenteBindingResult.hasErrors() && !credentialsBindingResult.hasErrors()){
-//            
-//            
-//
-//            cuoco.setNome(user.getNome());
-//            cuoco.setCognome(user.getCognome());
-//            cuoco.setDataNascita(user.getDataNascita());
-//            cuocoService.save(cuoco);
-//
-//            user.setCuoco(cuoco);
-//            userService.save(user);
-//
-//
-//            credentials.setUser(user);
-//            credentials.setRuolo(Credentials.UTENTE_CUOCO);
-//            
-//            credentialsService.save(credentials);
-//            
-//            model.addAttribute("user", user);
-//
-//            return "redirect:/";
-//        }
-//        
-//        return "auth/register.html";
-//    }
+
 
 
     @PostMapping(value = { "/register" })
@@ -132,6 +87,7 @@ public class AuthenticationController {
             credentials.setUser(user);
             Cuoco cuoco = new Cuoco(user);
             cuocoService.save(cuoco);
+            user.setCuoco(cuoco);
             credentials.setRuolo(Credentials.UTENTE_CUOCO);
             credentialsService.save(credentials);
             model.addAttribute("user", user);
