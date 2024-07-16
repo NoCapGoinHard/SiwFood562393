@@ -23,9 +23,11 @@
             <a th:href="@{/admin/deleteRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Cancella questa ricetta</a>
         </div>
 
-        <div>
-            <img th:if="${ricetta.hasImages() == true}"
-                th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%" />
+        <div th:if="${ricetta.hasImages() == true}">
+            <span th:each="immagine: ${ricetta.immagini}">
+                <img
+                    th:src="'data:image/jpeg;base64,' + ${immagine.getBase64()}" width="30%" />
+            </span>
         </div>
 
         <div th:if="${ricetta}">

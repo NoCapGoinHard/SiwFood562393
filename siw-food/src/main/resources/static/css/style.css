@@ -1,0 +1,115 @@
+body {
+  background-color: transparent;
+  background-image: url('/images/fotoSfondo.png');
+  font-family: 'Serif', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.container {
+  text-align: center;
+  background-color: rgba(0,0,0,0.4);
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 800px; /* added max-width for responsiveness */
+  margin: 0 auto; /* added margin to center the container */
+}
+
+.index-header {
+  font-size: 2.5em;
+  color: whitesmoke;
+  font-weight: 600;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  margin-bottom: 15px;
+  flex-direction: column;
+}
+
+.index-links {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.index-links:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+}
+
+.index-links-auth {
+  margin: 5px;
+  padding: 10px 20px;
+  background-color: #d3bc27;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.index-links-auth:hover {
+  background-color: #ce3928;
+}
+
+a {
+  color: whitesmoke;
+}
+
+/* added media queries for responsiveness */
+
+@media only screen and (max-width: 768px) {
+ .container {
+    padding: 20px;
+  }
+ .index-header {
+    font-size: 2em;
+  }
+ .index-links {
+    padding: 8px 15px;
+  }
+ .index-links-auth {
+    padding: 8px 15px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+ .container {
+    padding: 15px;
+  }
+ .index-header {
+    font-size: 1.5em;
+  }
+ .index-links {
+    padding: 5px 10px;
+  }
+ .index-links-auth {
+    padding: 5px 10px;
+  }
+}

@@ -6,44 +6,57 @@
         <title> 
             SiwFood    
         </title> 
+        <link rel="stylesheet" href="/css/style.css?version=3" />
     </head>
 
+
     <body>
-        <div>
-            <a href="/logout" th:if="${userDetails}">Logout</a>
-        </div>
+
         
+        <div class="container">
+            
+            <div class="column">
 
-        <span>
-            <a href="/login">Login</a>
-        </span>
-        <span>
-            <a href="/register">Registrati</a>
-        </span>
+                <div class="row">
+                    
+                    <div class="index-links-auth" th:if="${userDetails}">
+                        <a href="/logout">Logout</a>
+                    </div>
+                    <div class="index-links-auth">
+                        <a href="/login">Login</a>
+                    </div>
+                    <div class="index-links-auth">
+                        <a href="/register">Registrati</a>
+                    </div>
+                    
+                </div>
+                
+                <h1 class="index-header">Consulta</h1>
 
-        <h1>
-            Consulta
-        </h1>
-        <div>
-            <a href="/cuochi">
-                Cuochi
-            </a>
+                <div class="row">
+                        
+                        <div class="index-links">
+                            <a href="/cuochi">Cuochi</a>
+                        </div>
+
+                        <div class="index-links">
+                            <a href="/ricette">Ricette</a>
+                        </div>
+
+                        <div class="index-links" th:if="${userDetails}">
+                            <a href="/admin/ingredienti">Ingredienti</a>
+                        </div>
+
+                        <div class="error-message">
+                            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+                        </div>
+                
+                </div>
+
+            </div>
+
         </div>
-        <div>
-            <a href="/ricette">
-                Ricette
-            </a>
-        </div>
-        <div>
-            <a href="/admin/ingredienti">
-                Ingredienti
-            </a>
-        </div>
 
-        <div>
-            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
-        </div>
-    </body>
-
-
-</html>
+      </body>
+      
+      </html>

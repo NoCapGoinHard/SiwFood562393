@@ -79,7 +79,7 @@ public class RicettaController extends GlobalController {
         }
         else return "error.html";
     }
-
+/*
     @PostMapping("/admin/editRicetta/{id}")
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
     @RequestParam("immagine") MultipartFile immagine)
@@ -104,6 +104,32 @@ public class RicettaController extends GlobalController {
 
         this.ricettaService.save(ricetta);
         return "redirect:/ricette/" + ricetta.getId();
+    }*/
+
+    @PostMapping("/admin/editRicetta/{id}")
+    public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
+    @RequestParam("immagine") MultipartFile immagine)
+    throws IOException {
+        Ricetta tmpRicetta = ricettaService.findById(id);
+        if(ricetta.getNome() != null) {
+            tmpRicetta.setNome(ricetta.getNome());
+        }
+        if(ricetta.getDescrizione() != null) {
+            tmpRicetta.setDescrizione(ricetta.getDescrizione());
+        }
+
+        
+
+        if (!immagine.isEmpty()) {
+            Immagine img = new Immagine();
+            img.setFileName(immagine.getOriginalFilename());
+            img.setImageData(immagine.getBytes());
+            tmpRicetta.getImmagini().add(img);
+            immagineService.save(img);
+        }
+
+    
+        return "redirect:/ricette/" + tmpRicetta.getId();
     }
 
 
