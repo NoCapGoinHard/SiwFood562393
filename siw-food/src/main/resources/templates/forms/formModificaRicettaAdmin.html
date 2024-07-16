@@ -59,11 +59,11 @@
         <input type="hidden" th:field="*{cuoco}" />
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" required>
+            <input type="text" id="nome" th:field="*{nome}" required/>
         </div>
         <div>
             <label for="descrizione">Descrizione:</label>
-            <input type="text" id="descrizione" th:field="*{descrizione}" required>
+            <input type="text" id="descrizione" th:field="*{descrizione}" required/>
         </div>
 
         <div>
@@ -82,11 +82,11 @@
         th:object="${nuovoIngrediente}">
         <div>
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" required>
+            <input type="text" id="nome" th:field="*{nome}" required/>
         </div>
         <div>
             <label for="Quantità">Quantità:</label>
-            <input type="text" id="Quantità" th:field="*{quantita}" required>
+            <input type="text" id="Quantità" th:field="*{quantita}" required/>
         </div>
         <button type="submit">Aggiungi</button>
     </form>
