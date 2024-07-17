@@ -52,10 +52,11 @@ public class AuthConfiguration {
                             .permitAll()
                         // solo gli utenti autenticati con ruolo ADMIN possono accedere a risorse con path /admin/**
                         .requestMatchers(
-                            HttpMethod.GET, "/admin/**", "/admin/addRicetta/**")
+                            HttpMethod.GET, "/admin/**", "/admin/addRicetta/**", "/admin/editRicetta/**")
                         .hasAnyAuthority("ADMIN", "CUOCO")
+                        
                         .requestMatchers(
-                            HttpMethod.POST, "/admin/**", "/admin/addRicetta/**")
+                            HttpMethod.POST, "/admin/**", "/admin/addRicetta/**", "/admin/editRicetta/**")
                         .hasAnyAuthority("ADMIN", "CUOCO")
                         // tutti gli utenti autenticati possono accere alle pag
                         .anyRequest().authenticated())

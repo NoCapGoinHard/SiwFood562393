@@ -110,8 +110,8 @@ public class CuocoController extends GlobalController{
     @GetMapping("/admin/editCuoco/{cuoco_id}")
     public String getFormEditCuoco(@PathVariable("cuoco_id") Long id, Model model) {
         User user = getCredentials().getUser();
-        if (getCredentials().isAdmin()
-        || cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId() == id) {
+        Long cuoco_id = cuocoService.findByNomeAndCognome(user.getNome(), user.getCognome()).getId();
+        if (    (getCredentials().isAdmin())  ||  (cuoco_id == id)     ) {
             model.addAttribute("cuoco", this.cuocoService.findById(id));
             return "forms/formModificaCuocoAdmin.html";
         }
@@ -121,23 +121,28 @@ public class CuocoController extends GlobalController{
     public String updateCuoco(@PathVariable("cuoco_id") Long id, @ModelAttribute Cuoco cuoco,
     @RequestParam("immagine") MultipartFile immagine)
     throws IOException {
-        cuoco.setId(id);
+        Cuoco tmpCuoco = cuocoService.findById(id);
+        if(cuoco.getNome() != null) {
+            tmpCuoco.setNome(cuoco.getNome());
+        }
+        if(cuoco.getCognome() != null) {
+            tmpCuoco.setCognome(cuoco.getCognome());
+        }
+        if(cuoco.getDataNascita() != null) {
+            tmpCuoco.setDataNascita(cuoco.getDataNascita());
+        }
+        
 
         if (!immagine.isEmpty()) {
             Immagine img = new Immagine();
             img.setFileName(immagine.getOriginalFilename());
             img.setImageData(immagine.getBytes());
-            if (cuoco.getImmagini().isEmpty()) {
-                cuoco.getImmagini().add(img);
-            } else {
-                cuoco.getImmagini().clear();
-                cuoco.getImmagini().add(img);
-            }
+            tmpCuoco.getImmagini().add(img);
             immagineService.save(img);
         }
 
-        this.cuocoService.save(cuoco);
-        return "redirect:/cuochi/" + cuoco.getId();
+        this.cuocoService.save(tmpCuoco);
+        return "redirect:/cuochi/" + tmpCuoco.getId();
     }
 
 
