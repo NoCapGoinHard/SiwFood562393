@@ -46,10 +46,7 @@ public class IngredienteController extends GlobalController {
             model.addAttribute("ingredienti", ingredienti);
             return "ingredienti.html";
         }
-        else {
-            model.addAttribute("messaggioErrore", "Non disponi per le autorizzazioni necessarie per questa operazione!");
-            return "index.html";
-        }
+        else return "error.html";
     }
 
 
