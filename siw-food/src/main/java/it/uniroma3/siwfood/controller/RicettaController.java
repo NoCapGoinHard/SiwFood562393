@@ -105,7 +105,6 @@ public class RicettaController extends GlobalController {
         this.ricettaService.save(ricetta);
         return "redirect:/ricette/" + ricetta.getId();
     }*/
-
     @PostMapping("/admin/editRicetta/{id}")
     public String updateRicetta(@PathVariable("id") Long id, @ModelAttribute Ricetta ricetta, @ModelAttribute Ingrediente ingrediente,
     @RequestParam("immagine") MultipartFile immagine)
@@ -128,7 +127,7 @@ public class RicettaController extends GlobalController {
             immagineService.save(img);
         }
 
-    
+        ricettaService.save(tmpRicetta);
         return "redirect:/ricette/" + tmpRicetta.getId();
     }
 

@@ -5,42 +5,50 @@
     <head>
         <meta charset="utf-8">
         <title>Scheda Ingrediente</title>
+        <link rel="stylesheet" href="/css/style.css" />
     </head>
     
     <body>
-        <a href="/admin/ingredienti">Torna alla scheda degli ingredienti</a>
-        
-        <h1>Dettagli</h1>
 
-        <div>
-            <a th:href="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
-        </div>
-        <div>
-            <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Cancella questo ingrediente dal sistema</a>
-        </div>
+        <div class="container">
 
+            <div class="navigation-index-links">
+                <a class="navigation-index-links" href="/admin/ingredienti">Torna alla scheda degli ingredienti</a>
+            </div>
 
-        <div th:if="${ingrediente}">
-            <h2 th:text="${ingrediente.nome}">Nome:</h2>
-        </div>
-
-        <div>
-            <div>
-                <h2>Scheda allergeni</h2>
+            <div class="index-links">
+                <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Cancella questo ingrediente dal sistema</a>
+            </div>
+            
+            <div class="column">
+                <div class="index-header" th:if="${ingrediente}">
+                    <h2 th:text="${ingrediente.nome}">Nome:</h2>
+                </div>
                 
-                <!-- Mostra il messaggio se non ci sono allergeni -->
-                <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni.</p>
                 
-                <!-- Mostra la lista degli allergeni solo se non è vuota -->
-                <ul th:if="${!ingrediente.allergeni.isEmpty()}">
-                    <li th:each="allergene : ${ingrediente.allergeni}">
-                        <span th:text="${allergene.nome}"></span>
-                        <a th:href="@{/admin/eliminaAllergene/{ingrediente_nome}/{allergene_id}(ingrediente_nome=${ingrediente.nome}, allergene_id=${allergene.id})}" th:text="Rimuovi"></a>
-                    </li>
-                </ul>
+                
+                
+                <div class="allergeni-container">
+                    <h2 class="smaller-index-header">Scheda allergeni</h2>
+                    <div class="column">
+                        <div class="index-links">
+                            <a th:href="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}">Aggiungi un allergene all'ingrediente</a>
+                        </div>
+                        
+                        <!-- Mostra il messaggio se non ci sono allergeni -->
+                        <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni.</p>
+                        
+                        <!-- Mostra la lista degli allergeni solo se non è vuota -->
+                        <ul th:if="${!ingrediente.allergeni.isEmpty()}">
+                            <li th:each="allergene : ${ingrediente.allergeni}">
+                                <span th:text="${allergene.nome}"></span>
+                                <a th:href="@{/admin/eliminaAllergene/{ingrediente_nome}/{allergene_id}(ingrediente_nome=${ingrediente.nome}, allergene_id=${allergene.id})}" th:text="Rimuovi"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
         
         
         

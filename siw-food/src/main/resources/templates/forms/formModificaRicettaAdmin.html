@@ -48,7 +48,7 @@
             <li th:each="ingrediente : ${ricetta.ingredienti}">
                 <span th:text="${ingrediente.nome}">Nome Ingrediente: </span>
                 <span th:text="${ingrediente.quantita}">Quantità Ingrediente</span>
-                <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}">Rimuovi</button>
+                <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}">Rimuovi</a>
             </li>
         </ul>
     </div>
@@ -56,7 +56,7 @@
     <h1>Aggiorna Ricetta</h1>
     <form th:action="@{/admin/editRicetta/{id}(id=${ricetta.id})}" enctype="multipart/form-data" method="post"
         th:object="${ricetta}">
-        <input type="hidden" th:field="*{cuoco}" />
+
         <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}" required/>

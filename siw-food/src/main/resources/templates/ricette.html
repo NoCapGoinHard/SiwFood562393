@@ -6,32 +6,40 @@
         <title> 
             Ricette   
         </title> 
+        <link rel="stylesheet" href="/css/style.css" />
+
     </head>
 
     <body>
-        <a href="/">HOME</a>
+        <div class ="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/">HOME</a></div>
 
-        <h1>Lista Ricette</h1>
+            <h1 class="index-header">Lista Ricette</h1>
 
-        <div>
-            <a href="/ricette/search">Cerca ricette per nome</a>
-        </div>
+            <div class="index-links">
+                <a href="/ricette/search">Cerca ricette per nome</a>
+            </div>
 
-        <div
-            th:if="${ricette == null || ricette.isEmpty()}">
-            Non ci sono ricette nel sistema
-        </div>
-        <ul>
-            <li th:each="ricetta : ${ricette}">
-                <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">
-                   <span th:text="${ricetta.nome}"></span>
-                </a>
-                <p th:text="${ricetta.descrizione}"></p>
-            </li>
-        </ul>
+            <div th:if="${ricette == null || ricette.isEmpty()}">
+                Non ci sono ricette nel sistema
+            </div>
+            <div class="column">
+                <ul>
 
-                <div>
-            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+                        <li  class="menu-index-links" th:each="ricetta : ${ricette}">
+                            <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">
+                                <span th:text="${ricetta.nome}"></span>
+                            </a>
+                            <p th:text="${ricetta.descrizione}"></p>
+                        </li>
+                    
+                </ul>
+            </div>
+
+            <div>
+                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+            </div>
+
         </div>
     </body>
 

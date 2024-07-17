@@ -3,38 +3,52 @@
 
     <head>
         <meta charset="utf-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="/css/style.css" />
         <title> 
             Cuochi   
         </title> 
     </head>
 
     <body>
-        <a href="/">HOME</a>
 
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/">HOME</a></div>
         
-        <h1>Lista Cuochi trovati:</h1>
         
-        <div>
-            <a href="/admin/addCuoco">Inserisci un nuovo cuoco</a>
-        </div>
-        <div>
-            <a href="/cuochi/search">Cerca cuochi per nome e cognome</a>
+            <div class="index-links">
+                <a href="/admin/addCuoco">Inserisci un nuovo cuoco</a>
+            </div>
+            <div class="index-links">
+                <a href="/cuochi/search">Cerca cuochi per nome e cognome</a>
+            </div>
+
+            <h1 class="index-header">Lista Cuochi trovati:</h1>
+            
+
+            <div>
+                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+            </div>
+
+            <div class="column">
+                <ul>
+                    <li th:each="cuoco : ${cuochi}">
+                        <div class="menu-index-links"><!--fare custom rule al posto de questa-->
+                            <a 
+                                th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco.id})}">
+                                    <span 
+                                        th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
+                                    </span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
-        <div>
-            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
-        </div>
-        <ul>
-            <li th:each="cuoco : ${cuochi}">
-
-                <a 
-                    th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco.id})}">
-                        <span 
-                            th:text="${cuoco.nome} + ' ' + ${cuoco.cognome}">
-                        </span>
-                </a>
-            </li>
-        </ul>
     </body>
 
 

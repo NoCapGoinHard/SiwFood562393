@@ -5,73 +5,90 @@
     <head>
         <meta charset="utf-8">
         <title>Scheda Ricetta</title>
+        <link rel="stylesheet" href="/css/style.css" />
     </head>
 
     <body>
-        <a href="/ricette">Torna alla scheda delle ricette</a>
-        
-        <h1>Dettagli</h1>
-        
-        <div>
-            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
-        </div>
+        <div class="container">
 
-        <div>
-            <a th:href="@{/admin/editRicetta/{id}(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
-        </div>
-        <div>
-            <a th:href="@{/admin/deleteRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Cancella questa ricetta</a>
-        </div>
-
-        <div th:if="${ricetta.hasImages() == true}">
-            <span th:each="immagine: ${ricetta.immagini}">
-                <img
-                    th:src="'data:image/jpeg;base64,' + ${immagine.getBase64()}" width="30%" />
-            </span>
-        </div>
-
-        <div th:if="${ricetta}">
-            <h2 th:text="${ricetta.nome}">Nome:</h2>
-            <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
-        </div>
-
-        <div>
-            <h2>Ingredienti</h2>
-            <h5>puoi aggiungere gli ingredienti nella scheda di modifica della ricetta (in alto)</h5>
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/ricette">Torna alla scheda delle ricette</a></div>
             
-            <ul>
-                <li th:each="ingrediente : ${ricetta.ingredienti}">
-                    <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
-                    <span th:text="'(' + ${ingrediente.quantita} + ')'"></span>
-                    <span>
-                        <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id = ${ingrediente.id})}">Rimuovi ingrediente</a>
+            <h1 class="index-header">Dettagli</h1>
+            
+            <div>
+                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+            </div>
+
+            <div class="column">
+                <div class="index-links">
+                    <a th:href="@{/admin/editRicetta/{id}(id=${ricetta.id})}">Modifica la scheda della ricetta</a>
+                </div>
+                <div class="index-links">
+                    <a th:href="@{/admin/deleteRicetta/{ricetta_id}(ricetta_id=${ricetta.id})}">Cancella questa ricetta</a>
+                </div>
+
+                <div class="image-container" th:if="${ricetta.hasImages() == true}">
+                    <span th:each="immagine: ${ricetta.immagini}">
+                        <img
+                            th:src="'data:image/jpeg;base64,' + ${immagine.getBase64()}" width="30%" />
                     </span>
-                    
-                    <div>
-                        <h7>ALLERGENI:</h7>
-                        <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni</p>
-                        <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
-                            <li th:each="allergene : ${ingrediente.allergeni}">
-                                <span th:text="${allergene.nome}"></span>
-                            </li>
-                        </ul>
+                </div>
+
+                <div class="smaller-index-header" th:if="${ricetta}">
+                    <h2 th:text="${ricetta.nome}">Nome:</h2>
+                    <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
+                </div>
+
+                <div class="container">
+                    <div class="column">
+                        <h2 class="smaller-index-header">Ingredienti</h2>
+                        <h5 class="smallest-index-header">puoi aggiungere gli ingredienti nella scheda di modifica della ricetta (in alto)</h5>
+                        
+                        <div class="container">
+
+                            <div class="column">
+                                <ul>
+                                    <li th:each="ingrediente : ${ricetta.ingredienti}">
+                                        <div class="row">
+                                            <div class="column"><a class="smaller-index-header" th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a></div>
+                                            <div class="column"><p class="smallest-index-header" th:text="'(' + ${ingrediente.quantita} + ')'"></p></div>
+                                            <div class="column">
+                                                <span>
+                                                <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id = ${ingrediente.id})}">(rimuovi)</a>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="allergeni-container">
+                                            <h7 class="smallest-index-header">ALLERGENI:</h7>
+                                            <p th:if="${ingrediente.allergeni.isEmpty()}">Questo ingrediente non presenta allergeni</p>
+                                            <div class="column">
+                                                <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
+                                                    <li th:each="allergene : ${ingrediente.allergeni}">
+                                                        <span class="smaller-index-header" th:text="${allergene.nome}"></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <br>
-                </li>
-            </ul>
+                </div>
+
+                <div class="smaller-index-header">
+                    <span>Proposta da:</span>
+                    <span>
+                        <a th:href="@{/cuochi/{cuoco_id}(cuoco_id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
+                    </span>
+                </div>
+            </div>
+
         </div>
-
-        <div>
-            <span>Proposta da:</span>
-            <span>
-                <a th:href="@{/cuochi/{cuoco_id}(cuoco_id=${ricetta.cuoco.id})}" th:text="${ricetta.cuoco.nome} + ' ' + ${ricetta.cuoco.cognome}"></a>
-            </span>
-        </div>
-
-
-
         
-
     </body>
 
 

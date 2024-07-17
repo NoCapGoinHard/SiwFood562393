@@ -5,31 +5,36 @@
     <head>
         <meta charset="utf-8">
         <title>Ingredienti sul sito</title>
+        <link rel="stylesheet" href="/css/style.css" />
     </head>
 
     <body>
-        <a href="/">HOME</a>
+        <div class ="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/">HOME</a></div>
 
-        <h1>Lista Ingredienti</h1>
+            <div class="index-links">
+                <a href="/admin/ingredienti/search">Cerca ingrediente per nome</a>
+            </div>
 
-        <div>
-            <a href="/admin/ingredienti/search">Cerca ingrediente per nome</a>
+            <h1 class="index-header">Lista Ingredienti</h1>
+
+            <div class="error-message">
+                <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
+            </div>
+            <div class="column">
+                <ul>
+                    <li class="menu-index-links" th:each="ingrediente : ${ingredienti}">
+                        <span>
+                            <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
+                        </span>
+                        <span>
+                            <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
         </div>
-
-        <div>
-            <span th:if="${messaggioErrore}" th:text="${messaggioErrore}"></span>
-        </div>
-
-        <ul>
-            <li th:each="ingrediente : ${ingredienti}">
-                <span>
-                    <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})}" th:text="${ingrediente.nome}"></a>
-                </span>
-                <span>
-                    <a th:href="@{/admin/deleteIngrediente/{ingrediente_nome}(ingrediente_nome = ${ingrediente.nome})}">Rimuovi ingrediente dal sistema</a>
-                </span>
-            </li>
-        </ul>
 
     </body>
     
