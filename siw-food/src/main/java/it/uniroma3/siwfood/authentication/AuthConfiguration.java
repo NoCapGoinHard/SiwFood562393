@@ -44,7 +44,7 @@ public class AuthConfiguration {
                 .authorizeHttpRequests( authorize -> authorize
                         // chiunque (autenticato o no) può accedere alle pagine index, login, register, ai css e alle immagini
                         .requestMatchers(
-                            HttpMethod.GET, "/", "/index", "/register", "/cuochi/**", "/cuoco/**", "/ricette/**" , "/ricetta/**", "/ingredienti/**", "/css/**", "/image/**", "/error")
+                            HttpMethod.GET, "/", "/index", "/register", "/cuochi/**", "/cuoco/**", "/ricette/**" , "/ricetta/**", "/ingredienti/**", "/css/**", "/images/**", "/error")
                         .permitAll()  //tolto le icon
                         // chiunque (autenticato o no) può mandare richieste POST al punto di accesso per login e register
                         .requestMatchers(

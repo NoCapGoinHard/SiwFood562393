@@ -5,29 +5,33 @@
     <head>
         <meta charset="utf-8">
         <title>Ricerca Ingrediente</title>
+        <link rel="stylesheet" href="/css/style.css" /> 
     </head>
     
     <body>
-        <a href="/admin/ingredienti">Torna alla scheda degli ingredienti</a>
-        
-        <h1>Verrà mostrato l'ingrediente col nome cercato</h1>
-        
-        <form th:action="@{/admin/ingredienti/byNome}" method = "post">
+        <div class="container">
+            <div class="navigation-index-links"><a href="/ingredienti" class="navigation-index-links">Torna alla scheda degli ingredienti</a></div>
+            
+            <h1 class="index-header">Verrà mostrato l'ingrediente col nome cercato</h1>
+            
+            <form th:action="@{/admin/ingredienti/byNome}" method = "post">
+                <div class="column">
+                    <div class="form-window">
+                        <label for="nome">Inserisci il nome</label>
+                        <input type="text" name="nome" th:value="${nome}"/>
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Cerca</button>
+                    </div>
 
-            <div>
-                <label for="nome">Inserisci il nome</label>
-                <input type="text" name="nome" th:value="${nome}"/>
+                </div>
+            </form>
+
+            <div th:if="${messaggioErrore}">
+                <p th:text="${messaggioErrore}"></p>
             </div>
-            <div>
-                <button type="submit">Cerca</button>
-            </div>
 
-        </form>
-
-        <div th:if="${messaggioErrore}">
-            <p th:text="${messaggioErrore}"></p>
         </div>
-
     
     </body>
 

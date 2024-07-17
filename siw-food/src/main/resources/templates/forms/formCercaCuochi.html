@@ -5,29 +5,35 @@
     <head>
         <meta charset="utf-8">
         <title>Ricerca cuochi</title>
+        <link rel="stylesheet" href="/css/style.css" />  
     </head>
 
     <body>
-        <a href="/cuochi">Torna alla pagina dei cuochi</a>
-        
-        <h1>Verranno poi mostrati tutti i cuochi i quali nome e cognome sono corrispondenti</h1>
-        
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/cuochi">Torna alla scheda dei cuochi</a></div>
+            
+            <h1 class="index-header">Verranno poi mostrati tutti i cuochi i quali nome e cognome sono corrispondenti</h1>
+            
 
-        <form th:action="@{/cuochi/byNomeAndCognome}" method = "post">
-            <div>
-                <label for="nome">Nome:</label>
-                <input type="text" name="nome" th:value="${nome}"/>
-            </div>
-            <div>
-                <label for="cognome">Cognome:</label>
-                <input type="text" name="cognome" th:value="${cognome}"/>
-            </div>
-            <div>
-                <button type="submit">
-                    Cerca
-                </button>
-            </div>
-        </form>
+            <form th:action="@{/cuochi/byNomeAndCognome}" method = "post">
+                <div class="row">
+                    <div class="form-window">
+                        <label for="nome">Nome:</label>
+                        <input type="text" name="nome" th:value="${nome}"/>
+                    </div>
+                    <div class="form-window">
+                        <label for="cognome">Cognome:</label>
+                        <input type="text" name="cognome" th:value="${cognome}"/>
+                    </div>
+                </div>
+                <div class="submit">
+                    <button type="submit">
+                        Cerca
+                    </button>
+                </div>
+            </form>
+
+        </div>
 
     </body>
 

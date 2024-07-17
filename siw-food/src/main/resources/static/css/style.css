@@ -172,38 +172,6 @@ a {
   color: rgb(38, 38, 38);
 }
 
-/* added media queries for responsiveness */
-
-@media only screen and (max-width: 768px) {
- .container {
-    padding: 20px;
-  }
- .index-header {
-    font-size: 2em;
-  }
- .index-links {
-    padding: 8px 15px;
-  }
- .index-links-auth {
-    padding: 8px 15px;
-  }
-}
-
-@media only screen and (max-width: 480px) {
- .container {
-    padding: 15px;
-  }
- .index-header {
-    font-size: 1.5em;
-  }
- .index-links {
-    padding: 5px 10px;
-  }
- .index-links-auth {
-    padding: 5px 10px;
-  }
-}
-
 
 .column p {
   text-align: center;
@@ -221,3 +189,190 @@ a {
   padding-inline-start: 0;
 }
 
+
+.form-window {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-window label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.form-window input[type="text"], .form-window input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+.submit {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.submit button[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+
+.form-window input[type="date"] {
+  width: 95%; /* adjust the width to your liking */
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: inherit;
+  color: #333;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.form-window input[type="date"]:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-window input[type="date"]::-webkit-calendar-picker-indicator {
+  color: #333;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.form-window input[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+.form-window input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* added media queries for responsiveness */
+
+@media only screen and (max-width: 1200px) {
+  .container {
+     max-width: 700px;
+   }
+  .index-header {
+     font-size: 2.5em;
+   }
+  .column {
+     padding: 20px;
+   }
+ }
+ 
+ @media only screen and (max-width: 992px) {
+  .container {
+     max-width: 600px;
+   }
+  .index-header {
+     font-size: 2em;
+   }
+  .column {
+     padding: 15px;
+   }
+  .form-window {
+     padding: 8px;
+   }
+  .form-window input[type="text"],.form-window input[type="password"] {
+     padding: 8px;
+   }
+ }
+ 
+ @media only screen and (max-width: 768px) {
+  .container {
+     padding: 20px;
+   }
+  .index-header {
+     font-size: 1.8em;
+   }
+  .column {
+     padding: 10px;
+   }
+  .form-window {
+     padding: 5px;
+   }
+  .form-window input[type="text"],.form-window input[type="password"] {
+     padding: 5px;
+   }
+  .submit button[type="submit"] {
+     padding: 8px 15px;
+   }
+ }
+ 
+ @media only screen and (max-width: 480px) {
+  .container {
+     padding: 15px;
+   }
+  .index-header {
+     font-size: 1.5em;
+   }
+  .column {
+     padding: 5px;
+   }
+  .form-window {
+     padding: 3px;
+   }
+  .form-window input[type="text"],.form-window input[type="password"] {
+     padding: 3px;
+   }
+  .submit button[type="submit"] {
+     padding: 5px 10px;
+   }
+ }
+ 
+ @media only screen and (max-width: 320px) {
+  .container {
+     padding: 10px;
+   }
+  .index-header {
+     font-size: 1.2em;
+   }
+  .column {
+     padding: 3px;
+   }
+  .form-window {
+     padding: 2px;
+   }
+  .form-window input[type="text"],.form-window input[type="password"] {
+     padding: 2px;
+   }
+  .submit button[type="submit"] {
+     padding: 3px 5px;
+   }
+ }

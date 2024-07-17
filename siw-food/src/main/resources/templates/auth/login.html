@@ -4,31 +4,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-    <div>
-        <a href="/">HOME</a>
+    <div class="container">
 
-        <h1>Login</h1>
+        <div class="navigation-index-links"><a class="navigation-index-links" href="/">HOME</a></div>
 
-        <form th:action="@{/login}" id="login" method="POST">
+        <h1 class="index-header">Login</h1>
+        <div class="column">
+            <form th:action="@{/login}" id="login" method="POST">
 
-            <div>
-                <label for="username" th:text="'Username'"></label>
-                <input name="username" id="username" type="text" required>
-            </div>
-            <div>
-                <label for="password" th:text="'Password'"></label>
-                <input name="password" id="password" type="password" required>
-            </div>
-            <div>
-                <span th:if="${param.error != null}" th:text="'Username o password errati'"></span>
-            </div>
-            <div>
-                <button type="submit" th:text="'Accedi'"></button>
-            </div>
-        </form>
+                <div class="form-window">
+                    <label for="username" th:text="'Username'"></label>
+                    <input name="username" id="username" type="text" required>
+                </div>
+                <div class="form-window">
+                    <label for="password" th:text="'Password'"></label>
+                    <input name="password" id="password" type="password" required>
+                </div>
+                <div class="form-window"  th:if="${param.error != null}">
+                    <span th:text="'Username o password errati'"></span>
+                </div>
+                <div class="submit">
+                    <button type="submit" th:text="'Accedi'"></button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 

@@ -5,25 +5,31 @@
     <head>
         <meta charset="utf-8">
         <title>Ricerca Ricette</title>
+        <link rel="stylesheet" href="/css/style.css" />  
     </head>
 
     <body>
-        <a href="/ricette">Torna alla scheda delle ricette</a>
-        
-        <h1>Verranno mostrate tutte le ricette col nome cercato</h1>
-        
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/ricette">Torna alla scheda delle ricette</a></div>
 
-        <form th:action="@{/ricette/byNome}" method = "post">
-            <div>
-                <label for="nome">Inserisci il nome</label>
-                <input type="text" name="nome" th:value="${nome}"/>
-            </div>
-            <div>
-                <button type="submit">
-                    Cerca
-                </button>
-            </div>
-        </form>
+            
+            <h1 class="smaller-index-header">Verranno mostrate tutte le ricette col nome cercato</h1>
+            
+
+            <form th:action="@{/ricette/byNome}" method = "post">
+                <div class="column">
+                    <div class="form-window">
+                        <label for="nome">Inserisci il nome</label>
+                        <input type="text" name="nome" th:value="${nome}"/>
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Cerca</button>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
 
     </body>
 

@@ -4,44 +4,56 @@
 
     <head>
         <meta charset="utf-8">
-        <title>REGISTRATI A SiwFood</title>        
+        <title>REGISTRATI A SiwFood</title>
+        <link rel="stylesheet" href="/css/style.css" />        
     </head>
     
     <body>
-        <a href="/">HOME</a>
-        
-        <h1>Registrati</h1>
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/">HOME</a></div>
+            
 
-        <form th:action="@{/register}" method = "POST">
-            <div> 
-                <label for="username">Username:</label>
-                <input required type="text" name="username" th:field="*{credentials.username}"/>
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input required type="text" name="password" th:field="*{credentials.password}"/>
-            </div>
-            <div>
-                <label for="email">e-mail:</label>
-                <input required type="text" name="email" th:field="*{user.email}"/>
-            </div>
-            <div>
-                <label for="nome">Nome:</label>
-                <input required type="text" name="nome" th:field="*{user.nome}"/>
-            </div>
-            <div>
-                <label for="cognome">Cognome:</label>
-                <input required type="text" name="cognome" th:field="*{user.cognome}"/>
-            </div>
-            <div>
-                <label for="dataNascita">Data di Nascita: </label>
-                <input type="date" id="dataNascita" th:field="*{user.dataNascita}"/> 
-           </div>
-           <span>
-                <button type="submit">Conferma</button>
-            </span>
+            <h1 class="index-header">Registrati</h1>
 
-        </form>
+            <div class="column">
+                <form th:action="@{/register}" method = "POST">
+                    <div class="row">
+                        <div class="form-window"> 
+                            <label for="username">Username:</label>
+                            <input required type="text" name="username" th:field="*{credentials.username}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="password">Password:</label>
+                            <input required type="text" name="password" th:field="*{credentials.password}"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-window">
+                            <label for="email">e-mail:</label>
+                            <input required type="text" name="email" th:field="*{user.email}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="nome">Nome:</label>
+                            <input required type="text" name="nome" th:field="*{user.nome}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="cognome">Cognome:</label>
+                            <input required type="text" name="cognome" th:field="*{user.cognome}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="dataNascita">Data di Nascita: </label>
+                            <input type="date" id="dataNascita" th:field="*{user.dataNascita}"/> 
+                        </div>
+                    </div>
+                    <div class="submit">
+                        <button type="submit" th:text="'Conferma'"></button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
 
     </body>
 
