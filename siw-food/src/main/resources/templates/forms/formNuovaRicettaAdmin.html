@@ -7,50 +7,40 @@
         <title>
             Registrazione nuova ricetta
         </title>
+        <link rel="stylesheet" href="/css/style.css" /> 
 
     </head>
 
     <body>
-        <a th:href="@{/cuochi/{cuoco_id}(cuoco_id = ${cuoco.id})}">Torna alla scheda del cuoco</a>
-        
-        
-        <h1>
-            Inserire i dati e cliccare "conferma" per inserire la nuova ricetta
-        </h1>
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" th:href="@{/cuochi/{cuoco_id}(cuoco_id = ${cuoco.id})}">Torna alla scheda del cuoco</a></div>
+            
+            
+            <h1 class="index-header">Inserire i dati e cliccare "conferma" per inserire la nuova ricetta</h1>
 
-        <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" method = "POST" th:object="${ricetta}">
-            <!--<div>
-                <span th:text="${messaggioErrore}"></span>
-            </div>-->
-            <div>
-                Nome: 
-                <span>
-                    <input required type="text" th:field="*{nome}"/>
-                </span>
-            </div>
-            <div>
-                Descrizione:
-                <span>
-                    <input type="text" th:field="*{descrizione}"/>
-                </span>
-            </div>
-            <div>
-                <label for="immagine">Immagine:</label>
-                <input type="file" id="immagine" name="immagine" accept="image/*">
-            </div>
-            <div>
-                <img th:if="${ricetta.hasImages() == true}"
-                    th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%" />
-            </div>
-           <div>
-                <span>
-                    <button type="submit">
-                        Conferma
-                    </button>
-                </span>
-           </div>
-        </form>
+            <form th:action="@{/admin/addRicetta/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" method = "POST" th:object="${ricetta}">
+                <div class="column">
+                    <div class="form-window">
+                        <label for="nome">Nome:</label>
+                        <input required type="text" th:field="*{nome}"/>
+                    </div>
+                    <div class="form-window">
+                        <label for="descrizione">Descrizione:</label>
+                        <input required type="text" th:field="*{descrizione}"/>
+                    </div>
+                    <div class="form-window">
+                        <label for="immagine">Immagine:</label>
+                        <input type="file" id="immagine" name="immagine" accept="image/*">
+                    </div>
+                    <div class="submit">
+                        <button type="submit">Conferma</button>
+                    </div>
 
+                <div>
+
+            </form>
+
+        </div>
 
     </body>
 

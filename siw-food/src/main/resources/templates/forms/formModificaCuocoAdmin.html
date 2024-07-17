@@ -3,40 +3,51 @@
     <head>
         <meta charset="utf-8">
         <title>Modifica Cuoco</title>
+        <link rel="stylesheet" href="/css/style.css" />  
+
     </head>
 
 
     <body>
-        <a th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco_id})}">Torna alla pagina del cuoco</a>
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" th:href="@{/cuochi/{cuoco_id}(cuoco_id=${cuoco_id})}">Torna alla pagina del cuoco</a></div>
 
 
-        <h1>Modifica la scheda del cuoco</h1>
-        <form th:action="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${cuoco}" method="post">
-            <div>
-                <label for="nome">Modifica nome:</label>
-                <input type="text" id="nome" th:field="*{nome}" />
-            </div>
-            <div>
-                <label for="cognome">Modifica cognome:</label>
-                <input type="text" id="cognome" th:field="*{cognome}" />
-            </div>
-            <div>
-                <label for="dataNascita">Cambia data di nascita:</label>
-                <input type="date" id="dataNascita" th:field="*{dataNascita}" />
-            </div>
-            <div>
-                <label for="immagine">Immagine:</label>
-                <input type="file" id="immagine" name="immagine" accept="image/*">
-            </div>
-    
-            <div>
-                <img th:if="${cuoco.hasImages() == true}"
-                    th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
-            </div>
-            <div>
-                <button type="submit">Conferma modifiche</button>
-            </div>
-        </form>
+            <h1 class="index-header">Modifica la scheda del cuoco</h1>
+            <form th:action="@{/admin/editCuoco/{cuoco_id}(cuoco_id=${cuoco.id})}" enctype="multipart/form-data" th:object="${cuoco}" method="post">
+                <div class="column">
+                    <div class="row">
+                        <div class="form-window">
+                            <label for="nome">Modifica nome:</label>
+                            <input type="text" id="nome" th:field="*{nome}" />
+                        </div>
+                        <div class="form-window">
+                            <label for="cognome">Modifica cognome:</label>
+                            <input type="text" id="cognome" th:field="*{cognome}" />
+                        </div>
+                    </div>    
+                    <div class="form-window">
+                        <label for="dataNascita">Cambia data di nascita:</label>
+                        <input type="date" id="dataNascita" th:field="*{dataNascita}" />
+                    </div>
+                    <div class="image-container" th:if="${cuoco.hasImages() == true}">
+                        <img 
+                            th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
+                    </div>
+                    <div class="form-window">
+                        <label for="immagine">Immagine:</label>
+                        <input type="file" id="immagine" name="immagine" accept="image/*">
+                    </div>
+            
+                    <div class="submit">
+                        <button type="submit">Conferma modifiche</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </body>
 

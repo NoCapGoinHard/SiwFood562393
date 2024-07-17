@@ -34,7 +34,7 @@
                     </span>
                 </div>
 
-                <div class="smaller-index-header" th:if="${ricetta}">
+                <div class="index-header" th:if="${ricetta}">
                     <h2 th:text="${ricetta.nome}">Nome:</h2>
                     <p th:text="${ricetta.descrizione}">Descrizione ricetta:</p>
                 </div>
@@ -64,7 +64,7 @@
                                             <div class="column">
                                                 <ul th:if="${!(ingrediente.allergeni.isEmpty())}">
                                                     <li th:each="allergene : ${ingrediente.allergeni}">
-                                                        <span class="smaller-index-header" th:text="${allergene.nome}"></span>
+                                                        <span class="smallest-index-header" th:text="${allergene.nome}"></span>
                                                     </li>
                                                 </ul>
                                             </div>

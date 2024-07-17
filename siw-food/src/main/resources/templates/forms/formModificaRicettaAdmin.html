@@ -30,67 +30,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Modifica ricetta</title>
+    <link rel="stylesheet" href="/css/style.css" />
+
 </head>
 
 <body>
-    <a th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">Torna ai dettagli della ricetta</a>
-    
-    <h1>Modifica i dettagli della Ricetta</h1>
+    <div class="container">
+        <div class="navigation-index-links"><a class="navigation-index-links" th:href="@{/ricette/{ricetta_id}(ricetta_id=${ricetta.id})}">Torna ai dettagli della ricetta</a></div>
+        
+        <h1 class="index-header">Modifica i dettagli della Ricetta</h1>
 
-    <div>
-        <h2 th:text="${ricetta.nome}">Nome della Ricetta</h2>
-        <p th:text="${ricetta.descrizione}">Descrizione della Ricetta</p>
+        <div class="smallest-index-header">
+            <h2 th:text="${ricetta.nome}">Nome della Ricetta</h2>
+            <p th:text="${ricetta.descrizione}">Descrizione della Ricetta</p>
+        </div>
+
+        <div class="smaller-index-header">
+            <h3>Ingredienti</h3>
+            <ul>
+                <li th:each="ingrediente : ${ricetta.ingredienti}">
+                    <span th:text="${ingrediente.nome}">Nome Ingrediente: </span>
+                    <span th:text="${ingrediente.quantita}">Quantità Ingrediente</span>
+                    <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}">Rimuovi</a>
+                </li>
+            </ul>
+        </div>
+        
+        <div class="row">
+            <div class="column">
+                <h1 class="smaller-index-header">Aggiorna Ricetta</h1>
+                <form th:action="@{/admin/editRicetta/{id}(id=${ricetta.id})}" enctype="multipart/form-data" method="post"
+                    th:object="${ricetta}">
+                    <div class="column">
+                        <div class="form-window">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" th:field="*{nome}" required/>
+                        </div>
+                        <div class="form-window">
+                            <label for="descrizione">Descrizione:</label>
+                            <input type="text" id="descrizione" th:field="*{descrizione}" required/>
+                        </div>
+
+                        <div class="image-container" th:if="${ricetta.hasImages() == true}">
+                            <img 
+                                th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%" />
+                        </div>
+                        <div class="form-window">
+                            <label for="immagine">Immagine:</label>
+                            <input type="file" id="immagine" name="immagine" accept="image/*">
+                        </div>
+                        <div class="submit">
+                            <button type="submit">Aggiorna</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div> <!--chiusura column--> 
+
+            <div class="column">
+                <h1 class="smaller-index-header">Aggiungi Ingrediente</h1>
+                <form th:action="@{/admin/aggiungiIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}" enctype="multipart/form-data" method="post"
+                    th:object="${nuovoIngrediente}">
+                    <div class="column">
+                        <div class="form-window">
+                            <label for="nome">Nome:</label>
+                            <input type="text" id="nome" th:field="*{nome}" required/>
+                        </div>
+                        <div class="form-window">
+                            <label for="Quantità">Quantità:</label>
+                            <input type="text" id="Quantità" th:field="*{quantita}" required/>
+                        </div>
+                        <div class="submit">
+                            <button type="submit">Aggiungi</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div> <!--chiusura column--> 
+        </div> <!--chiusura row-->
+
     </div>
-
-    <div>
-        <h3>Ingredienti</h3>
-        <ul>
-            <li th:each="ingrediente : ${ricetta.ingredienti}">
-                <span th:text="${ingrediente.nome}">Nome Ingrediente: </span>
-                <span th:text="${ingrediente.quantita}">Quantità Ingrediente</span>
-                <a th:href="@{/admin/rimuoviIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}">Rimuovi</a>
-            </li>
-        </ul>
-    </div>
-    
-    <h1>Aggiorna Ricetta</h1>
-    <form th:action="@{/admin/editRicetta/{id}(id=${ricetta.id})}" enctype="multipart/form-data" method="post"
-        th:object="${ricetta}">
-
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" required/>
-        </div>
-        <div>
-            <label for="descrizione">Descrizione:</label>
-            <input type="text" id="descrizione" th:field="*{descrizione}" required/>
-        </div>
-
-        <div>
-            <label for="immagine">Immagine:</label>
-            <input type="file" id="immagine" name="immagine" accept="image/*">
-        </div>
-        <div>
-            <img th:if="${ricetta.hasImages() == true}"
-                th:src="'data:image/jpeg;base64,' + ${ricetta.getFirstImmagine().getBase64()}" width="30%" />
-        </div>
-        <button type="submit">Aggiorna</button>
-    </form>
-
-    <h1>Aggiungi Ingrediente</h1>
-    <form th:action="@{/admin/aggiungiIngrediente/{ricetta_id}(ricetta_id=${ricetta.id})}" enctype="multipart/form-data" method="post"
-        th:object="${nuovoIngrediente}">
-        <div>
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" th:field="*{nome}" required/>
-        </div>
-        <div>
-            <label for="Quantità">Quantità:</label>
-            <input type="text" id="Quantità" th:field="*{quantita}" required/>
-        </div>
-        <button type="submit">Aggiungi</button>
-    </form>
-
 
 </body>
 

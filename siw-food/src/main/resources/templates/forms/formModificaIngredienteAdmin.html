@@ -4,25 +4,41 @@
     <head>
         <meta charset="utf-8">
         <title>Aggiungi ingrediente</title>
+        <link rel="stylesheet" href="/css/style.css" /> 
+
     </head>
 
     
     <body>
-        <a th:href="/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})"></a>
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" th:href="/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingrediente.nome})"></a></div>
 
-        <form th:action="@{/admin/editIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}" th:object="${ingrediente}" method = "post">
-            <div>
-                <label for="nome">Ingrediente:</label>
-                <input type="text" id="nome" th:field="*{nome}"/>
-            </div>
-            <div>
-                <label for="quantita">Quantità:</label>
-                <input type="text" id="quantita" th:field="*{quantita}"/>
-            </div>
-            <div>
-                <button type="submit">Aggiungi</button>
-            </div>
-        </form>
+            <form th:action="@{/admin/editIngrediente/{ingrediente_id}(ingrediente_id=${ingrediente.id})}" th:object="${ingrediente}" method = "post">
+                <div class="column">
+
+                    <div class="row">
+
+                        <div class="form-window">
+                            <label for="nome">Ingrediente:</label>
+                            <input type="text" id="nome" th:field="*{nome}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="quantita">Quantità:</label>
+                            <input type="text" id="quantita" th:field="*{quantita}"/>
+                        </div>
+                    
+                    </div><!--chiusura ROW-->
+                    
+                    <div class="submit">
+                        <button type="submit">Aggiungi</button>
+                    </div>
+
+                </div> <!--chiusura COLUMN-->
+
+            </form>
+
+        </div>
+
     </body>
 
 

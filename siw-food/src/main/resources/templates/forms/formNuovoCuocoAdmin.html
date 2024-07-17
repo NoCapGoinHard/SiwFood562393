@@ -7,56 +7,51 @@
         <title>
             Registrazione nuovo cuoco
         </title>
+        <link rel="stylesheet" href="/css/style.css" />  
 
     </head>
 
     <body>
-        <a th:href="@{/cuochi}">Torna alla lista dei cuochi</a>
-        
-        
-        <h1>
-            Inserire i dati e cliccare "conferma" per inserire il nuovo cuoco
-        </h1>
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" href="/cuochi">Torna alla scheda dei cuochi</a></div>
+            
+            
+            <h1 class="index-header">Inserire i dati e cliccare "conferma" per inserire il nuovo cuoco</h1>
 
-        <form th:action="@{/admin/addCuoco}" enctype = "multipart/form-data" method = "POST" th:object="${cuoco}"> 
-            <div>
-                <span th:text="${messaggioErrore}"> ERRORE </span>
-            </div>
-            <div>
-                Nome: 
-                <span>
-                    <input required type="text" th:field="*{nome}"/>
-                </span>
-            </div>
-            <div>
-                Cognome:
-                <span>
-                    <input required type="text" th:field="*{cognome}"/>
-                </span>
-            </div>
-            <div>
-                 <label for="dataNascita"> Data di Nascita: </label>
-                 <input type="date" id="dataNascita" th:field="*{dataNascita}"/> 
-            </div>
-            <div>
-                <label for="immagine">Immagine:</label>
-                <input type="file" id="immagine" name="immagine" accept="image/*">
-            </div>
-    
-            <div>
-                <img th:if="${cuoco.hasImages() == true}"
-                    th:src="'data:image/jpeg;base64,' + ${cuoco.getFirstImmagine().getBase64()}" width="30%" />
-            </div>
+            <form th:action="@{/admin/addCuoco}" enctype = "multipart/form-data" method = "POST" th:object="${cuoco}"> 
+                <div class="column">
+                    <div class="row">
+                        <div th:if="${messaggioErrore}" class="form-window">
+                            <span th:text="${messaggioErrore}"> ERRORE </span>
+                        </div>
+                        <div class="form-window">
+                            <label for="nome">Nome:</label>
+                            <input required type="text" th:field="*{nome}"/>
+                        </div>
+                        <div class="form-window">
+                            <label for="cognome">Cognome:</label>
+                            <input required type="text" th:field="*{cognome}"/>
+                        </div>
+                    </div>
 
-           <div>
-                <span>
-                    <button type="submit">
-                        Conferma
-                    </button>
-                </span>
-           </div>
-        </form>
+                    <div class="form-window">
+                        <label for="dataNascita"> Data di Nascita: </label>
+                        <input type="date" id="dataNascita" th:field="*{dataNascita}"/> 
+                    </div>
+                    <div class="form-window">
+                        <label for="immagine">Immagine:</label>
+                        <input type="file" id="immagine" name="immagine" accept="image/*">
+                    </div>
 
+                    <div class="submit">
+                        <button type="submit">Conferma</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        <div>
 
     </body>
 

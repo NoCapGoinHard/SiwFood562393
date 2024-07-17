@@ -6,21 +6,29 @@
     <head>
         <meta charset="utf-8">
         <title>Aggiungi allergene</title>
-        
+        <link rel="stylesheet" href="/css/style.css" />  
+
     </head>
     
     <body>
-        <a th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingredienti[0].nome})}">Torna alla scheda dell'ingrediente</a>
-        <form th:action="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome = ${ingredienti[0].nome})}" th:object ="${allergene}" method ="post">
-            <div>
-                <label for="nome">Allergene:</label>
-                <input type="text" id="nome" th:field="*{nome}"/>
-            </div>
-            <div>
-                <button type = "submit">Aggiungi</button>
-            </div>
-        </form>
-    
+        <div class="container">
+            <div class="navigation-index-links"><a class="navigation-index-links" th:href="@{/admin/ingredienti/{ingrediente_nome}(ingrediente_nome=${ingredienti[0].nome})}">Torna alla scheda dell'ingrediente</a></div>
+            <form th:action="@{/admin/aggiungiAllergene/{ingrediente_nome}(ingrediente_nome = ${ingredienti[0].nome})}" th:object ="${allergene}" method ="post">
+                <div class="column">
+                    <div class="form-window">
+                        <label for="nome">Allergene:</label>
+                        <input type="text" id="nome" th:field="*{nome}"/>
+                    </div>
+                    <div class="submit">
+                        <button type = "submit">Aggiungi</button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
     </body>
 
 

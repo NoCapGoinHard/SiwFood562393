@@ -30,7 +30,7 @@ body {
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 800px; /* added max-width for responsiveness */
+  max-width: 1200px; /* added max-width for responsiveness */
   margin: 0 auto; /* added margin to center the container */
   list-style-type: none;
 }
@@ -45,7 +45,8 @@ body {
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 800px; /* added max-width for responsiveness */
+  max-width: 500px; /* added max-width for responsiveness */
+  max-height: 200px;
   margin: 0 auto; /* added margin to center the container */
   list-style-type: none;
 }
@@ -77,9 +78,10 @@ body {
 
 .row {
   display: inline-flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .column {
@@ -189,8 +191,24 @@ a {
   padding-inline-start: 0;
 }
 
+.form-window input[type="text"],.form-window input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-sizing: border-box;
+  height: auto; /* set height to auto to allow the input field to expand */
+  overflow-y: auto; /* add a vertical scrollbar if the text exceeds the input field's height */
+}
+
+.form-window input[type="text"]:focus,.form-window input[type="password"]:focus {
+  border-color: #aaa;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
 
 .form-window {
+  width: 300px;
   margin-bottom: 20px;
   padding: 10px;
   border: 1px solid #ddd;
@@ -205,6 +223,7 @@ a {
   color: whitesmoke;
 }
 
+/*
 .form-window input[type="text"], .form-window input[type="password"] {
   width: 100%;
   padding: 10px;
@@ -212,7 +231,8 @@ a {
   border: 1px solid #ddd;
   border-radius: 10px;
   box-sizing: border-box;
-}
+}*/
+
 
 .submit {
   text-align: center;
@@ -266,7 +286,32 @@ a {
   display: none;
 }
 
+.form-window input[type="file"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.form-window input[type="file"]:hover {
+  background-color: #45a049;
+}
+
+.form-window input[type="file"]::-webkit-file-upload-button {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-window input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: whitesmoke;
+  color: grey;
+}
 
 
 
