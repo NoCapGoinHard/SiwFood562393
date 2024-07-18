@@ -59,7 +59,7 @@ public class RicettaController extends GlobalController {
     }
     @PostMapping("/ricette/byNome")
     public String byNome(@RequestParam String nome, Model model) {
-        model.addAttribute("ricette", this.ricettaService.findAllByNome(nome));
+        model.addAttribute("ricette", this.ricettaService.findAllByNomeSimile(nome));
         return "ricette.html";
     }
 

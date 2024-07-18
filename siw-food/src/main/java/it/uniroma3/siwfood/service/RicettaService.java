@@ -33,4 +33,11 @@ public class RicettaService {
     public void deleteById(Long id) {
         ricettaRepository.deleteById(id);
     }
+
+
+    //CUSTOM QUERIES
+
+    public List<Ricetta> findAllByNomeSimile(String nome) {
+        return this.ricettaRepository.findAllByNomeSimile(nome);
+    }
 }

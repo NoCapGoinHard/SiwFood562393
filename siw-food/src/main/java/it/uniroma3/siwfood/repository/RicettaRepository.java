@@ -22,4 +22,8 @@ public interface RicettaRepository extends CrudRepository<Ricetta,Long>{
     public boolean existsByNomeAndCuoco(String nome, Cuoco cuoco);
 
     public List<Ricetta> findAllByNome(String nome);
+
+    @Query(value = "SELECT * FROM ricetta WHERE nome LIKE :nome%", nativeQuery = true)
+    public List<Ricetta> findAllByNomeSimile(@Param("nome") String nome);
+
 }

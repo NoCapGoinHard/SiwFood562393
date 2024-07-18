@@ -50,7 +50,7 @@
                             <a href="/ricette">Ricette</a>
                         </div>
 
-                        <div class="index-links" th:if="${userDetails}">
+                        <div class="index-links" th:if="${userDetails != null && credenziali.isAdmin()}">
                             <a href="/admin/ingredienti">Ingredienti</a>
                         </div>
 

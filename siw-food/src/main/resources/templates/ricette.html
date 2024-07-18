@@ -20,7 +20,7 @@
                 <a href="/ricette/search">Cerca ricette per nome</a>
             </div>
 
-            <div th:if="${ricette == null || ricette.isEmpty()}">
+            <div class="smaller-index-header" th:if="${ricette == null || ricette.isEmpty()}">
                 Non ci sono ricette nel sistema
             </div>
             <div class="column">
